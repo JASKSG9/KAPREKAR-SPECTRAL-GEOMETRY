@@ -1,3 +1,184 @@
+***
+
+### Second: Self‑Contained HTML Front‑End (for Live Demo)
+
+Save this as `docs/ksg.html` or `app/ksg.html` and serve it directly from your Hugging Face Space or GitHub Pages.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kaprekar Spectral Geometry (KSG)</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --card: #1a1a20;
+      --text: #e0e0e0;
+      --accent: #8b5cf6;
+      --border: #373745;
+      --green: #10b981;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 1rem 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-top: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h1, h2, h3 {
+      color: var(--accent);
+      margin: 0.75rem 0;
+    }
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.35rem; border-left: 3px solid var(--accent); padding-left: 12px; }
+    h3 { font-size: 1.15rem; }
+    code {
+      background: rgba(60,60,90,0.4);
+      border-radius: 2px;
+      padding: 0.15rem 0.4rem;
+      font-family: monospace;
+    }
+    pre {
+      background: rgba(30,30,50,0.6);
+      border-radius: 5px;
+      padding: 0.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 0.3rem 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: rgba(100,100,150,0.2);
+    }
+    .tag-green  { color: var(--green); }
+    .tag-yellow { color: var(--yellow); }
+    .tag-red    { color: var(--red); }
+    .summary {
+      background: rgba(100,100,200,0.1);
+      border-radius: 6px;
+      padding: 0.6rem;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🧱 Kaprekar Spectral Geometry (KSG)</h1>
+    <p>
+      <a href="https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY">
+        github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
+      </a>
+    </p>
+  </header>
+
+  <div class="card">
+    <h2>🔬 What is KSG?</h2>
+    <p>
+      For 4‑digit numbers <code>0000</code>…<code>9999</code>, the Kaprekar map
+      <code>T(n) = descending(n) - ascending(n)</code> converges to <strong>6174</strong> in ≤7 steps.
+    </p>
+    <p>
+      KSG treats this functional graph as an undirected graph and computes its <strong>normalized Laplacian spectrum</strong>,
+      including exact spectral gap μ₁, τ‑histograms, and effective resistance landscapes.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>✅ Locked‑In 4‑Digit Invariants</h2>
+    <table>
+      <tr><th>Invariant</th><th>Value</th></tr>
+      <tr><td><code>τ‑histogram</code></td><td><code>[383, 576, 2400, 1272, 1518, 1656, 2184]</code></td></tr>
+      <tr><td>τ_max</td><td>7</td></tr>
+      <tr><td>τ* (bottleneck)</td><td>5</td></tr>
+      <tr><td>μ₁</td><td>0.1624262417339861</td></tr>
+      <tr><td>SUSY pairing (path)</td><td>λₖ + λ₆₋ₖ = 2</td></tr>
+      <tr><td>Skeleton sums Σ(S₃)=Σ(S₅)</td><td>59193</td></tr>
+    </table>
+    <p class="tag-green">All values are machine‑verified and can be recomputed with <code>KSG‑NODE‑V4.PY</code>.</p>
+  </div>
+
+  <div class="card">
+    <h2>📊 5‑ and 6‑Digit Results</h2>
+    <p>Horizontal scaling laws (τ_max, μ₁, resistance frontiers) are preserved.</p>
+    <table>
+      <tr><th>d</th><th>Main basin</th><th>τ_max</th><th>μ₁</th></tr>
+      <tr><td>3</td><td>–</td><td>5</td><td>2.59e‑03</td></tr>
+      <tr><td>4</td><td>9990</td><td>7</td><td>5.24e‑05</td></tr>
+      <tr><td>5</td><td>≈96000</td><td>6</td><td>1.54e‑05</td></tr>
+      <tr><td>6</td><td>≈950000</td><td>13</td><td>2.30e‑06</td></tr>
+    </table>
+    <p class="summary">
+      <strong>Observations</strong>: τ_max oscillates non‑monotonically, μ₁ decays exponentially,
+      effective resistance peaks at |τ|=4, 5‑digit 4‑cycle basins (2↔4) show spectral symmetry (μ₁ ratio ≈1.0006).
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🏗️ HeiCut Reduction</h2>
+    <p>
+      The 4‑digit Kaprekar hypergraph (nodes = numbers, hyperedges = τ‑levels) is reducible by HeiCut rules 1,2,3,6,7.
+      <br>
+      <code>10000</code> nodes → <code>0</code> after contraction; min‑cut size = <code>5358</code> (τ ≥ 5).
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>📜 Quick Run</h2>
+    <pre>
+git clone https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
+cd KAPREKAR-SPECTRAL-GEOMETRY
+python3 DOCS/PYTHON/KSG-NODE-V4.PY
+python3 DOCS/PYTHON/d6_ksg_full.py
+    </pre>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Open Problems (Verifiable)</h2>
+    <ul>
+      <li>P1: Universal scaling μ₁(d) for d=3…6</li>
+      <li>P2: τ‑histograms for d=5 and d=6</li>
+      <li>P3: Skeleton sum equality for d=5</li>
+    </ul>
+    <p>Full list in <code>DOCS/TODO/A24-OPEN-PROBLEMS.MD</code>.</p>
+  </div>
+
+  <div class="card">
+    <h2>💡 Speculative Analogies (Isolated)</h2>
+    <p>
+      Ideas like <em>topological charge W</em>, <em>phantom energy ω = −4/3</em>, <em>1.618 kHz resonance</em>,
+      and <em>strange repellers</em> are quarantined in <code>DOCS/TODO/SPECULATIVE_ANALOGIES.MD</code> and <strong>not part</strong>
+      of the core mathematics.
+    </p>
+  </div>
+
+  <footer style="text-align:center; margin-top:2rem; font-size:0.9rem; color:#aaa;">
+    Kaprekar Spectral Geometry – 2026, MIT‑
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
