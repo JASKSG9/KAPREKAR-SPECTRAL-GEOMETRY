@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\title{A Convexity Impossibility Theorem for Linear Markov Mixtures of the Kaprekar Map}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study linear Markov mixtures $\phi_\alpha = \alpha P_1 + (1-\alpha)P_2$ on the 4-digit Kaprekar state space of non-repdigits, where $P_1$ is the deterministic Kaprekar transition and $P_2$ is a row-stochastic perturbation. Let $T$ be the digit-reversal involution and define
+\[
+A(\mu;\alpha)=\|\phi_\alpha \mu - T\phi_\alpha \mu\|_{TV}.
+\]
+We prove: if $A(\mu;0)=A(\mu;1)=0$, then $A(\mu;\alpha)=0$ for all $\alpha\in[0,1]$. The result follows from linearity of $\phi_\alpha$ and convexity of total variation.
+\end{abstract}
+
+\section{Definitions}
+
+Let $\Omega^*$ be the set of 4-digit non-repdigits ($|\Omega^*|=9990$).
+
+\textbf{Kaprekar map:}
+\[
+K(x)=\operatorname{desc}(x)-\operatorname{asc}(x).
+\]
+
+\textbf{Markov operators:}
+$P_1$ is deterministic with $(P_1)_{ij}=1$ if $K(i)=j$.
+$P_2$ is row-stochastic.
+
+\textbf{Mixture:}
+\[
+\phi_\alpha = \alpha P_1 + (1-\alpha)P_2.
+\]
+
+\textbf{Involution:}
+$T$ is digit reversal, $T^2 = I$.
+
+\textbf{Asymmetry:}
+\[
+A(\mu;\alpha)=\|\phi_\alpha \mu - T\phi_\alpha \mu\|_{TV}.
+\]
+
+\section{Main Result}
+
+\begin{lemma}
+For fixed $\mu$, $A(\mu;\alpha)$ is convex in $\alpha$.
+\end{lemma}
+
+\begin{proof}
+$\phi_\alpha \mu$ is affine in $\alpha$ and total variation is convex.
+\end{proof}
+
+\begin{theorem}
+If $A(\mu;0)=A(\mu;1)=0$, then $A(\mu;\alpha)=0$ for all $\alpha\in[0,1]$.
+\end{theorem}
+
+\begin{proof}
+If endpoints vanish, then
+\[
+P_1\mu = TP_1\mu,\quad P_2\mu = TP_2\mu.
+\]
+By linearity of $\phi_\alpha$,
+\[
+\phi_\alpha \mu = T\phi_\alpha \mu,
+\]
+hence $A(\mu;\alpha)=0$.
+\end{proof}
+
+\section{Remark}
+
+Any interior peak in $A(\mu;\alpha)$ is impossible under linear interpolation of Markov operators and a fixed linear involution.
+
+\end{document}
