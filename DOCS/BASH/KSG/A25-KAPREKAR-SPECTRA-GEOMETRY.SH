@@ -24,3 +24,21 @@ EOF
 git add papers/ pipeline/ RESEARCH_GROUNDED_SUPPORT.md
 git commit -m "v3.1: Linear Impossibility Theorem + corrected pipeline"
 git push origin main
+
+https://huggingface.co/Aqarion/Global-Edu-Borion-phi43-Aqarion-Doctrine-v0.1
+
+https://huggingface.co/spaces/Aqarion/Global-Edu-Borion-phi43
+
+https://huggingface.co/spaces/Aqarion/Borion-quantarion-moneospace
+
+https://huggingface.co/spaces/Aqarion/Phi-377-spectral-geometry
+
+curl https://huggingface.co/spaces/Aqarion/Phi-377-spectral-geometry/agents.md
+
+https://huggingface.co/Quantarion-AI
+
+https://huggingface.co/Quantarion-AI
+
+https://huggingface.co/spaces/Aqarion-TB13/KAPREKAR/resolve/main/BASH/A25-MONEO-CLONE_KSG-BOOTSTRAP.SH
+
+https://huggingface.co/Aqarion
