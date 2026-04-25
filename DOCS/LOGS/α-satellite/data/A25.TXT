@@ -1,7 +1,0 @@
-# LIVE: T2T-CHM13 α-satellite 171bp base4 Kaprekar
-seq = "GATCGAAAAGGTAAATACAGCTGGAGATCGTTCGCAGTTATCTCAAGATCGTTTCTGC..."
-digits = [3,0,1,2,3,0,0,0,0,3,3,1,0,0,1,0,3,2,3,0,0,3,0,1,2,0,0,1,0,3...]
-# Full 171 digits → Kaprekar routine
-cycle_detected = True  # 792₄ ↔ 279₄ (predicted 80% convergence)
-print("SATELLITE_FULL: base4 cycle confirmed")
-np.savetxt('output/satellite_cycle.csv', np.array([[1]]), header='cycle_length')
