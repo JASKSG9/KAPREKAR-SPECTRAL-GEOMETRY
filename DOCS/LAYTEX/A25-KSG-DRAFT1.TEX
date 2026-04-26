@@ -1,0 +1,182 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Kaprekar Dynamics as a Deterministic-to-Markov Lifted System\\
+and Associated Inverse Problem Structure}
+\author{A25 Framework (Computational Dynamics Note)}
+\date{2026}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We study the Kaprekar 4-digit iteration as a deterministic dynamical system on a finite state space $\Omega^*$ and formalize its structure as a directed graph. We introduce a stochastic lifting procedure yielding a Markov chain representation, enabling spectral analysis via the normalized graph Laplacian. We further interpret the induced τ-depth distribution as a lossy observable of an ill-posed inverse problem over dynamical graphs. This framework separates deterministic collapse dynamics from stochastic relaxation geometry.
+\end{abstract}
+
+\section{Deterministic System}
+
+\begin{definition}[State space]
+Let
+\[
+\Omega^* = \{0,1,\dots,9999\} \setminus \{\text{repdigits}\},
+\quad |\Omega^*| = 9990.
+\]
+\end{definition}
+
+\begin{definition}[Kaprekar map]
+Define
+\[
+K : \Omega^* \to \Omega^*
+\]
+by
+\[
+K(n) = \mathrm{desc}(n) - \mathrm{asc}(n),
+\]
+where digits are sorted in descending and ascending order.
+\end{definition}
+
+This defines a deterministic dynamical system $(\Omega^*, K)$.
+
+\section{Graph Representation}
+
+\begin{definition}[Transition graph]
+Define a directed graph $G_K = (\Omega^*, E)$ with edges
+\[
+i \to K(i).
+\]
+\end{definition}
+
+The deterministic transition operator is:
+\[
+P_{\mathrm{det}}(i,j) =
+\begin{cases}
+1 & j = K(i) \\
+0 & \text{otherwise}.
+\end{cases}
+\]
+
+This operator is not reversible and is highly non-invertible.
+
+\section{Markov Lift}
+
+\begin{definition}[Stochastic lift]
+Let $U$ be the uniform transition kernel on $\Omega^*$. Define
+\[
+P_\varepsilon = (1-\varepsilon)P_{\mathrm{det}} + \varepsilon U,
+\quad 0 < \varepsilon \le 1.
+\]
+\end{definition}
+
+\begin{lemma}
+For any $\varepsilon > 0$, $P_\varepsilon$ defines an irreducible and aperiodic Markov chain on $\Omega^*$.
+\end{lemma}
+
+\begin{proof}
+Since $U$ has full support, every state communicates with every other state in one step with probability $\varepsilon / |\Omega^*| > 0$.
+\end{proof}
+
+\section{Markov Operator and Laplacian}
+
+Let $\mathcal{P}$ be the Markov operator:
+\[
+(\mathcal{P} f)(x) = \sum_{y \in \Omega^*} P_\varepsilon(x,y) f(y).
+\]
+
+Let $\pi$ be the stationary distribution of $P_\varepsilon$.
+
+\begin{definition}[Normalized Laplacian]
+\[
+L = I - \Pi^{1/2} P_\varepsilon \Pi^{-1/2}.
+\]
+\end{definition}
+
+The eigenvalues of $L$ satisfy:
+\[
+0 = \lambda_0 \le \lambda_1 \le \cdots \le \lambda_{n-1}.
+\]
+
+The spectral gap is:
+\[
+\mu_1 = \lambda_1.
+\]
+
+\section{Hitting Time Structure}
+
+\begin{definition}[Kaprekar depth]
+Let $A = \{6174\}$. Define
+\[
+\tau(x) = \min \{t \ge 0 : K^t(x) = 6174\}.
+\]
+\end{definition}
+
+This defines a deterministic hitting-time field over $\Omega^*$.
+
+Under stochastic lift:
+\[
+\tau(x) = \mathbb{E}_P[T_A \mid X_0 = x],
+\]
+becomes a first-passage time of the Markov chain.
+
+\section{Inverse Problem Formulation}
+
+\begin{definition}[Inverse Kaprekar problem]
+Given the observable distribution
+\[
+\{(\tau, N_\tau)\},
+\]
+reconstruct structural properties of the underlying graph $G_K$.
+\end{definition}
+
+This inverse map is ill-posed due to many-to-one collapse of $K$.
+
+\begin{lemma}
+The inverse mapping $\tau^{-1}$ is non-unique.
+\end{lemma}
+
+\begin{proof}
+Multiple states share identical iteration depth under $K$, hence $\tau$ is not injective.
+\end{proof}
+
+\section{Regularized Reconstruction}
+
+We define a variational reconstruction problem:
+\[
+\min_G \| \tau_G - \tau_{\mathrm{obs}} \|^2 + \lambda \mathcal{R}(G),
+\]
+where $\mathcal{R}(G)$ penalizes structural complexity.
+
+This defines a discrete ill-posed inverse problem over dynamical graphs.
+
+\section{Spectral Interpretation}
+
+The spectral gap $\mu_1$ is not intrinsic to $K$ but emerges from the lifted operator $P_\varepsilon$.
+
+\begin{theorem}[Spectral meaning]
+$\mu_1$ governs the relaxation rate of probability mass toward the attractor under the Markov lift.
+\end{theorem}
+
+\begin{proof}
+Standard Markov chain theory: $\mu_1$ controls convergence rate in $L^2(\pi)$.
+\end{proof}
+
+\section{Conclusion}
+
+We separate three layers of structure:
+
+\begin{itemize}
+\item Deterministic collapse dynamics $(\Omega^*, K)$
+\item Stochastic embedding $(\Omega^*, P_\varepsilon)$
+\item Inverse problem geometry induced by $\tau$
+\end{itemize}
+
+Spectral properties arise only after stochastic lifting and should not be interpreted as intrinsic invariants of the deterministic map.
+
+\end{document}
