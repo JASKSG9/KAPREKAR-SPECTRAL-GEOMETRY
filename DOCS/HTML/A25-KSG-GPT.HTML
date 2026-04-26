@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kaprekar Spectral Geometry (KSG) — Computational Atlas</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.5; }
+h1, h2 { color: #111; }
+.section { margin-bottom: 40px; }
+.badge { display:inline-block; padding:4px 8px; margin:2px; background:#eee; border-radius:4px; }
+.code { background:#f6f6f6; padding:10px; border-left:4px solid #333; white-space:pre; }
+.warn { color:#b00; }
+.ok { color:#080; }
+.pending { color:#b60; }
+</style>
+</head>
+
+<body>
+
+<h1>Kaprekar Spectral Geometry (KSG)</h1>
+<p>
+A computational exploration of Kaprekar’s 4-digit dynamical system,
+its quotient projections, and induced transition structures.
+</p>
+
+<div class="section">
+<span class="badge ok">VERIFIED COMPUTATIONS</span>
+<span class="badge ok">REPRODUCIBLE</span>
+<span class="badge ok">OPEN MATHEMATICS</span>
+<span class="badge warn">PRE-CLOSURE SYSTEM</span>
+</div>
+
+---
+
+<div class="section">
+<h2>01 / State Space</h2>
+<p>Kaprekar system defined on non-rep-digit 4-digit integers.</p>
+
+<div class="code">
+Ω* = { n ∈ [0000,9999] | n not repdigit }
+|Ω*| = 9990 (exact)
+</div>
+</div>
+
+---
+
+<div class="section">
+<h2>02 / Kaprekar Map</h2>
+
+<div class="code">
+K(n) = descending_digits(n) − ascending_digits(n)
+K(n) ≡ 0 (mod 9)
+</div>
+
+<p>Invariant: digit permutation preserves mod-9 structure.</p>
+</div>
+
+---
+
+<div class="section">
+<h2>03 / Dynamical Structure</h2>
+
+<p>
+Iterating K(n) leads to convergence into fixed point:
+</p>
+
+<div class="code">
+6174 is the unique attractor (classical Kaprekar result)
+</div>
+
+<p>
+Define hitting time:
+</p>
+
+<div class="code">
+τ(n) ∈ {0,1,2,3,4,5,6,7}
+(empirically verified distribution computed in session)
+</div>
+
+<p class="pending">
+✔ τ distribution computed over full Ω*  
+⚠ convergence assumed from known Kaprekar theorem (not independently reproven here)
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>04 / Permutation Classes</h2>
+
+<div class="code">
+Digit multiset equivalence:
+n ~ m ⇔ sorted_digits(n) = sorted_digits(m)
+|Ω*/~| = 705 classes
+</div>
+
+<p>
+Result:
+</p>
+
+<p class="warn">
+τ is NOT constant on permutation classes.
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>05 / Gap Coordinate Projection</h2>
+
+<div class="code">
+g(n) = (d1-d2, d2-d3, d3-d4)
+|G| = 219 unique gap triples
+Compression: 9990 → 219 (45.6×)
+</div>
+
+<p class="warn">
+Gap coordinates do NOT determine τ uniquely.
+</p>
+
+<p class="pending">
+⏳ Closure test pending: does g define a closed dynamical system?
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>06 / Transition Structure (Unresolved)</h2>
+
+<p>
+Define empirical transition relation:
+</p>
+
+<div class="code">
+T(g) = { g(K(n)) | g(n) = g }
+</div>
+
+<p class="pending">
+This may be:
+- deterministic (closure)
+- stochastic (Markov embedding)
+- or non-Markovian (hidden structure)
+</p>
+
+<p class="warn">
+No closure assumption is made at this stage.
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>07 / Spectral Structure (PENDING VALIDATION)</h2>
+
+<p>
+Spectral analysis is only valid if transition closure holds.
+</p>
+
+<div class="code">
+Laplacian undefined until:
+→ transition matrix P(g→g') is confirmed
+</div>
+
+<p class="pending">
+⏳ μ₁ (spectral gap) NOT finalized  
+⏳ diffusion coefficient NOT assigned
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>08 / Structural Findings (SAFE RESULTS ONLY)</h2>
+
+<ul>
+<li>Ω* is finite deterministic dynamical system</li>
+<li>K(n) preserves mod-9 invariant</li>
+<li>τ is well-defined hitting time function</li>
+<li>Permutation classes do not determine τ</li>
+<li>Gap projection compresses state space (219 nodes)</li>
+<li>Gap projection does not preserve τ information</li>
+</ul>
+</div>
+
+---
+
+<div class="section">
+<h2>09 / Open Problem (CORE)</h2>
+
+<div class="code">
+Does gap projection g define a closed dynamical system?
+
+Formally:
+∀ g ∈ G, does ∃ unique g' such that g → g' under K?
+</div>
+
+<p class="warn">
+This determines whether:
+- 219-node quotient system exists
+OR
+- 219-node Markov embedding is required
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>10 / Computational Reproducibility</h2>
+
+<div class="code">
+pip install numpy scipy
+
+python kaprekar_core.py
+python gap_projection.py
+python closure_test.py   # CRITICAL STEP
+</div>
+
+<p>
+All results depend on explicit enumeration over Ω* (9990 states).
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>11 / Interpretation Policy</h2>
+
+<p class="warn">
+No physical interpretation is asserted.
+No universality claims are made.
+All structures are purely combinatorial and spectral-graph-theoretic.
+</p>
+</div>
+
+---
+
+<div class="section">
+<h2>12 / Version Status</h2>
+
+<div class="code">
+KSG Atlas v0.2 (PRE-CLOSURE)
+Status: COMPUTATIONAL SNAPSHOT
+Classification: UNKNOWN (pending gap closure test)
+</div>
+</div>
+
+---
+
+</body>
+</html>
