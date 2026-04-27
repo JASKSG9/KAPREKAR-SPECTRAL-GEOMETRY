@@ -1,0 +1,60 @@
+name: KSG Test Suite
+
+on: [push, pull_request]
+
+jobs:
+  test-python:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.9", "3.10", "3.11"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: pip install numpy scipy pytest
+    - name: Run Python tests
+      run: pytest tests/ -v
+
+  test-cpp:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile d6 enumeration
+      run: g++ -O3 -std=c++17 -o d6_enum DOCS/CPP/A27--D6-ENUM.CPP
+    - name: Run d6 test
+      run: ./d6_enum | grep "τ_max = 7"name: Bug Report (KSG Invariant Mismatch)
+description: Report a discrepancy in computed Kaprekar invariants
+body:
+  - type: input
+    id: invariant
+    attributes:
+      label: Which invariant is wrong?
+      placeholder: μ₁ / τ_max / N_τ histogram / τ*
+    validations:
+      required: true
+  - type: input
+    id: computed
+    attributes:
+      label: What value did you compute?
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: What is the locked expected value?
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Code used
+      render: python
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/tree/main/FLOW
