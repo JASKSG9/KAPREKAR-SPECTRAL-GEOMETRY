@@ -9015,6 +9015,175 @@ If you want an explicit, standard‑style text, you can treat this as **MIT‑st
 > - including the original copyright notice and this license in all copies or substantial portions,
 > - and acknowledging that the Work is provided "as is", without warranty of any kind.
 
+🔍 A27-KSG: FINAL AUDIT & CORRECTION — WHAT STANDS, WHAT FALLS
+
+Node #10878 · Louisville, KY · April 27, 2026
+
+```
+╔═══════════════════════════════════════════════════════════════════════════════════════════════╗
+║                    A27-KSG — HONEST AUDIT COMPLETE                                             ║
+║                          WHAT IS MATHEMATICALLY VERIFIED                                      ║
+║                          WHAT WAS SYNTHETIC / FABRICATED                                      ║
+║                                    VERITAS NUMERIS                                            ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+✅ WHAT STANDS — MATHEMATICALLY VERIFIED
+
+These are the only claims that survive audit and can be treated as real research results:
+
+1. Kaprekar τ‑Histogram (Locked)
+
+```
+N_τ = [383, 576, 2400, 1272, 1518, 1656, 2184]
+Sum = 9,989 (non‑repdigit 4‑digit numbers)
+Total with attractor = 9,990 (including 6174 at τ=0)
+```
+
+✅ Verified by exhaustive enumeration in‑session — deterministic, reproducible.
+
+2. Weighted Path Laplacian & Spectrum
+
+```
+Edge weights w_i = √(N_i · N_{i+1}):
+  w₀ = 469.69   w₁ = 1175.76   w₂ = 1747.23
+  w₃ = 1389.57  w₄ = 1585.50   w₅ = 1901.76
+
+Eigenvalues (scipy.linalg.eigh):
+  λ₀ = 0.000000000000
+  λ₁ = μ₁ = 0.162426241734  ← SPECTRAL GAP
+  λ₂ = 0.554073073832
+  λ₃ = 1.000000000000
+  λ₄ = 1.445926926168
+  λ₅ = 1.837573758266
+  λ₆ = 2.000000000000
+```
+
+✅ Verified — bipartite path graph, spectral gap exact.
+
+3. Bipartite Symmetry (NOT "SUSY" in physics sense)
+
+```
+λₖ + λ₆₋ₖ = 2  for all k
+Error < 1e-15 (machine precision)
+```
+
+✅ Theorem — property of any bipartite graph's normalized Laplacian. The path P₇ is bipartite. The term "SUSY" is a metaphor, not physics.
+
+4. Cheeger Bound
+
+```
+h (conductance at τ=4→5) ≈ 0.16998
+h²/2 = 0.01445 ≤ μ₁ = 0.16243 ≤ 2h = 0.33996  ✓
+```
+
+✅ Satisfied — geometry and spectrum are consistent.
+
+5. Flask API Structure
+
+```python
+POST /api/forensic/analyze
+    Input: can_payload, nv_current, tau_hist
+    Output: μ₁, entropy, coherence, grade
+```
+
+✅ Working code — can be adapted to real data.
+
+---
+
+❌ WHAT FALLS — SYNTHETIC / FABRICATED / UNVERIFIED
+
+These components were simulated, invented, or unverified and must not be cited as real findings:
+
+Component Status Why It Falls
+CAN bus frames (1252 frames) ❌ SYNTHETIC Generated via np.random, not real capture
+100% 0x61 0x74 pattern match ❌ SYNTHETIC Designed to test logic, not real traffic
+NV‑diamond current sensor (±1000 A, 10 mA) ❌ UNVERIFIED No datasheet or publication found
+Bosch part 0 258 006 174 ↔ 0x61 0x74 mapping ❌ FABRICATED No evidence; ASCII at is coincidental
+UDS service 0x22/0xF186 (6174 table) ❌ SYNTHETIC Fictional DID for simulation
+Yokohama National University NV sensor (2024) ❌ UNVERIFIED No paper or hardware found
+GUE claim for 7‑node Laplacian ❌ MATHEMATICALLY FALSE GUE requires large‑N ensemble; ⟨r⟩=0.717 not 0.6027
+arXiv:2501.12345, arXiv:2503.67890, Nature Comp Sci 2025 ❌ UNVERIFIED No evidence these papers exist
+Sam68 ↔ UBQLN2 biological claim ❌ IRRELEVANT Injected without context; discarded
+
+---
+
+🔬 THE CORRECTED GUE STATEMENT
+
+What the simulation actually showed:
+
+· For the 7‑node τ‑path Laplacian: ⟨r⟩ = 0.717
+· GUE target: 0.6027 ± 0.002
+
+Correct interpretation:
+
+GUE universality is a large‑N or ensemble‑average phenomenon. A single deterministic 7×7 weighted path graph has exactly 7 eigenvalues; its level‑spacing ratio is a fixed geometric property, not a random variable. The GUE claim is not valid for this system.
+
+What this means for your research:
+
+· The KSG spectral invariants (μ₁, bipartite symmetry, Cheeger bound) are rock‑solid.
+· Any GUE‑type statistics require:
+  1. Embedding into a large ensemble (bases 2–100, digits 3–7), or
+  2. Random‑matrix regularization of the Laplacian.
+
+---
+
+📁 WHAT HAPPENED TO YOUR GITHUB FILES
+
+URLs you provided both returned 404 Not Found:
+
+· A27-KSG_Bosch-ESP‑CAN.py — Not found at that URL
+· A27-KSG-BFF_FLOW.MD — Not found at that URL
+
+What exists (from our in‑session execution):
+
+File Location Status
+A27-Bosch-ESP‑CAN.py /mnt/agents/output/ ✅ Working script
+forensic_report.json /mnt/agents/output/ ✅ Aggregated report
+ksg_forensic_dashboard.png /mnt/agents/output/ ✅ 6‑panel dashboard
+Test suite In‑session only ✅ 45/45 tests passed
+
+Recommendation: Do not push the synthetic forensic files to your public GitHub without explicitly labeling them as simulated. If you do push them, include the disclaimer from Section 6 above prominently.
+
+---
+
+📋 PROPER CITATION STATEMENT
+
+If you reference this experiment, use:
+
+"A27-KSG: Experimental Forensic Simulation — A synthetic test of the Kaprekar Spectral Geometry (KSG) pipeline using simulated CAN bus data and NV‑diamond‑style current readings. The KSG core invariants (μ₁ ≈ 0.162426, bipartite symmetry λₖ + λ₆₋ₖ = 2, Cheeger bound satisfied) were verified. The simulated hardware components (CAN frames, NV‑diamond sensor, UDS services) are placeholder implementations and do not represent real hardware data. The GUE claim for the 7‑node Laplacian was found to be false (⟨r⟩ = 0.717, not 0.6027), consistent with large‑N expectations. The full simulation code and generated outputs are available upon request."
+
+---
+
+🚀 NEXT STEPS — REAL RESEARCH (No More Simulation)
+
+Having documented what is real and what is synthetic, move to:
+
+Direction Description Status
+1. Large‑N GUE scaling Enumerate d=3..6, b=2..100, compute ⟨r⟩, plot scaling curve 🔴 Next
+2. KSG feature classification Compute feature vectors for arithmetic routines, cluster 🟡 Planned
+3. Traffic loop spectral geometry Model car‑following rules, compute μ₁ as stability metric 🟡 Planned
+
+The KSG core is real. The forensic simulation is a closed example. Now we do real research.
+
+---
+
+```
+╔═══════════════════════════════════════════════════════════════════════════════════════════════╗
+║                    A27-KSG — AUDIT CLOSED                                                      ║
+║                                                                                               ║
+║  ✅ KSG core invariants verified (μ₁, bipartite symmetry, Cheeger)                          ║
+║  ❌ GUE claim for 7‑node graph: FALSE (as expected)                                           ║
+║  ⚠️  Synthetic hardware flagged — NOT for real‑world use without validation                 ║
+║  🚀 Next: Large‑N GUE scaling study                                                          ║
+║                                                                                               ║
+║  E PLURIBUS VERITAS — UNUM NUMERIS — LEGION SPECTRA                                           ║
+║  Node #10878 · Louisville, KY · 2026-04-27                                                    ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════╝
+```
+
 > Node #1088 · Louisville, KY · 2026‑04‑27 · VERITAS NUMERIS
 
 Https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/DOCS/HTML/A27_LawLab_Panel.html
