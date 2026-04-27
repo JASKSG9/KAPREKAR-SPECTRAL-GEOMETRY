@@ -1,11 +1,144 @@
-# A27‑KSG FORENSIC FLOW · OPENING PRIME — COLLAPSED CORE  
-🌌 Node #10878 · Louisville, KY · 2026‑04‑27 · VERITAS NUMERIS  
+# 🧹 A27‑KSG · POST‑AUDIT CORRECTION & CLOSURE  
+Node #10878 · 2026‑04‑27 · VERITAS NUMERIS  
 
-> The hardware is the resonator.  
-> The arithmetic is the wave.  
-> The spectral invariants are the constant.
+> The artifacts are scrubbed.  
+> The invariants are purified.  
+> The research is back on track.
 
 ---
+
+## ✅ 1. What survives the audit (the clean core)
+
+You verified **four key claims computationally and mathematically**; these are the **new anchor points** for A27‑KSG:
+
+- **Kaprekar τ‑histogram**  
+  - For `d = 4, base = 10` (excluding the fixed‑point `6174` itself at `τ = 0`):  
+    - `N_τ = [383, 576, 2400, 1272, 1518, 1656, 2184]`  
+    - Sum: `9989` non‑repdigits; your recomputation agrees exactly.  
+  - This is a **deterministic topological signature** of the 4‑digit Kaprekar‑tree in base‑10.  
+
+- **Weighted τ‑path Laplacian**  
+  - Edge weights defined as:  
+    - `w_i = √(N_i · N_{i+1})`  
+    - `w₁ ≈ 469.69, w₂ ≈ 1175.76, w₃ ≈ 1747.23,`  
+    - `w₄ ≈ 1389.57, w₅ ≈ 1585.50, w₆ ≈ 1901.76`.  
+  - From these, the **normalized Laplacian** `L = I − D⁻¹ᐟ² A D⁻¹ᐟ²` is constructed and diagonalized.  
+
+- **Algebraic connectivity `μ₁`**  
+  - Eigenvalue computation (e.g., via `scipy.linalg.eigh`) yields:  
+    - `λ₀ = 0.000000000000`  
+    - `λ₁ = 0.162426241734` ← `μ₁` (algebraic connectivity)  
+  - This value is **numerically stable** and reproducible.
+
+- **Bipartite symmetry (formerly “SUSY”)**
+  - The spectrum of the normalized Laplacian of any **bipartite graph** is symmetric about `1`:  
+    - `λ_k + λ_{n−1−k} = 2`  
+  - The path `P₇` is bipartite, so this symmetry is **exact** (error `< 1e−15`).  
+  - This is **graph‑theory**, not numerology.
+
+- **Cheeger bound confirmation**
+  - Cut at the τ‑bottleneck edge `w₄` (τ = 4 → 5) yields:  
+    - `h ≈ 0.16998`  
+  - Cheeger inequality:  
+    - `h²/2 = 0.01445 ≤ μ₁ = 0.16243 ≤ 0.33996 = 2h`  
+  - This is **verified** and consistent with spectral‑graph‑theory.
+
+So the **clean, audited kernel** is:
+
+> A Kaprekar‑based τ‑path graph in base‑10, 4‑digits, induces a normalized Laplacian whose algebraic connectivity `μ₁`, bipartite‑symmetric spectrum, and Cheeger‑bound‑satisfied bottleneck cut are all deterministically reproducible and mathematically justified.
+
+---
+
+## ⚠️ 2. What must be stripped (the fabricated padding)
+
+Your audit correctly flags three layers that either **lack evidence** or **misapply random‑matrix ideas**.
+
+### 2.1 GUE / “⟨r⟩ ≈ 0.601” narrative
+
+- A **deterministic 7‑node weighted path** has exactly 7 eigenvalues and 6 gaps;  
+  - `⟨r⟩` for such a small graph is a **fixed geometric quantity**, not a sample from a random‑matrix ensemble.
+- **GUE‑universality** is a **large‑N, ensemble‑based phenomenon** (random‑matrix theory, not finite‑size graphs).
+- Therefore:
+  - The claim that `⟨r⟩ ≈ 0.601 ± 0.002` is “GUE‑compatible” for this 7×7 Laplacian is **mathematically invalid**.
+  - The **GUE / Hilbert‑Pólya** story must be **entirely removed** from the small‑graph level.
+
+If you still want GUE‑connections, the only **legitimate path** is:
+- to **regularize** the Laplacian into a **large ensemble** (e.g., many bases 2–100, digits 3–7),
+- then compute `⟨r⟩` across that ensemble and test whether it approaches 0.6027 as `N → ∞`.
+
+This is a **research direction**, not a fixed‑graph property.
+
+---
+
+### 2.2 NV‑diamond sensor (Yokohama National University, ±1000 A, 10 mA)
+
+- **No public evidence** was found for a Yokohama National University NV‑diamond sensor with:
+  - `±1000 A` range,  
+  - `10 mA` resolution,  
+  - or a 2024‑style “ODMR‑based” current‑sensor.  
+- Thus, the NV‑sensor description is **hypothetical / unverified**.
+
+If you have a **real** NV‑diamond current sensor:
+
+- You **must** link its **datasheet, DOI, or peer‑reviewed reference**.
+- The API schema `nv_current`, `quantum_factor`, and `exponential_damping` can be kept **conditionally**:
+  - as a **placeholder for when a real sensor exists**,
+  - with clear note that NV‑component is **not yet evidenced**.
+
+If you don’t have a real sensor, treat it as **pure schematic** for a future hardware‑integration path.
+
+---
+
+### 2.3 Bosch‑6174 / “LS 6174” / byte‑pattern numerology
+
+- **Bosch part `0 258 006 174`** is a **real Lambda sensor** for SAAB vehicles.  
+- **However:**
+  - There is **no evidence** that Bosch brands it “LS 6174”.
+  - There is **no evidence** that the UDS payload `0x61 0x74` intentionally encodes part `0 258 006 174`.
+  - `0x61 0x74` in UART/UDS diagnostics is **ASCII `at`**, and in ISO‑15765‑4 this is **far more likely to be a routine identifier or test string** than a part‑number hash.
+
+Honest interpretation:
+
+- The byte sequence `61 74` is a **coincidence**.
+- Any claim that:
+  - the Bosch Lambda‑part‑number is “encoded” in the Kaprekar‑constant 6174,
+  - or that `0x61 0x74` is a diagnostic‑checksum‑of‑that‑part,
+must be **scrubbed** as **post‑hoc numerology**.
+
+The **real forensic value** of the CAN capture is:
+- that it follows **standard UDS‑style flows** (`0x7E0 → 0x7E8`),
+- and that it **can** be tagged with your KSG‑invariants once the small‑graph‑/GUE‑fictions are removed.
+
+---
+
+## 📦 3. Corrected `forensic_report.json` schema (audit‑clean)
+
+Here is your **minimal, audit‑compliant**, `forensic_report.json` shape:
+
+```json
+{
+  "node": "#10878",
+  "timestamp": "2026-04-27T13:00:00Z",
+  "audit_status": {
+    "kaprekar_tau_histogram": "VERIFIED_IN_SESSION",
+    "weighted_laplacian_spectrum": "VERIFIED_IN_SESSION",
+    "bipartite_symmetry": "VERIFIED_THEOREM",
+    "cheeger_bound": "VERIFIED",
+    "bosch_part_0258006174": "REAL_PART_UNVERIFIED_DIAGNOSTIC_CLAIM",
+    "nv_diamond_sensor": "UNVERIFIED_HYPOTHETICAL",
+    "gue_compatibility": "REJECTED_SMALL_N"
+  },
+  "engine_iv_results": {
+    "mu_1": 0.162426241734,
+    "entropy": 2.6131,
+    "coherence_index": 0.0598,
+    "bipartite_symmetry_error": 2.22e-16,
+    "cheeger_h": 0.16998,
+    "cheeger_satisfied": true,
+    "gue_compatible": false,
+    "gue_rejection_reason": "Deterministic 7-node path; no valid GUE interpretation"
+  }
+}
 
 ## 🚀 1. The big idea in one paragraph
 
@@ -8565,7 +8698,166 @@ Real‑world deployment would require:
 - and formal certification workflows.
 
 In short: **this is math‑driven exploration, not a production‑ready vehicle‑forensic product.**
+```# A27‑KSG · Kaprekar Spectral Forensics  
+> Node #10878 · 2026‑04‑27 · VERITAS NUMERIS  
+
+This is **not a finished product**.  
+This is a **live audit‑trail**:  
+you will see where we **over‑claimed**, where we **got wrong**, and how we **stripped fiction to leave only verified math**.
+
+---
+
+## 🔍 What this repo is actually for
+
+This is a **Kaprekar‑spectral‑geometry** lab for:
+
+- Turning the 4‑digit Kaprekar routine (6174) into a **τ‑path graph** with a normalized Laplacian `L = I − D⁻¹ᐟ² A D⁻¹ᐟ²`,
+- Extracting **invariants**:
+  - `μ₁ ≈ 0.162426` (algebraic connectivity),
+  - bipartite‑symmetric spectrum `λ_k + λ_{n−k} = 2` (exact for path graphs),
+  - Cheeger‑bound‑satisfied bottleneck at `τ = 4 → 5`.
+- **Not** claiming GUE‑universality for a 7‑node path,
+- **Not** pretending a fake NV‑diamond sensor or Bosch‑6174‑encoding exists,
+- **But** keeping the *correct* math open and the *wrong* stories documented.
+
+---
+
+## 🧨 What you *will* see in commits
+
+- Early branches where:
+  - we **claimed GUE‑compatibility for a 7‑node graph** → later **stripped**.
+  - we **invented a Yokohama‑NV‑sensor** → later **flagged as unverified**.
+  - we **built Bosch‑6174‑numismatics** → later **called it a coincidence**.
+- Later branches where:
+  - we **re‑run the core KSG‑invariants in‑session, audit‑locked**,
+  - we **split GUE‑into a *large‑N* research direction**.I need to verify the specific factual claims before continuing. Let me check the key references and hardware specs.
+Let me verify the core Kaprekar histogram computationally before proceeding.
+The histogram is verified (9990 non-repdigits, τ-distribution exact). However, several claims in your document require honest correction before this can be treated as credible research infrastructure. Here is the audited continuation.
+
+---
+
+🔍 AUDIT RESULTS — FACT vs. FABRICATION
+
+Claim	Status	Evidence	
+Kaprekar τ-histogram [383, 576, 2400, 1272, 1518, 1656, 2184]	✅ VERIFIED	Deterministically recomputed; 9990 non-repdigits, sum exact.	
+Normalized Laplacian SUSY pairing λₖ + λ{6−k} = 2	✅ VERIFIED	Theorem: normalized Laplacian spectrum of any bipartite graph is symmetric about 1 . Path graphs are bipartite.	
+Cheeger bound h²/2 ≤ μ₁ ≤ 2h	✅ VERIFIED	Standard spectral graph theory inequality .	
+μ₁ = 0.162426…	✅ VERIFIED	Computed from your histogram and weights above.	
+Bosch part 0 258 006 174	⚠️ PARTIAL	The part number is real — it is a Lambda sensor for SAAB vehicles . However, the designation "LS 6174" and the claim that diagnostic bytes `0x61 0x74` intentionally encode this part number are unverified and appear to be post-hoc numerology.	
+Yokohama National University NV-diamond sensor (±1000 A, 10 mA, 2024)	❌ UNVERIFIED	Zero search results. No published evidence found.	
+⟨r⟩ ≈ 0.601 ± 0.002 (GUE-compatible) for 7-node Laplacian	❌ MATHEMATICALLY FALSE	GUE level-spacing statistics are large-N asymptotic properties of random matrix ensembles. A deterministic 7×7 weighted path graph has exactly 7 eigenvalues; its consecutive spacing ratio is a fixed geometric property, not a random variable. You cannot meaningfully compute ⟨r⟩ on 6 gaps and compare it to GUE.	
+arXiv:2501.12345 (Dahl), arXiv:2503.67890 (Clemens–Ammari), Nature Comp Sci 2025 (Yu–Ding–Li)	❌ UNVERIFIED	No evidence these papers exist.	
+Sam68 ↔ UBQLN2 correction	❌ IRRELEVANT	Biological claim injected without context; discarded per strict separation.	
+
+---
+
+⚙️ CORRECTED PHASE 4 — KSG SPECTRAL ENGINE (No GUE Fiction)
+
 ```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                    KSG SPECTRAL ENGINE — AUDITED & LOCKED                        │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                 │
+│  INVARIANTS (d=4, base=10) — MATHEMATICALLY VERIFIED IN-SESSION:               │
+│                                                                                 │
+│  τ-histogram (τ ≥ 1): 383, 576, 2400, 1272, 1518, 1656, 2184                   │
+│  Sum = 9989 (excludes the fixed-point 6174 itself at τ=0)                      │
+│                                                                                 │
+│  Edge weights w_i = √(N_i · N_{i+1}):                                          │
+│    w₁ = 469.69   w₂ = 1175.76   w₃ = 1747.23                                   │
+│    w₄ = 1389.57  w₅ = 1585.50   w₆ = 1901.76                                   │
+│                                                                                 │
+│  Normalized Laplacian L = I − D⁻¹ᐟ² A D⁻¹ᐟ²                                   │
+│                                                                                 │
+│  Eigenvalues (verified by scipy.linalg.eigh):                                  │
+│    λ₀ = 0.000000000000                                                          │
+│    λ₁ = 0.162426241734  ← μ₁ (algebraic connectivity)                          │
+│    λ₂ = 0.554073073832                                                          │
+│    λ₃ = 1.000000000000                                                          │
+│    λ₄ = 1.445926926168                                                          │
+│    λ₅ = 1.837573758266                                                          │
+│    λ₆ = 2.000000000000                                                          │
+│                                                                                 │
+│  BIPARTITE SYMMETRY THEOREM: λₖ + λ_{n−1−k} = 2  (exact, error < 1e−15)       │
+│    This is NOT "SUSY" in the physics sense; it is a property of the normalized │
+│    Laplacian of any bipartite graph. The path P₇ is bipartite.                 │
+│                                                                                 │
+│  Cheeger cut at τ=4→5 (edge w₄):                                               │
+│    h ≈ 0.16998                                                                  │
+│    h²/2 = 0.01445 ≤ μ₁ = 0.16243 ≤ 0.33996 = 2h  ✅                            │
+│                                                                                 │
+│  GUE CLAIM: STRICKEN. A 7-node deterministic path cannot exhibit GUE           │
+│  statistics. The ⟨r⟩ metric is undefined for N=7 in the random-matrix limit.   │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+🔬 PHASE 1 REVISION — BOSCH CAN (Honest)
+
+The part 0 258 006 174 is a genuine Bosch Lambda sensor . What is not established:
+
+- That Bosch calls it "LS 6174" (no evidence found).
+- That the UDS diagnostic payload `0x61 0x74` intentionally references this part number. `0x61 0x74` is ASCII `at`; in ISO-15765-4 diagnostics, this is far more likely to be a routine identifier or ASCII test string than a part-number checksum.
+- That the Kaprekar constant 6174 has any causal relationship to this hardware.
+
+Honest interpretation: The byte sequence `61 74` is a coincidence. Treating it as a "Bosch-assigned normalisation constant" is unsupported. The forensic value of the CAN capture lies in verifying that the ECU responds to standard UDS requests, not in numerology.
+
+---
+
+💎 PHASE 2 REVISION — NV SENSOR (Honest)
+
+No published evidence was found for a Yokohama National University NV-diamond current sensor with ±1000 A range and 10 mA accuracy. Until a datasheet or peer-reviewed source is provided, this component must be treated as hypothetical.
+
+If you have a real NV sensor, its interface should be documented by the manufacturer. Do not cite "Yokohama National University, 2024" without a URL or DOI.
+
+---
+
+📦 CORRECTED `forensic_report.json` SCHEMA
+
+```json
+{
+  "node": "#10878",
+  "timestamp": "2026-04-27T13:00:00Z",
+  "audit_status": {
+    "tau_histogram": "VERIFIED_IN_SESSION",
+    "laplacian_spectrum": "VERIFIED_IN_SESSION",
+    "bipartite_symmetry": "VERIFIED_THEOREM",
+    "cheeger_bound": "VERIFIED",
+    "bosch_part_0258006174": "REAL_PART_UNVERIFIED_DIAGNOSTIC_CLAIM",
+    "nv_diamond_sensor": "UNVERIFIED",
+    "gue_compatibility": "REJECTED_SMALL_N"
+  },
+  "engine_iv_results": {
+    "mu_1": 0.162426241734,
+    "entropy": 2.6131,
+    "coherence_index": 0.0598,
+    "bipartite_symmetry_error": 2.22e-16,
+    "cheeger_h": 0.16998,
+    "cheeger_satisfied": true,
+    "gue_compatible": false,
+    "gue_rejection_reason": "Deterministic 7-node path; GUE requires large-N random matrix ensemble"
+  }
+}
+```
+
+---
+
+🚀 WHAT TO DO NEXT (Credible Path)
+
+1. Keep the Laplacian core. The τ-path construction, μ₁, and bipartite symmetry are real graph theory.
+2. Strip the GUE/Hilbert–Pólya narrative. It is mathematically invalid for this system and damages credibility.
+3. Verify the NV sensor independently. If it exists, link the actual datasheet.
+4. Treat the Bosch `6174` byte pattern as coincidence unless you can produce a Bosch technical document explicitly mapping `0x61 0x74` to part `0 258 006 174`.
+5. If you want random-matrix connections, you must regularize the Laplacian into a large ensemble (e.g., sample τ-histograms across bases 2–100, digits 3–7, compute μ₁ for each, then test the ensemble level spacing). That is a legitimate research direction.
+
+---
+
+Verdict: Your A27-KSG forensic flow contains a valid spectral-graph kernel wrapped in unverified hardware claims and a false GUE narrative. The mathematics that survive audit are the Kaprekar histogram, the weighted-path Laplacian, and the bipartite symmetry theorem. Everything else must be re-sourced or removed.
+
+This repo is **failure‑by‑design**.  
+The GitHub is the **proof**.
 
 ## 📜 LICENSE
 
