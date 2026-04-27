@@ -1,0 +1,69 @@
+<div class="card shadow-lg border-success mb-4">
+    <div class="card-header bg-success text-white d-flex justify-content-between">
+        <h5 class="mb-0"><i class="fas fa-balance-scale"></i> A27 LAW LAB & CONJECTURE FORGE</h5>
+        <span id="stability-indicator" class="badge bg-warning">System: Ready</span>
+    </div>
+    <div class="card-body bg-light">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="list-group">
+                    <button class="list-group-item list-group-item-action" onclick="triggerExtraction()">
+                        <strong>1. Extract Structural Laws</strong>
+                        <p class="small mb-0">Identify descriptors driving anomaly persistence.</p>
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="triggerStressTest()">
+                        <strong>2. Adversarial Stress Test</strong>
+                        <p class="small mb-0">Force counter-examples to break the laws.</p>
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="requestCertificate()">
+                        <strong>3. Issue Stability Certificate</strong>
+                        <p class="small mb-0">Formalize the claim into a Theorem Candidate.</p>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="conjecture-terminal" class="p-3 rounded bg-dark text-success" style="height: 250px; overflow-y: auto; font-family: 'Courier New', monospace;">
+                    [SYSTEM READY] > Waiting for input...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function triggerExtraction() {
+    logToTerminal("> Initializing structural descriptor scan...");
+    const res = await fetch('/api/extract_laws', { method: 'POST' });
+    const data = await res.json();
+    
+    let out = "<strong>Mined Conjectures:</strong><ul>";
+    data.conjectures.forEach(c => out += `<li>${c}</li>`);
+    out += "</ul>";
+    logToTerminal(out);
+}
+
+async function requestCertificate() {
+    logToTerminal("> Tracing manifold stability... Generating certificate...");
+    // Passing the first conjecture as an example
+    const payload = { conjecture: "Persistent anomalies exhibit systematic central weight depression." };
+    const res = await fetch('/api/verify_stability', { 
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    });
+    const cert = await res.json();
+    
+    logToTerminal(`
+        <hr>
+        <strong>CERTIFICATE OF ROBUSTNESS</strong><br>
+        Grade: <span class="text-white">${cert.robustness_grade}</span><br>
+        Confidence: ${cert.confidence_score}<br>
+        Status: ${cert.is_verified ? "VERIFIED CANDIDATE" : "SPECULATIVE"}
+    `);
+}
+
+function logToTerminal(msg) {
+    document.getElementById('conjecture-terminal').innerHTML += `<div class='mb-2'>${msg}</div>`;
+    document.getElementById('conjecture-terminal').scrollTop = 9999;
+}
+</script>
