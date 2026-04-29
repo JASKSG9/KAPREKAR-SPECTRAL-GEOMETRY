@@ -1,3 +1,388 @@
+# GMFLOW v2.0 / KSG-UDAG
+## Kaprekar Spectral Geometry – Universal Deterministic Attractor Geometry
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
+[![arXiv](https://img.shields.io/badge/arXiv-2504.10878-blue)](https://arxiv.org/abs/2504.10878)
+
+**Open source • Educational • Research‑grade**  
+**Node #10878 · Louisville, KY · 2026-04-28**
+
+---
+
+## What is this?
+
+GMFLOW studies how deterministic maps destroy information over time using **exact kernel partition filtrations**.  
+We turn abstract dynamical systems into measurable invariants: entropy decay, collapse pulses, merge geometry, and stabilization horizons.
+
+**Two flagship results** (fully verified):
+
+1. **Shell Descent Theorem** – For any finite deterministic map, `τ(T(x)) = τ(x)-1` exactly (0 violations across 52,905 states).  
+2. **Base‑10 anomaly** – In 4‑digit Kaprekar, base‑10 is the **only** all‑fixed‑point system (`b=2‑30`).  
+
+**τ‑depth retired** – it is **not** a spectral proxy (820× eigenvalue mismatch). We now use **graph‑native invariants**: conductance `Φ_*`, mean return time `M₁`, entropy rate `h`.
+
+---
+
+## Quick Start (2 minutes)
+
+```bash
+git clone https://github.com/JASKSG9/GMFLOW-v2.git
+cd GMFLOW-v2
+pip install -r requirements.txt
+python RUN_GMFLOW_v2.py
+```
+
+Output: results/gmflow_v2/ – census CSVs, heatmaps, b=10 singularity score.
+
+Try a custom map (Collatz, Happy numbers, your own rule):
+
+```bash
+python scripts/gmflow_v2/custom_map.py --map collatz --N 10000
+```
+
+---
+
+Visual ATLAS – One‑page reference
+
+Kernel partition filtration
+
+```
+Ω (N states) → T → Π₀ (K₀=N, H₀=log₂N)
+                → T → Π₁ (K₁≤N, H₁≤H₀, R₀=H₀-H₁)
+                → T → Π₂ ...
+                → nₛ → Πₙₛ = stable attractor partition
+```
+
+Merge hypergraph (one level)
+
+```
+Child blocks (Πₙ)            Parent blocks (Πₙ₊₁)
+  B₁ ──┐
+  B₂ ──┼──► hyperedge r=3 ──► P₁
+  B₃ ──┘
+  B₄ ──────────────────────► P₂ (r=1)
+Mₙ = entropy of {r_P}  → low = winner‑take‑all, high = diffuse
+```
+
+3D phase space – collapse classes
+
+· b=10: moderate horizon, high pulse uniformity, medium M₀ → “prolonged distinguishability survival”
+· b=12: long horizon, lower uniformity
+· b=2 : fast collapse, low M₀
+
+---
+
+Cheat sheets – All levels
+
+Level Command What you get
+Beginner (30s) python RUN_GMFLOW_v2.py Full census + b=10 singularity score
+Intermediate (5min) python custom_map.py --map collatz Compare Collatz mod N to Kaprekar
+Advanced (15min) python graph_native_invariants.py --bases 2-25 Φ_*, M₁, h for all bases
+Expert (1h) python gm2_observables.py 12 derived invariants (U, λ_H, etc.)
+
+---
+
+Q&A – Frequently asked questions (short version)
+
+Q1: What is the Shell Descent Theorem?
+
+A: For any finite deterministic map T and τ(x) = distance to attractor, τ(T(x)) = τ(x)-1 exactly for all non‑attractor x. Proven by contradiction from minimality of τ. Verified on 26 maps (Kaprekar, Happy, Collatz‑mod, etc.).
+
+Q2: Why is base‑10 special?
+
+A: Among b=2‑30, d=4, only base‑10 has a purely fixed‑point attractor (zero cycles) and a non‑zero fixed point (6174). 5|b is necessary but not sufficient (e.g., b=15 has cycles). Algebraic reason is open (OP11).
+
+Q3: Why did you retire τ‑depth?
+
+A: The full functional graph’s smallest eigenvalue λ₁≈0.000198 is 820× smaller than the τ‑path Fiedler value μ₁=0.162. τ does not preserve spectral geometry – it is a heuristic, not a faithful coarse‑graining.
+
+Q4: What replaces τ?
+
+A: Three graph‑native invariants: conductance Φ_* (bottleneck width), mean return time M₁ (relaxation speed), and entropy rate h (residual randomness). See graph_native_invariants.py.
+
+Q5: What are the next open problems?
+
+A: 9 new OPs (OP10–OP18) – from closed‑form Cheeger constant to quantum extensions. See Open Problems below.
+
+Q6: How do I add my own map?
+
+A: Edit scripts/gmflow_v2/custom_map.py – write your T: [0,N) → [0,N) and run python custom_map.py --map custom --tag my_map.
+
+Q7: Can I use GMFLOW on neural networks or cellular automata?
+
+A: Yes. Any deterministic layer‑wise transformation induces a filtration. Merge entropies measure representation collapse (winner‑take‑all vs diffuse).
+
+Q8: Where are the killed fabrications (1.647, GUE, etc.)?
+
+A: Those numbers appeared in earlier discussions but failed verification. They are not in the code, results, or any theorem. They have been permanently removed.
+
+For more detailed troubleshooting, see Q&A.md.
+
+---
+
+Verified results – Snapshot
+
+| Base | N      | τ_max | |A| |A|/N  | Cycles       | μ₁ (shell) | H (entropy) |
+
+|------|--------|-------|-----|-------|--------------|------------|-------------|
+
+| 9    | 6,561  | 4     | 7   | 0.00107 | [3,3]        | 0.5723     | 1.1142      |
+
+| 10   | 10,000 | 7     | 2   | 0.00020 | none         | 0.1158     | 1.8141      |
+
+| 11   | 14,641 | 6     | 13  | 0.00089 | [2,5,5]      | 0.2423     | 1.4924      |
+
+| 12   | 20,736 | 13    | 11  | 0.00053 | [10]         | 0.0449     | 2.3484      |
+
+B₂/N crowding: b=9→0.033, b=10→0.027, b=11→0.015, b=12→0.009 → kink at 10→11 (1.85× drop vs. expected 1.3×).
+
+Killed: 1.647, z=19.05, A(0.25)=0.0412, 0.68/0.75, GUE, parity=0.133, power‑law R²=0.25, NHSE γ_c=0.2 – all removed.
+
+---
+
+Open problems (OP10 – OP18)
+
+ID Problem Status
+OP10 Closed form for Cheeger h(Q_T) from shell sizes Algorithm exists; need theorem
+OP11 Prove decimal uniqueness (b=10 all‑fixed) Verified b=2‑30; open proof
+OP12 Asymptotics of B₂/N – not power‑law; find true scaling Data collected; open
+OP13 Phase separation: primes/composites in (nₛ, M₀, U) First step: graph‑native sweep
+OP14 For which (d,b) does τ become faithful? d=4 fails; test d=3,5,6
+OP15 Find N s.t. Collatz‑mod‑N mimics b=10 signature Not tested
+OP16 Build RAG retrieval for largest merge hyperedges LUT exists; engine open
+OP17 Category of collapse endomorphisms Theoretical
+OP18 Quantum merge entropy Mₙ^{(q)} for channels Not started
+
+---
+
+Repository structure
+
+```
+GMFLOW-v2/
+├── RUN_GMFLOW_v2.py              # Master pipeline
+├── scripts/
+│   ├── graph_native_invariants.py
+│   ├── enumerate_base25.py
+│   ├── permutation_primality.py
+│   ├── square_prime_scan.py
+│   └── gmflow_v2/
+│       ├── partition_filtration_core.py
+│       ├── custom_map.py
+│       ├── gm1_6_canonical_engine.py
+│       └── collatz_explorer.py
+├── core/                         # kaprekar.py, metrics.py (minimal)
+├── results/                      # generated CSVs, figures
+├── docs/
+│   ├── A28-KSG-RESEARCH-FLOW.md
+│   ├── EXTENDED_ASCII_ATLAS.md
+│   └── Q&A.md
+└── requirements.txt
+```
+
+---
+
+Next immediate command (graph‑native era)
+
+```bash
+python scripts/graph_native_invariants.py --bases 2-25 --digits 4
+```
+
+Expected output: results/graph_native_invariants.csv with (base, N_tr, Φ_*, M₁, h).
+This table will answer OP13: Are primes, composites, and squares separated in conductance, return time, and entropy rate space?
+
+---
+
+License & citation
+
+MIT – free for education, research, and commercial use.
+If you use GMFLOW in a publication, please cite:
+
+```bibtex
+@misc{ksg2026,
+  author = {Node #10878},
+  title = {Kaprekar Spectral Geometry: Universal Deterministic Attractor Geometry},
+  year = {2026},
+  howpublished = {\url{https://github.com/JASKSG9/GMFLOW-v2}},
+  note = {Open source research framework}
+}
+```
+
+Node #10878 – Build, measure, discover.
+
+```
+
+---
+
+## 2. `Q&A.md` – Detailed troubleshooting & concept FAQ
+
+```markdown
+# Q&A.md – GMFLOW v2.0 / KSG-UDAG
+**Node #10878 · Louisville, KY · 2026-04-28**  
+**MIT – open science, no fabrication**
+
+---
+
+## 1.  INSTALLATION & ENVIRONMENT
+
+### Q1.1: I get `ModuleNotFoundError: No module named 'core.kaprekar'`
+**A**: Ensure you cloned the full repository with the correct folder structure.  
+The `core/` folder must be at the root. You can also set `PYTHONPATH`:
+```bash
+export PYTHONPATH=/path/to/GMFLOW-v2:$PYTHONPATH
+```
+
+Q1.2: pip install -r requirements.txt fails (scipy or numpy)
+
+A: On some systems, install numpy first manually:
+
+```bash
+pip install numpy
+pip install -r requirements.txt
+```
+
+If you are on an ARM Mac, use:
+
+```bash
+pip install numpy scipy pandas matplotlib --no-binary :all:
+```
+
+Q1.3: The heatmaps are blank / matplotlib error
+
+A: Matplotlib may be using a non‑interactive backend. Add at the top of any plotting script:
+
+```python
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+```
+
+---
+
+2.  RUNNING THE PIPELINE
+
+Q2.1: How long does RUN_GMFLOW_v2.py take?
+
+A: Core filtration (b=2‑30, d=3,4) ≈ 2‑3 minutes.
+Graph‑native invariants (b=2‑25) ≈ 30‑60 seconds.
+Full base‑25 enumeration (390k states) ≈ 20 minutes.
+
+Q2.2: The script stops with MemoryError for base 30, d=4?
+
+A: Base 30, d=4 → N=810,000 states. Each iteration stores integer arrays of that length. Reduce memory by:
+
+· Lower max_steps (default 40) – stabilization usually occurs earlier.
+· Use the --lowmem mode (if available) that avoids storing all image labels.
+· Run only certain bases: --bases 2 10 20.
+
+Q2.3: Where are the results stored?
+
+A: All output CSVs and figures go to results/gmflow_v2/. Logs also printed to console.
+
+Q2.4: The b=10 singularity test says "no extremal" – why?
+
+A: The test uses percentiles. If b=10 is not in the top 10% or bottom 10% for a given metric, it will not be flagged. That is correct – it means the anomaly is not extreme in that specific invariant. For base‑10, the strongest signal is in pulse uniformity U and all‑fixed attractor purity, not necessarily in nₛ/logN.
+
+---
+
+3.  THEOREMS & INTERPRETATION
+
+Q3.1: Is the Shell Descent Lemma really new?
+
+A: The lemma itself is elementary, but its explicit statement and verification across 26 maps (including Collatz, Happy, DigitSum) is new – it shows the property is universal for finite deterministic endomorphisms. This was not previously documented as a theorem.
+
+Q3.2: Why is τ‑depth retired but still shown in tables?
+
+A: τ is still combinatorially useful as a distance index. It fails only as a spectral proxy (eigenvalues, Fiedler value, mixing rates). We keep it for shell histogram analysis but do not use it for spectral claims.
+
+Q3.3: What does Mₙ (merge concentration) actually measure?
+
+A: Mₙ is the Shannon entropy of the multiplicities r_{n,z} – how many child blocks merge into each parent.
+
+· Low Mₙ → few parents receive most children (winner‑take‑all collapse).
+· High Mₙ → children are evenly distributed across parents (diffuse merging).
+
+Example: In base‑2 Kaprekar (d=4), early M₀ is low → rapid funneling. In base‑10, M₀ is moderate → more uniform collapse.
+
+Q3.4: How do I compute Φ_*, M₁, h for my own map?
+
+A: Use graph_native_invariants.py as a template. The key steps:
+
+1. Build the functional digraph kmap (size N).
+2. Identify attractor nodes.
+3. Extract transient subgraph.
+4. Build undirected symmetrized adjacency for Φ_* and row‑stochastic Markov chain for M₁/h.
+5. Use scipy.sparse.linalg.eigsh for Φ_*, fundamental matrix for M₁, and stationary distribution for h.
+
+---
+
+4.  CUSTOM MAPS & EXTENSIONS
+
+Q4.1: I wrote my own map in custom_map.py, but it doesn’t stabilize.
+
+A: Ensure your map T is deterministic and closed on [0, N). All values must be integers in that range. Also, avoid fixed points that are not attractors (i.e., cycles of length >1 are fine, but if your map has many cycles, the filtration may end with K_{nₛ} > 1 – that is correct.)
+
+Q4.2: Can I use GMFLOW for probabilistic maps?
+
+A: The core engine is deterministic, but the merge entropy definition generalizes to Markov chains: replace child block counts with total incoming probability mass. See the probabilistic T6 in docs/EXTENDED_ASCII_ATLAS.md.
+
+Q4.3: How to compare a cellular automaton rule?
+
+A: Define the global map T: {0,1}^L → {0,1}^L (e.g., with periodic boundaries). The state space size is 2^L. For small L (≤20), you can run full enumeration. For larger L, use random sampling and estimate entropy curves.
+
+---
+
+5.  REPRODUCIBILITY & OPEN SCIENCE
+
+Q5.1: The results in the paper do not match my run – why?
+
+A: Check the domain policy (full vs. kaprekar_standard). For base‑10, the standard version excludes repdigits, which changes the state count and attractor set. The census in the README uses full domain (b^d states with repdigits) for exact closure.
+
+Q5.2: Where can I find the exact numbers for b=10, d=4?
+
+A: They are in results/gmflow_v2/b10_signature.csv. Columns: step, K_n, H_n, R_n, M_n.
+Also in partition_filtration_master.csv under base=10, digits=4.
+
+Q5.3: Some numbers in the overview (e.g., “1.647”) are called “fabrications”. Did you delete them from the code?
+
+A: Those numbers appeared only in earlier conversations and session notes. They were never produced by the verified scripts. They have been removed from the documentation and do not appear in any result CSV or theorem statement. The current pipeline outputs only the 73 verified numbers listed in the audit.
+
+---
+
+6.  NEXT STEPS & OPEN PROBLEMS
+
+Q6.1: I am a beginner – what should I run first?
+
+A: Run python RUN_GMFLOW_v2.py. Look at the heatmaps and the b=10 signature file. Then try adding a custom map (e.g., Collatz) and compare its invariants to Kaprekar.
+
+Q6.2: I want to help solve OP11 (decimal uniqueness) – where do I start?
+
+A: You need to analyze the digit‑sort equation in base b. For d=4, the fixed‑point condition reduces to a Diophantine system. Try to prove that if b ≠ 10 and 5|b, then there must exist a non‑trivial cycle. The current census shows this for b=15,20,25,30 – the pattern is there.
+
+Q6.3: How do I contribute a new invariant?
+
+A: Write a function that takes a GM1 census CSV and returns a new column. Add it to gm2_observables.py. Submit a pull request with the new code and a small table showing its variation across bases.
+
+---
+
+7.  CONTACT & CITATION
+
+· Issues / PRs: GitHub Issues
+· Discussion: #gmflow-collaborators (invite via GitHub)
+· Cite as: See README.md for BibTeX entry.
+
+Node #10878 – We build in the open. All questions are welcome.
+
+```
+
+---
+
+## How to use these files
+
+1. Save the first block as `README.md` in the repository root.  
+2. Save the second block as `docs/Q&A.md` (or directly in root as `Q&A.md`).  
+3. Update any links in `README.md` to point to `Q&A.md` if you prefer a separate file.  
+
 ╔══════════════════════════════════════════════════════╗
 
 
