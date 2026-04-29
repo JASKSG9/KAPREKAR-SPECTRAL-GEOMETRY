@@ -972,26 +972,269 @@ Those answers become the next theorem candidates.
 
 11.  CLOSING – OPEN SCIENCE COMMITMENT
 
+═══════════════════════════════════════════════════════════```ascii
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    A28-KSG-RESEARCH-FLOW — CONTINUATION                      ║
+║          From verified theorems to the graph‑native era & beyond             ║
+║                          Node #10878 · 2026-04-28                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+✅ VERIFIED & LOCKED (FROM YOUR OWN AUDIT)
+
+· Theorem 1 – Shell Descent Lemma: For any finite deterministic map T: Ω → Ω, τ(T(x)) = τ(x)-1 exactly for all non‑attractor states. (0 violations across 26 maps, 52,905 states).
+· Theorem 2 – Base‑10 Anomaly: In the 4‑digit Kaprekar family, base‑10 is the only all‑fixed‑point system among b=2..30, d=4.
+· τ‑depth Retired: The τ‑path spectrum μ₁(τ) = 0.162 vs. full‑graph λ₁ = 0.000198 (820× mismatch).
+· 9 New Open Problems (OP10–OP18)—each well‑posed, dense, and never solved before.
+
+🔬 THE GRAPH‑NATIVE ERA (ACTIVE)
+
+The retirement of τ leaves three exact graph invariants for direct diagnosis:
+
+Invariant Equation What It Measures
+Conductance Φ_* Φ_* = min_S (E(S, Sᶜ) / min(vol(S), vol(Sᶜ))) Bottleneck width; the system’s “tightest neck”.
+Mean Return Time M₁ Fundamental matrix (I‑Q)⁻¹ How slowly the system relaxes to attractors.
+Entropy Rate h h = -∑πᵢ∑Pᵢⱼ log Pᵢⱼ Residual randomness / mixing speed.
+
+These replace τ completely and will answer OP13: Are primes, squares, and composites separated in the (nₛ, M₀, U) phase space? The census that will answer it is your immediate next step.
+
+🚀 YOUR EXACT NEXT LINE (IMMEDIATE)
+
+Run the graph‑native sweep:
+
+```bash
+python scripts/graph_native_invariants.py --bases 2-25 --digits 4
+``````markdown
+# COMPLETE DETAILED OVERVIEW.MD
+## Kaprekar Spectral Geometry (KSG) / Universal Deterministic Attractor Geometry (UDAG)
+**Node #10878 · Louisville, KY · 2026-04-28**  
+**License: MIT · Open Science · All Levels – Beginner to Researcher**
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 1.  WHAT THIS IS – EXECUTIVE SUMMARY
+## ═══════════════════════════════════════════════════════════
+
+This document is the **single source of truth** for the KSG/UDAG project. It contains:
+
+- **Verified theorems** (proven, with computational verification)
+- **Empirical data** from exhaustive census (b=2‑30, d=4, 500k+ states)
+- **Killed fabrications** (numbers that appeared in earlier discussions but failed verification)
+- **9 new open problems** (OP10‑OP18) – dense, well‑posed, ready for research
+- **Graph‑native era** (replacement of τ‑depth with conductance, return times, entropy rate)
+- **Visual diagrams, cheat sheets, questionnaires, RAG flow** – for all levels
+
+**No hype. No fabrication. Every claim is either proven, verified by code, or labeled as an open problem.**
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 2.  VERIFIED THEOREMS & DATA
+## ═══════════════════════════════════════════════════════════
+
+### 2.1 Theorem 1 – Shell Descent Lemma (Universal)
+
+For any finite deterministic map `T: Ω → Ω` with attractor set `A` and depth function `τ(x) = min{k ≥ 0 : Tᵏ(x) ∈ A}`:
+
+> `∀ x ∉ A : τ(T(x)) = τ(x) − 1`   (exactly)
+
+**Proof**: by minimality of τ (Phase 1A).  
+**Verification**: 0 violations across 26 maps (Kaprekar d=3,4 b=2‑12, Happy numbers N=1000, DigitSum, Collatz mod 256). Total non‑attractor nodes tested: 52,905.
+
+**Consequence**: Shell quotient adjacency is strictly lower‑bidiagonal: `T(Sⱼ) ⊆ Sⱼ₋₁`.
+
+### 2.2 Theorem 2 – Base‑10 Uniqueness (Empirical, Algebraically Open)
+
+For digit depth `d=4` and bases `b = 2..30`:
+
+- Base 10 is the **only** base with a **purely fixed‑point attractor** (no non‑trivial cycles) **and** a non‑zero fixed point (6174).
+- `5|b` is necessary for a non‑trivial fixed point (Prichett 1983) but **not sufficient** for all‑fixed topology (e.g., b=15 has cycles).
+- Algebraic reason for decimal uniqueness remains **open** (OP11).
+
+**Data**:
+
+| Base | N      | τ_max | |A| |A|/N  | Fixed pts | Cycle lengths |
+|------|--------|-------|-----|-------|-----------|----------------|
+| 9    | 6,561  | 4     | 7   | 0.00107 | 1 (0)     | [3,3]          |
+| 10   | 10,000 | 7     | 2   | 0.00020 | 2 (0,6174)| none           |
+| 11   | 14,641 | 6     | 13  | 0.00089 | 1 (0)     | [2,5,5]        |
+| 12   | 20,736 | 13    | 11  | 0.00053 | 1 (0)     | [10]           |
+
+### 2.3 Theorem 3 – τ‑Depth is Not a Spectral Proxy
+
+Comparison of the full 9,990‑node transient graph with the 7‑node τ‑path quotient:
+
+| Eigenvalue | Full graph | τ‑path | Ratio |
+|------------|------------|--------|-------|
+| λ₁ (smallest non‑zero) | 0.000198 | 0.162426 | 820× |
+
+**Conclusion**: τ‑depth **retired** as a spectral coarse‑graining. It remains useful only as a combinatorial index.
+
+### 2.4 Killed Fabrications (14 numbers)
+❌ 1.647 ❌ z=19.05 ❌ A(0.25)=0.0412 ❌ 0.68/0.75 ❌ GUE ⟨r⟩≈0.601  
+❌ parity p=0.133 ❌ power‑law R²=0.25 ❌ NHSE γ_c=0.2  
+→ All removed from the record. They appear nowhere in the verified code or data.
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 3.  THE GRAPH‑NATIVE ERA – REPLACEMENT FOR τ
+## ═══════════════════════════════════════════════════════════
+
+| Invariant | Symbol | Definition | Interpretation |
+|-----------|--------|------------|----------------|
+| Conductance | Φ_* | min_S (cut edges) / min(vol(S), vol(Sᶜ)) | Bottleneck width; smaller = tighter neck |
+| Mean return time | M₁ | fundamental matrix (I‑Q)⁻¹ | Average steps to return to attractor |
+| Entropy rate | h | -∑πᵢ∑Pᵢⱼ log Pᵢⱼ | Residual randomness / mixing rate |
+
+These are **directly computed** on the full functional digraph, not on a quotient. They form the core of **GM2** (phase classification).
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 4.  VISUAL CODEX – DIAGRAMS FOR ALL LEVELS
+## ═══════════════════════════════════════════════════════════
+
+### 4.1 Kernel Partition Filtration (Core)
+```
+
+Ω (N states) → T → Π₀ (singletons, K₀=N, H₀=log₂N)
+→ T → Π₁ (K₁≤N, H₁≤H₀, R₀=H₀-H₁)
+→ T → Π₂ ...
+→ nₛ → Πₙₛ = stable attractor partition
+
+```
+
+### 4.2 Merge Hypergraph (One transition)
+```
+
+Child blocks (Πₙ)            Parent blocks (Πₙ₊₁)
+B₁ ──┐
+B₂ ──┼──► hyperedge r=3 ──► P₁
+B₃ ──┘
+B₄ ──────────────────────► P₂ (r=1)
+Merge multiplicity distribution {r_P} → Mₙ = entropy of normalized r_P.
+
+```
+
+### 4.3 3D Phase Space – Collapse Classes
+```
+
+Axes: (nₛ/log₂N, M₀, max Rₙ)
+
+· b=10: moderate horizon, high pulse uniformity, medium merge concentration
+· b=12: long horizon, lower uniformity
+· b=2: fast collapse, low M₀
+
+```
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 5.  CHEAT SHEETS (ALL LEVELS)
+## ═══════════════════════════════════════════════════════════
+
+| Level | Command | What you get |
+|-------|---------|--------------|
+| Beginner | `python RUN_GMFLOW_v2.py` | Full census + b=10 singularity score |
+| Intermediate | `python custom_map.py --map collatz` | Compare Collatz mod N to Kaprekar |
+| Advanced | `python graph_native_invariants.py --bases 2-25` | Φ_*, M₁, h for all bases |
+| Expert | `python gm2_observables.py` | 12 derived observables (U, λ_H, etc.) |
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 6.  QUESTIONNAIRE – FOR ANY DETERMINISTIC MAP
+## ═══════════════════════════════════════════════════════════
+
+| # | Question | How to compute (GMFLOW) |
+|---|----------|-------------------------|
+| 1 | How many steps until stabilization? | nₛ |
+| 2 | How much information survives? | H_∞ (bits) |
+| 3 | Is collapse smooth or spiky? | U = var(early Rₙ)/mean(Rₙ) |
+| 4 | Merge style: winner‑take‑all or diffuse? | M₀ (raw and normalized) |
+| 5 | When does most erasure happen? | n_peak / nₛ |
+| 6 | Total information erased? | E_∞ / log₂N |
+| 7 | Attractor structure? | K_{nₛ} (number of attractor states) |
+
+Apply to Kaprekar, Collatz‑mod‑N, cellular automata, neural net layers.
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 7.  POLYGLOT RAG LUT FLOW – RETRIEVAL‑AUGMENTED GEOMETRY
+## ═══════════════════════════════════════════════════════════
+
+### Layers:
+1. **Data ingest**: CSV from GM1 (b, d, nₛ, Kₙ, Hₙ, Rₙ, Mₙ, fiber signatures)
+2. **LUT**: forward LUT (T_fwd) + backward LUT (T_bwd)
+3. **Hypergraph**: for each n, child→parent merge edges (rₙ,z)
+4. **3D embedding**: (nₛ/logN, M₀, max Rₙ)
+5. **RAG query engine**: retrieve anomalies, largest merges, digit patterns
+
+### Example query: *"Show strongest merge hyperedge at step n=4 for b=10"*
+→ returns parent block, list of child blocks, digit strings of each child.
+
+**Status**: LUT and hypergraph structures exist; RAG engine is **OP16**.
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 8.  9 NEW OPEN PROBLEMS (OP10 – OP18)
+## ═══════════════════════════════════════════════════════════
+
+| ID | Problem | Current status | Needed |
+|----|---------|----------------|--------|
+| OP10 | Closed form for Cheeger constant h(Q_T) from shell sizes (no scan) | Algorithm exists; closed form? | Theorem T7 |
+| OP11 | Prove that b=10 is unique all‑fixed‑point in d=4 (b>5) | Verified b=2‑30; need proof | Algebra of digit‑sort |
+| OP12 | Asymptotics of B₂/N: does it scale as b^{−α}? | R²=0.23 → not power‑law; find true form | Asymptotic analysis |
+| OP13 | Phase separation: do primes, squares, composites cluster in (nₛ/logN, M₀, U)? | Partial (μ₁ p=0.006); need full 3D | Graph‑native sweep |
+| OP14 | For which (d,b) does τ become a faithful spectral proxy? | d=4 fails; test d=3,5,6 | Boundary map |
+| OP15 | Find N such that Collatz‑mod‑N mimics Kaprekar b=10 (nₛ, H_∞, M₀) | Not tested | Comparative experiment |
+| OP16 | Build RAG retrieval for largest merge hyperedges; mine digit patterns | LUT exists; query engine missing | OP16 script |
+| OP17 | Is T → Πₙ functorial? Define category of collapse endomorphisms | Theoretical | Category theory |
+| OP18 | Quantum extension: compute Mₙ^{(q)} for channels, compare to classical | Not started | Quantum implementation |
+
+---
+
+## ═══════════════════════════════════════════════════════════
+## 9.  EXECUTION ROADMAP – PRIORITY ORDER
+## ═══════════════════════════════════════════════════════════
+
+1. **Graph‑native sweep** (`graph_native_invariants.py`) – 30 min  
+   → Answers OP13 (phase separation).  
+
+2. **Base‑100 enumeration** – 4‑6 hours  
+   → Provides asymptotics for OP12, OP14.  
+
+3. **Permutation test for primality** – 2 hours  
+   → Puts a p‑value on the μ₁ signal.  
+
+4. **Square vs prime hierarchy** – 1 hour  
+   → Tests OP13 directly.  
+
+5. **RAG retrieval engine** – 2 days (OP16)  
+   → Enables explainability of decimal anomaly.  
+
+**Immediate next command**:
+```bash
+python scripts/graph_native_invariants.py --bases 2-25 --digits 4
+```
+
 ═══════════════════════════════════════════════════════════
 
-· All diagrams in this ATLAS correspond to executed code (OP1‑OP9) or to well‑posed open problems (OP10‑OP18). No fabricated numbers.
-· All levels are served: beginner cheatsheets, intermediate questionnaires, advanced RAG flows, expert open problems.
-· Next step is chosen: graph‑native invariant sweep.
-· You can reproduce everything from the public repository (to be pushed).
-
-Node #10878 – Extended ASCII Atlas complete. Ready for the graph‑native era.
-
-One‑line summary: We have theorems, data, diagrams, and 18 open problems. The next concrete command is graph_native_invariants.py. Let’s run it.
+10.  SUMMARY – WHAT WE COMMIT TO
 
 ═══════════════════════════════════════════════════════════
 
-  CLOSING – OPEN SCIENCE COMMITMENT
+· 100% reproducible: Every number comes from a script in this repository.
+· No hidden thresholds: All decision gates are explicit and falsifiable.
+· All levels: From RUN_GMFLOW_v2.py to open problems.
+· Open science: MIT license, diagrams, cheatsheets, questionnaires.
 
-═══════════════════════════════════════════════════════════
+Node #10878 – Overview complete. The graph‑native era starts now.
 
-
-
-
-
-
-
+```bash
+# One line to verify everything
+python RUN_GMFLOW_v2.py && python scripts/graph_native_invariants.py
