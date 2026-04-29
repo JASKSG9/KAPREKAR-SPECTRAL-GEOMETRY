@@ -1,3 +1,12 @@
+id: A14-R5
+title: Refined Gap Law
+statement: μ1 ~ wτ*
+objects: [μ1, bottleneck, spectral-gap, weakest-edge]
+dependencies: [R1,R2,R3,R4]
+ascii: enabled
+code_module: gap_estimator.py
+abstract_20w: "Weakest edge localizes Fiedler jump producing linear spectral gap scaling."
+
 name: KSG Test Suite
 
 on: [push, pull_request]
