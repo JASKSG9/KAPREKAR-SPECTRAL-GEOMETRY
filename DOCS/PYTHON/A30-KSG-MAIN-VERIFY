@@ -1,0 +1,61 @@
+
+# ============================================================
+# VERIFY THE PACKAGE WORKS
+# ============================================================
+
+import sys
+sys.path.insert(0, '/mnt/agents/output/KSG-GMFLOW-A')
+
+from core.kaprekar_engine import KaprekarEngineFinal
+
+print("="*70)
+print("PACKAGE VERIFICATION")
+print("="*70)
+
+# Quick smoke test
+engine = KaprekarEngineFinal(10, 4)
+print(f"\nSmoke test:")
+print(f"  K(1234) = {engine.map(1234)}")
+print(f"  K(6174) = {engine.map(6174)}")
+print(f"  |Im| = {len(engine.compute_image())}")
+
+sig = engine.orbit_signature()
+print(f"  Components = {sig['components']}")
+print(f"  Max tau = {sig['max_tau']}")
+print(f"  Cycles = {sig['cycle_lengths']}")
+
+shells = engine.shell_decomposition()
+print(f"  Shells = {len(shells)} layers")
+print(f"  Shell-3 fraction = {len(shells[3])/10000:.2%}")
+
+print("\n✓ Package imports and runs correctly")
+
+# Run a subset of tests inline
+print("\n" + "="*70)
+print("INLINE TEST VERIFICATION")
+print("="*70)
+
+tests = [
+    ("6174 fixed", lambda: KaprekarEngineFinal(10,4).map(6174) == 6174),
+    ("495 fixed", lambda: KaprekarEngineFinal(10,3).map(495) == 495),
+    ("Image size 10,4", lambda: len(KaprekarEngineFinal(10,4).compute_image()) == 55),
+    ("Image size 10,3", lambda: len(KaprekarEngineFinal(10,3).compute_image()) == 10),
+    ("Components 2", lambda: KaprekarEngineFinal(10,4).orbit_signature()['components'] == 2),
+    ("Max tau 7", lambda: KaprekarEngineFinal(10,4).orbit_signature()['max_tau'] == 7),
+    ("Cycles [1,1]", lambda: KaprekarEngineFinal(10,4).orbit_signature()['cycle_lengths'] == [1,1]),
+    ("mod 9 invariant", lambda: all(KaprekarEngineFinal(10,4).map(n) % 9 == 0 for n in [1234,5555,9876])),
+    ("Deterministic", lambda: [KaprekarEngineFinal(10,4).map(n) for n in range(1000)] == [KaprekarEngineFinal(10,4).map(n) for n in range(1000)]),
+]
+
+passed = 0
+for name, test in tests:
+    try:
+        result = test()
+        status = "PASS" if result else "FAIL"
+        if result:
+            passed += 1
+    except Exception as e:
+        status = f"ERROR: {e}"
+    print(f"  [{status}] {name}")
+
+print(f"\n{passed}/{len(tests)} inline tests passed")
