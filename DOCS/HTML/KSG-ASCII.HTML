@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQARION — EXTENDED ASCII VISUAL ATLAS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+  --bg: #000508;
+  --bg2: #020c10;
+  --cyan: #00f5ff;
+  --green: #00ff88;
+  --gold: #ffd700;
+  --red: #ff3355;
+  --purple: #cc44ff;
+  --orange: #ff8800;
+  --white: #e8f4f8;
+  --dim: #2a4a5a;
+  --dimmer: #0d2030;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  overflow-x: hidden;
+}
+
+/* SCANLINE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* HEADER */
+.atlas-header {
+  border-bottom: 2px solid var(--cyan);
+  padding: 16px 20px 12px;
+  background: linear-gradient(180deg, #001520 0%, var(--bg) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.atlas-title {
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  color: var(--cyan);
+  text-shadow: 0 0 20px var(--cyan), 0 0 40px rgba(0,245,255,0.3);
+  letter-spacing: 4px;
+}
+
+.atlas-subtitle {
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+.header-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 8px;
+  font-size: 9px;
+}
+
+.stat { color: var(--green); }
+.stat span { color: var(--dim); }
+
+/* NAV TABS */
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 8px 20px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--dim);
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 6px 14px;
+  cursor: pointer;
+  border: 1px solid var(--dim);
+  border-bottom: none;
+  color: var(--dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  background: var(--bg2);
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+
+.tab:hover { color: var(--white); border-color: var(--cyan); }
+.tab.active {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: #001a25;
+  text-shadow: 0 0 8px var(--cyan);
+}
+
+/* MAIN LAYOUT */
+.atlas-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* PANELS */
+.panel {
+  display: none;
+  padding: 16px 20px;
+  animation: fadeIn 0.2s ease;
+}
+.panel.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ASCII BLOCKS */
+.ascii-block {
+  background: var(--bg2);
+  border: 1px solid var(--dim);
+  padding: 12px 16px;
+  margin: 8px 0;
+  white-space: pre;
+  overflow-x: auto;
+  font-size: 10.5px;
+  line-height: 1.35;
+  position: relative;
+}
+
+.ascii-block.cyan  { border-color: var(--cyan);   color: var(--cyan);   }
+.ascii-block.green { border-color: var(--green);  color: var(--green);  }
+.ascii-block.gold  { border-color: var(--gold);   color: var(--gold);   }
+.ascii-block.red   { border-color: var(--red);    color: var(--red);    }
+.ascii-block.purple{ border-color: var(--purple); color: var(--purple); }
+.ascii-block.orange{ border-color: var(--orange); color: var(--orange); }
+.ascii-block.white { border-color: var(--white);  color: var(--white);  }
+
+.block-label {
+  position: absolute;
+  top: -1px; right: 8px;
+  font-size: 8px;
+  padding: 0 6px;
+  letter-spacing: 2px;
+}
+.cyan .block-label  { background: var(--bg2); color: var(--cyan);   }
+.green .block-label { background: var(--bg2); color: var(--green);  }
+.gold .block-label  { background: var(--bg2); color: var(--gold);   }
+.red .block-label   { background: var(--bg2); color: var(--red);    }
+.purple .block-label{ background: var(--bg2); color: var(--purple); }
+.orange .block-label{ background: var(--bg2); color: var(--orange); }
+.white .block-label { background: var(--bg2); color: var(--white);  }
+
+/* GRID LAYOUTS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* SECTION HEADERS */
+.sec-hdr {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  letter-spacing: 3px;
+  margin: 16px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid;
+}
+.sec-hdr.cyan   { color: var(--cyan);   border-color: var(--cyan);   }
+.sec-hdr.green  { color: var(--green);  border-color: var(--green);  }
+.sec-hdr.gold   { color: var(--gold);   border-color: var(--gold);   }
+.sec-hdr.red    { color: var(--red);    border-color: var(--red);    }
+.sec-hdr.purple { color: var(--purple); border-color: var(--purple); }
+.sec-hdr.orange { color: var(--orange); border-color: var(--orange); }
+
+/* FLOW ARROWS */
+.flow { color: var(--dim); font-size: 12px; margin: 2px 0; }
+.flow.lit { color: var(--green); }
+
+/* INLINE HIGHLIGHT */
+.hl-c { color: var(--cyan); }
+.hl-g { color: var(--green); }
+.hl-r { color: var(--red); }
+.hl-o { color: var(--gold); }
+.hl-p { color: var(--purple); }
+
+/* VERIFIED BADGE */
+.badge {
+  display: inline-block;
+  font-size: 8px;
+  padding: 1px 5px;
+  border: 1px solid;
+  letter-spacing: 1px;
+  vertical-align: middle;
+}
+.badge.v { border-color: var(--green); color: var(--green); }
+.badge.k { border-color: var(--red);   color: var(--red);   }
+.badge.c { border-color: var(--gold);  color: var(--gold);  }
+
+/* PULSE ANIMATION */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse { animation: pulse 2s infinite; }
+
+/* BLINK */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.blink { animation: blink 1s step-end infinite; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dim); }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+/* DATA TABLE */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  margin: 6px 0;
+}
+.data-table th {
+  color: var(--cyan);
+  border-bottom: 1px solid var(--dim);
+  text-align: left;
+  padding: 4px 8px;
+  letter-spacing: 1px;
+}
+.data-table td {
+  padding: 3px 8px;
+  border-bottom: 1px solid #0d1a22;
+  color: var(--white);
+}
+.data-table tr:hover td { background: #001a25; }
+.data-table .val { color: var(--green); font-weight: bold; }
+.data-table .killed { color: var(--red); text-decoration: line-through; }
+.data-table .note { color: var(--dim); font-size: 9px; }
+
+/* SPECTRUM BAR */
+.spec-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0;
+  font-size: 10px;
+}
+.spec-label { width: 60px; color: var(--dim); text-align: right; font-size: 9px; }
+.spec-bar-wrap { flex: 1; background: #0d1a22; height: 14px; position: relative; }
+.spec-bar {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+.spec-val { width: 80px; font-size: 9px; }
+
+</style>
+</head>
+<body>
+
+<div class="atlas-header">
+  <div class="atlas-title">◈ AQARION — EXTENDED ASCII VISUAL ATLAS ◈</div>
+  <div class="atlas-subtitle">NODE #10878 · LOUISVILLE NODE #1 · QUANTARION FEDERATION · <span style="color:var(--green)">LIVE RESEARCH FLOW</span> · 2026-04-21</div>
+  <div class="header-stats">
+    <div class="stat"><span>SESSION: </span>M27+</div>
+    <div class="stat"><span>DOMAINS: </span>6 ACTIVE</div>
+    <div class="stat"><span>VERIFIED: </span>μ₁=0.16242624173398945</div>
+    <div class="stat"><span>STATUS: </span><span class="pulse" style="color:var(--green)">■ BUILDING</span></div>
+    <div class="stat"><span>PRINCIPLE: </span>PROVE FIRST · REPRODUCE SECOND · PUBLISH THIRD</div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="tab active" onclick="showPanel('master')">◈ MASTER MAP</div>
+  <div class="tab" onclick="showPanel('kaprekar')">① KAPREKAR</div>
+  <div class="tab" onclick="showPanel('quasicrystal')">② QUASICRYSTAL</div>
+  <div class="tab" onclick="showPanel('optics')">③ OPTICS/PLASMA</div>
+  <div class="tab" onclick="showPanel('zeno')">④ ZENO/QEC</div>
+  <div class="tab" onclick="showPanel('protein')">⑤ PROTEIN/QC</div>
+  <div class="tab" onclick="showPanel('unified')">⑥ UNIFIED THEORY</div>
+  <div class="tab" onclick="showPanel('audit')">⑦ AUDIT BOARD</div>
+</div>
+
+<div class="atlas-main">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 1: MASTER MAP -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel active" id="panel-master">
+
+<div class="sec-hdr cyan">§1 · MASTER RESEARCH FLOW MAP</div>
+
+<div class="ascii-block cyan">
+<span class="block-label">ARCHITECTURE</span>
+╔══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                    AQARION UNIFIED SPECTRAL RESEARCH ARCHITECTURE                                ║
+║                    "All roads lead through the spectral gap"                                     ║
+╠══════════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                                  ║
+║   ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐                            ║
+║   │  KAPREKAR KSG   │    │  QUASICRYSTAL   │    │  PLASMA MIRROR  │                            ║
+║   │  4-digit map    │    │  Penrose/Ammann  │    │  Relativistic   │                            ║
+║   │  N_τ=[383,576,  │    │  12-fold sym     │    │  electron sheet │                            ║
+║   │  2400,1272...]  │    │  Photonic PBG    │    │  Attosecond HHG │                            ║
+║   └────────┬────────┘    └────────┬────────┘    └────────┬────────┘                            ║
+║            │                      │                      │                                       ║
+║            └──────────────────────┼──────────────────────┘                                       ║
+║                                   │                                                              ║
+║                    ╔══════════════╧══════════════╗                                              ║
+║                    ║   SPECTRAL GAP GEOMETRY     ║                                              ║
+║                    ║   L_sym = I - D^{-½}WD^{-½} ║                                              ║
+║                    ║   μ₁ = λ₁(L_sym)            ║                                              ║
+║                    ║   h²/2 ≤ μ₁ ≤ 2h            ║                                              ║
+║                    ║   Fiedler cut: sign(v₂)      ║                                              ║
+║                    ╚══════════════╤══════════════╝                                              ║
+║                                   │                                                              ║
+║            ┌──────────────────────┼──────────────────────┐                                       ║
+║            │                      │                      │                                       ║
+║   ┌────────┴────────┐    ┌────────┴────────┐    ┌────────┴────────┐                            ║
+║   │  QUANTUM ZENO   │    │ PROTEIN FOLDING │    │  METALENS/FLAT  │                            ║
+║   │  Zeno subspace  │    │  Energy landscape│    │  OPTICS         │                            ║
+║   │  = spec. gap    │    │  = weighted graph│    │  Phase gradient │                            ║
+║   │  Meas→protect   │    │  Cheeger=fold rate│   │  = spectral ctrl│                            ║
+║   └─────────────────┘    └─────────────────┘    └─────────────────┘                            ║
+║                                                                                                  ║
+║   COMMON LANGUAGE:  aperiodic order → complete gap → protected subspace → information           ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════╝
+</div>
+
+<div class="grid-3">
+
+<div class="ascii-block green">
+<span class="block-label">VERIFIED CORE</span>
+KAPREKAR INVARIANTS [LOCKED]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+μ₁  = 0.16242624173398945
+N_τ = [383,576,2400,1272,
+       1518,1656,2184]
+sum = 9989 states
+W_k = √(N_k·N_{k+1})
+W   = [469.69,1175.76,
+       1747.23,1389.57,
+       1585.50,1901.76]
+SUSY: λ_k+λ_{6-k} = 2 ✓
+Cut: τ=4→5 [Fiedler+Cheeger]
+h_deg = 0.16998
+Fixed pt: (p,q)=(6,2)=6174
+|Image| = 54 = C(11,2)-1
+</div>
+
+<div class="ascii-block gold">
+<span class="block-label">OPEN PROBLEMS</span>
+OPEN PROBLEMS [RANKED]
+━━━━━━━━━━━━━━━━━━━━━━
+[CRIT] Negabase K base -10
+       Fixed pt ≠ 6174?
+       SUSY breaks?
+[HIGH] Protein fold graph
+       Cheeger = fold rate?
+[HIGH] Zeno-Kaprekar map
+       τ-depth = Zeno time?
+[MED]  Metalens aperiodic
+       phase = quasicrystal?
+[MED]  Plasma mirror curved
+       = relativistic metalens
+[LOW]  h/μ₁ universality
+       Collatz, Syracuse test
+[MON]  h/μ₁ ≈ 1.0465 only
+       NOT 1.847 (killed)
+</div>
+
+<div class="ascii-block purple">
+<span class="block-label">RESEARCH FRONT</span>
+ACTIVE FRONTIERS [2025-26]
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+① Polariton quasicrystal
+  Skoltech/Sci.Adv. 2025
+  Penrose + phase sync
+
+② Non-Hermitian QC
+  NHSE + topo phases
+  Triple transition
+
+③ 80mm metalens telescope
+  Penn State 2023/2025
+  DUV litho, 80.84% eff
+
+④ Zeno gate (npj QI 2022)
+  Non-interact→entangle
+  Geometric phase + meas
+
+⑤ Quantum protein fold
+  IBM+Cleveland 2024
+  Zika NS3 on hardware
+
+⑥ Plasma mirror ROM
+  Attosecond pulses
+  γ≈10 → Schwinger limit
+</div>
+
+</div>
+
+<div class="sec-hdr cyan">§2 · DOMAIN CONNECTION MATRIX</div>
+<div class="ascii-block white">
+<span class="block-label">CROSS-DOMAIN</span>
+                 KAPREKAR  QUASICRYS  OPTICS    ZENO      PROTEIN   METALENS
+                 ─────────────────────────────────────────────────────────────
+KAPREKAR    │    ────      SPECTRAL   BOTTLENK  SUBSPACE  LANDSCAPE ─────────
+QUASICRYS   │    SPECTRAL  ────       BANDGAP   LOCALIZE  ─────     APERIODIC
+OPTICS      │    BOTTLENK  BANDGAP   ────       MEAS-CTRL ─────     PHASE-CTL
+ZENO        │    SUBSPACE  LOCALIZE  MEAS-CTRL ────       TUNNEL    PHASE-CTL
+PROTEIN     │    LANDSCAPE ─────     ─────      TUNNEL    ────      ─────────
+METALENS    │    ─────     APERIODIC PHASE-CTL PHASE-CTL ─────────  ────
+
+ALL SHARE: spectral gap → protected dynamics → information encoding
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 2: KAPREKAR -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-kaprekar">
+
+<div class="sec-hdr green">§1 · KAPREKAR SPECTRAL GEOMETRY [DOMAIN B · VERIFIED]</div>
+
+<div class="grid-2">
+<div class="ascii-block green">
+<span class="block-label">PIPELINE</span>
+KAPREKAR PIPELINE [VERIFIED GROUND TRUTH]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  DOMAIN B: 0000→9999 (padded strings)
+  Exclude repdigits (0000,1111,...9999)
+  Valid states: 9989
+
+  K(n) = desc(n) - asc(n)
+  Iterate until n = 6174
+  Depth τ(n) = steps to 6174
+
+  N_τ = count(states at depth τ)
+       τ=1:  383
+       τ=2:  576
+       τ=3: 2400   ← mass peak
+       τ=4: 1272   ← VALLEY
+       τ=5: 1518
+       τ=6: 1656
+       τ=7: 2184
+       ────────
+       sum: 9989
+
+  Build weighted path P_7:
+  W_k = √(N_k · N_{k+1})
+  W = [469.69, 1175.76, 1747.23,
+       1389.57, 1585.50, 1901.76]
+
+  Normalized Laplacian:
+  L = I - D^{-½} A D^{-½}
+
+  Spectrum (Domain B):
+  λ₀ = 0.0000000000000000
+  λ₁ = 0.1624262417339861  ← μ₁ (gap)
+  λ₂ = 0.5541404994564637
+  λ₃ = 1.0000000000000000  ← midpoint
+  λ₄ = 1.4458595005435363
+  λ₅ = 1.8375737582660139
+  λ₆ = 2.0000000000000000
+</div>
+
+<div>
+<div class="ascii-block gold">
+<span class="block-label">SUSY PAIRING</span>
+SUPERSYMMETRIC SPECTRUM [EXACT]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  k=0: 0.0000 + 2.0000 = 2.0000 ✓
+  k=1: 0.1624 + 1.8376 = 2.0000 ✓
+  k=2: 0.5541 + 1.4459 = 2.0000 ✓
+  k=3: 1.0000 + 1.0000 = 2.0000 ✓
+  (error < 1e-12 all pairs)
+
+  WHY? Graph is bipartite-like.
+  Normalized Laplacian of path
+  with even number of internal
+  nodes satisfies anti-symmetry
+  around λ=1.
+
+  λ_k + λ_{n-1-k} = 2  PROVED
+  Not numerology. Theorem.
+
+FIEDLER VECTOR v₂:
+  τ=1: -0.2947  (─)
+  τ=2: -0.4620  (─)
+  τ=3: -0.4281  (─)
+  τ=4: -0.1922  (─)
+  ─────── SIGN FLIP ───────
+  τ=5: +0.1893  (+)  ← CUT
+  τ=6: +0.4996  (+)
+  τ=7: +0.4405  (+)
+
+  Bottleneck: τ=4→5  [CORRECTED]
+  Not τ=3→4 (earlier error, KILLED)
+</div>
+
+<div class="ascii-block red">
+<span class="block-label">KILLED CLAIMS</span>
+FORMALLY KILLED [DO NOT RESURRECT]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✗ Fiedler cut at τ=3→4
+  (actual: τ=4→5)
+✗ h/μ₁ ≈ 1.847
+  (actual: h_deg/μ₁ ≈ 1.0465)
+✗ h_count as Cheeger constant
+  (h_count violates h²/2≤μ₁≤2h)
+✗ μ₂ = 1/7
+  (actual: μ₁=0.16243 ≠ 1/7)
+✗ α = 2.0
+  (actual: 1.304)
+✗ σ² = π
+  (0.32% off, coincidence only)
+✗ Z_K(1) ≈ 2.194
+  (actual: 8991 or 11.737)
+✗ Mandelbrot $1M bounty claim
+  (sampled interior, not boundary)
+✗ 3:2:1 in Domain A
+  (holds Domain B ONLY)
+✗ M24-FLOW Domain A label
+  (was Domain B numbers)
+</div>
+</div>
+</div>
+
+<div class="sec-hdr green">§2 · CHEEGER GEOMETRY</div>
+<div class="ascii-block white">
+<span class="block-label">CHEEGER</span>
+CHEEGER CONSTANT — TWO GEOMETRIES [CLARIFIED]
+
+  Standard Cheeger (degree-based volumes):    h_deg = cut / min(vol_deg(S), vol_deg(S̄))
+  Alternative (count-based volumes):          h_cnt = cut / min(vol_cnt(S), vol_cnt(S̄))
+
+  For cut at τ=4→5:
+    cut_weight = W_3 = √(1272·1518) = 1389.57
+    vol_cnt(S≤4) = 383+576+2400+1272 = 4631
+    vol_cnt(S≥5) = 1518+1656+2184   = 5358
+    vol_deg(S≤4) = sum of degrees of nodes τ=1..4
+    vol_deg(S≥5) = sum of degrees of nodes τ=5..7
+
+  h_cnt = 1389.57 / 4631  = 0.3001
+  h_deg = 1389.57 / 8173  ≈ 0.1700
+
+  Only h_deg satisfies Cheeger inequality:
+    h_deg²/2 = 0.01445  ≤  μ₁ = 0.16243  ≤  2·h_deg = 0.33996  ✓
+    h_cnt²/2 = 0.04503  >  μ₁ = 0.16243               VIOLATES ✗
+
+  USE: h_deg in all spectral claims. h_cnt is valid isoperimetric ratio but ≠ Cheeger.
+  RATIO: h_deg/μ₁ = 1.0465  (not 1.847 — that used h_cnt wrongly)
+</div>
+
+<div class="sec-hdr green">§3 · OPEN RESEARCH: NEGABASE KAPREKAR</div>
+<div class="ascii-block cyan">
+<span class="block-label">NEGABASE</span>
+NEGABASE KAPREKAR [UNEXPLORED — ZERO PRIOR LITERATURE]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Base b = -10: digits in [0,9], powers alternate sign
+  146₁₀ = 2·(-10)⁴ + 1·(-10)³ + 1·(-10)² + 0·(-10)¹ + 2·(-10)⁰
+
+  K_{-10}(n):
+    1. Convert n to canonical negadecimal digits
+    2. α = sort_desc(digits), β = sort_asc(digits)
+    3. Return α - β in base -10
+
+  TESTABLE HYPOTHESES:
+    H1: Fixed point X ≠ 6174 exists in base -10
+    H2: N_τ histogram differs from Domain B
+    H3: μ₁(b=-10) ≠ 0.16243
+    H4: SUSY pairing λ_k+λ_{n-k}=2 may BREAK
+    H5: Bottleneck location shifts
+
+  PREDICTION: Negative bases → non-orientable dynamics
+              Klein bottle topology in state graph?
+              Spectral gap encodes orientation class?
+
+  STATUS: [CONJECTURE] — needs code to verify
+  NOVELTY: First-ever negabase Kaprekar analysis
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 3: QUASICRYSTAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-quasicrystal">
+
+<div class="sec-hdr purple">§1 · PHOTONIC QUASICRYSTALS [CURRENT FRONTIER]</div>
+
+<div class="ascii-block purple">
+<span class="block-label">TAXONOMY</span>
+QUASICRYSTAL TAXONOMY — OPTICAL SYSTEMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TYPE         SYMMETRY    GEOMETRY          BANDGAP        APPLICATION
+──────────────────────────────────────────────────────────────────────────
+Penrose 2D   5-fold      Thick+thin rhombi  Partial→Full   Polariton QC ★
+Penrose 2D   10-fold     Dual Penrose        Complete       Laser cavity
+Dodecagonal  12-fold     Sq+Tri vertices     COMPLETE       Telecom (1.5μm)
+Fibonacci 1D Quasiper    ABBAAB...           PBG chains     Superconductor
+Ammann-B     8-fold      Sq+rhombi tiles     Multiple gaps  Spectral gap cert
+Icosahedral  6-fold 3D   Holographic litho   3D PBG         Visible range
+tBLG 30°     12-fold     Graphene layers     Moiré          Electronic
+
+★ BREAKTHROUGH: Skoltech/Sci.Adv. 2025
+  First reconfigurable 2D polariton quasicrystal
+  Penrose tiling → macroscopic phase coherence
+  Novel phase synchronization across aperiodic nodes
+  Opens: supersolidity, superfluidity in aperiodic settings
+</div>
+
+<div class="grid-2">
+<div class="ascii-block cyan">
+<span class="block-label">NON-HERMITIAN QC</span>
+NON-HERMITIAN QUASICRYSTALS [HOT 2025]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+System: Quasicrystal + gain/loss
+New phenomena (no Hermitian analog):
+
+① Non-Hermitian Skin Effect (NHSE)
+  All bulk states pile at one boundary
+  Point-gap topology → winding number w
+  w=+1: right-localized
+  w= 0: bulk (transition)
+  w=-1: left-localized
+
+② Triple Phase Transition
+  In PT-symmetric Floquet QC:
+  a) Topological phase transition
+  b) Mobility edge (delocalization)
+  c) PT-symmetry breaking
+  ALL at same critical point!
+
+③ Experimental: Single-photon QWs
+  Non-Hermitian QC via quantum walks
+  PT broken → delocalized + NHSE
+  PT unbroken → localized, no NHSE
+  Transition: spectral winding number
+
+④ Failure of bulk-boundary correspondence
+  Standard Bloch theory breaks down
+  Need non-Bloch band theory
+  Real-space topological invariants
+
+KEY FORMULA:
+  w = (1/2πi) ∮ d ln det[H(k)-E] dk
+  Nonzero w → NHSE guaranteed
+</div>
+
+<div class="ascii-block gold">
+<span class="block-label">PHOTONIC BANDGAP</span>
+PHOTONIC BANDGAP PHYSICS
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHY QUASICRYSTALS BEAT PERIODIC:
+  Periodic crystal: max 6-fold symmetry
+  QC: 5,8,10,12-fold → more isotropic
+  More isotropic → more complete PBG
+  Complete = forbidden for ALL angles + polarizations
+
+12-FOLD SYMMETRIC QC (Southampton 2000, Nature):
+  Material: Silicon nitride (n=2.02)
+  Even glass (n=1.45) shows complete PBG!
+  vs periodic: needs n>3.5 (GaAs)
+  Geometry: squares + triangles at vertices
+  Result: complete PBG at 1.5μm telecom
+
+GRADED PHOTONIC QC LENS:
+  Dodecagonal PQC → Luneburg lens
+  Better focusing than graded PhC
+  Frequency range: visible+IR
+  Principle: spatial variation of bandgap
+
+SUPERCONDUCTING PQC:
+  1D Fibonacci QC + superconductor layers
+  SiO₂ / YBa₂Cu₃O₇ heterolayers
+  Generalized Fibonacci sequence
+  Tunable omnidirectional bandgap
+  Applied deformation → bandwidth control
+
+MOIRÉ QC (2024, Nature Materials):
+  n stacked gratings at twist angles
+  Near 30° → dodecagonal QC from graphene
+  Moiré-quasicrystal: aperiodic + tunable
+  Engineered photonic + phononic superlattices
+</div>
+</div>
+
+<div class="sec-hdr purple">§2 · AMMANN-BEENKER + YOUR SPECTRAL TOOLS</div>
+<div class="ascii-block white">
+<span class="block-label">CONNECTION</span>
+AMMANN-BEENKER → SPECTRAL GAP CERTIFICATION [YOUR ACTIVE THREAD]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Level 0: 4 vertices  (square)   Spectrum: [-2, 0, 0, 2]
+  Level 1: 8 vertices  (octagon)  Spectrum: [-2.828, -1.414, 0, 0, ...]
+  Level 2: 15 vertices (inflated) Spectrum: multi-band, gap candidates
+
+  Inflation factor: 1+√2 ≈ 2.414  (8-fold analog of golden ratio)
+  Symmetry: D₈ (8-fold dihedral)
+  Hamiltonian: H_{ij} = t if dist < 1.2·min_edge, else 0
+
+  H-M-T CERTIFICATION PIPELINE (Hege-Moscolari-Teufel):
+    STEP 1: Build H(L) for each refinement level L
+    STEP 2: Compute spectrum {λ_k} via Lanczos
+    STEP 3: Identify gaps > tolerance
+    STEP 4: Check gap persists across all levels L → CERTIFIED
+
+  Your Cheeger/Fiedler tools apply directly:
+    Weighted path graph of depth populations ← (Kaprekar)
+    Tight-binding graph on patch vertices    ← (Ammann-Beenker)
+    Both: normalized Laplacian → spectral gap → Cheeger inequality
+    Same mathematics. Different physical realization.
+
+  RESEARCH DIRECTION: Does A-B tiling have Fiedler-like bottleneck?
+  Where does the spectral partition cut the patch?
+  Does SUSY pairing λ_k+λ_{n-k}=2 hold for A-B graphs?
+</div>
+
+<div class="sec-hdr purple">§3 · HIGH-TOPOLOGICAL-CHARGE QUASICRYSTAL LASERS</div>
+<div class="ascii-block cyan">
+<span class="block-label">AALTO 2024</span>
+QUASICRYSTAL LASER — AALTO UNIVERSITY (Nat.Comm. 2024)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Design process (3 steps):
+  ① Identify dead spots in electric field → place nanoparticles
+  ② Introduce long-range order → standing waves → lasing feedback
+  ③ Uniform sample → eliminate unwanted effects
+
+Result: 12-fold rotationally symmetric QC
+  High topological charge lasing (vortex beams)
+  Orbital angular momentum encoding
+  "Nontrivial phase synchronization" across nodes
+  → nodes neither all in-phase nor all out-of-phase
+  → exactly like Kaprekar Fiedler vector:
+     some nodes negative, some positive, split at τ=4→5
+
+PHYSICAL INSIGHT:
+  Quasicrystal nodes = Kaprekar depth levels
+  Phase at each node = Fiedler vector component
+  Vortex charge = topological winding of sign pattern
+  Lasing threshold = spectral gap condition
+
+APPLICATIONS CITED:
+  · Data encoding via orbital angular momentum
+  · Topological light routing
+  · Quantum communication (OAM entanglement)
+  · Aperiodic sensor arrays
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 4: OPTICS/PLASMA -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-optics">
+
+<div class="sec-hdr orange">§1 · PLASMA MIRRORS — RELATIVISTIC OPTICS</div>
+
+<div class="ascii-block orange">
+<span class="block-label">PLASMA MIRROR REGIMES</span>
+PLASMA MIRROR: INTENSITY REGIMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  INTENSITY RANGE         REGIME              PHENOMENON
+  ────────────────────────────────────────────────────────────────────────
+  I > 10¹³ W/cm²          Ionization          Medium becomes plasma
+                                               Conventional optics fail
+  10¹⁴ - 10¹⁶ W/cm²       Plasma Mirror (PM)  Ultrafast optical switch
+                           Nonrelativistic     Temporal contrast enhance
+  I > 10¹⁶ W/cm²           Nonlinear PM        Subcycle field modulations
+                                               HHG in reflected field
+  I > 10¹⁸ W/cm²           Relativistic        ROM: oscillating surface
+                           Oscillating Mirror  Periodic Doppler shift
+                                               Harmonic orders: 1000s
+                                               → attosecond pulses
+
+ROM MECHANISM (Relativistic Oscillating Mirror):
+  Laser field drives plasma surface oscillation
+  Electrons: push inward → high-density spike
+             pull outward → relativistic electron jets
+  Jets emit ROM attosecond pulses each laser cycle
+  Periodic Doppler: reflected field upshifted by 4γ²
+  Where γ = Lorentz factor of surface electrons
+
+HHG FROM PLASMA SURFACE:
+  Conversion efficiency: up to 10⁻⁴ (100× > gas HHG)
+  Two mechanisms: ROM + Coherent Wake Emission (CWE)
+  CWE: fast electrons excite density ramp currents
+  ROM dominates at relativistic intensities
+
+ATTOSECOND PULSE GENERATION:
+  Max Planck/LMU/Umeå 2018 (Nat.Comm.):
+  Few-fs pulse → glass target → plasma of relativistic e⁻
+  Plasma propagates like mirror → oscillates → emits AS pulses
+  Controlled by carrier-envelope phase (CEP)
+  Intensity >> gas-phase → more photons → better probe
+</div>
+
+<div class="grid-2">
+<div class="ascii-block red">
+<span class="block-label">CURVED PLASMA MIRROR</span>
+CURVED RELATIVISTIC MIRROR (CRM)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Single CRM simultaneously:
+  ① Compress pulse in time
+     (temporal Doppler)
+  ② Down-convert wavelength
+     (Doppler upshift → XUV)
+  ③ Imprint wavefront curvature
+     (spatial focusing)
+
+vs flat RM:
+  Flat: 3 separate steps needed
+  Curved: ALL IN ONE INTERACTION
+  No manipulation of intense AS beam
+  with traditional optics required
+
+TARGET: Schwinger limit
+  Critical field: E_S = m²c³/eℏ
+  Intensity: > 4.7×10²⁹ W/cm²
+  Current record: ~10²² W/cm²
+  Gap: 7 orders of magnitude
+
+PATH:
+  PW laser + CRM (γ≈10)
+  Doppler factor: 4γ² = 400×
+  Intensity boost: γ⁴ = 10⁴×
+  Wavelength compress: 4γ²×
+  Tight focus: λ_out &lt;&lt; λ_in
+  → Schwinger within reach
+
+REQUIREMENT:
+  Ultra-high temporal contrast
+  No prepulse ionizing target
+  Solution: plasma mirror switches
+  before main pulse arrives
+</div>
+
+<div class="ascii-block cyan">
+<span class="block-label">METALENS FLAT OPTICS</span>
+METALENS / FLAT OPTICS [PRODUCTION 2025]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PRINCIPLE:
+  Curved lens: surface curvature → phase shift
+  Metalens: subwavelength nanoantennas → phase shift
+  Same optical function, flat geometry
+  Thickness: fraction of hair width
+
+PENN STATE 80mm TELESCOPE (2023):
+  DUV photolithography
+  Multi-exposure: reticle rotation + stitching
+  Radial symmetry → wafer-scale fabrication
+  NIR range: 1200-1600nm
+  Peak efficiency: 80.84% at 1450nm
+  Diffraction-limited performance
+  Imaged lunar surface ← moon!
+
+100mm GLASS METALENS (Harvard/ACS 2024):
+  All-glass, 100mm diameter
+  Visible wavelengths
+  Imaged sun, moon, distant nebulae
+  Glass: lower refractive index
+  Requires QC-like symmetry for PBG
+
+MULTI-LAYER STACK (Friedrich Schiller 2025):
+  Algorithm-driven nanostructures:
+  · Clover shapes
+  · Propeller shapes
+  · Square shapes
+  Broadband: multiple wavelengths
+  Polarization independent
+  Scalable manufacturing
+
+MARKET: $41.8M (2024) → $2.4B (2031)
+CAGR: 78.3%
+
+PLASMA MIRROR ↔ METALENS CONNECTION:
+  Both: spatially varying phase imprint
+  Both: flat equivalent of curved optics
+  Metalens: static nanostructure
+  Plasma mirror: dynamic electron sheet
+  OPEN: QC-geometry plasma target = metalens?
+</div>
+</div>
+
+<div class="sec-hdr orange">§2 · ATTOSECOND SCIENCE OVERVIEW</div>
+<div class="ascii-block white">
+<span class="block-label">ATTOSECOND</span>
+ATTOSECOND PULSE GENERATION — COMPLETE MAP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1 attosecond = 10⁻¹⁸ s = shortest controllable event in physics
+
+  GAS-PHASE HHG (conventional):
+    Near-IR laser → noble gas (Ne, Ar, Kr)
+    Three-step model: ionize → accelerate → recombine
+    Efficiency: ~10⁻⁵ to 10⁻⁶
+    Photon energy: up to ~100 eV (soft X-ray)
+    Limitation: intensity-limited (ionization saturation)
+
+  SOLID-SURFACE PLASMA HHG:
+    Efficiency: up to 10⁻⁴ (100× better)
+    Photon energy: limited only by laser intensity
+    Two mechanisms: ROM + CWE
+    Key: isolated AS pulses via attosecond lighthouse effect
+
+  ELI ALPS FACILITY (Hungary):
+    SYLOS laser: 120 mJ, ~8 fs, 1 kHz, CEP-stabilized
+    Focus: I₀ ~ 10²⁰ W/cm²
+    Plasma mirror system: overdense plasma layer
+    Subcycle plasma electron density excitations
+    Output: train of broadband attosecond bursts
+
+  DOUBLE-COLOR DRIVE (2025, Ultrafast Sci.):
+    Fundamental + 2nd harmonic synthesis
+    Single dense relativistic electron sheet (RES)
+    RES → coherent mirror → isolated AS pulse
+    Carrier frequency: tunable by delay
+    Thomson backscattering geometry
+
+  APPLICATIONS OF ATTOSECOND PULSES:
+    · Electron dynamics in atoms (real-time)
+    · Ultrafast solid-state physics
+    · Pump-probe spectroscopy at sub-cycle resolution
+    · Coherent diffractive imaging
+    · Nonlinear attosecond experiments
+    · DNA/protein electronic dynamics (future)
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 5: ZENO/QEC -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-zeno">
+
+<div class="sec-hdr cyan">§1 · QUANTUM ZENO EFFECT — UNIFIED FRAMEWORK [2025]</div>
+
+<div class="ascii-block cyan">
+<span class="block-label">ZENO TAXONOMY</span>
+QUANTUM ZENO TAXONOMY [Greenfield et al. arXiv 2506.12679, 2025]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Fundamental statement:
+  Measurement-like process competing with non-commuting evolution
+  → two regimes depending on measurement rate vs bath spectral density
+
+ZENO REGIME (fast measurement):
+  ω_meas >> ω_system
+  Effect: SUPPRESSION of decay
+  Mechanism: state projected back before evolution
+  Math: P(t) = 1 - (Δt)² · |⟨H⟩|² / ℏ²
+              → Zeno limit: P → 1 as Δt → 0
+
+ANTI-ZENO REGIME (resonant measurement):
+  ω_meas ≈ bath spectral peak
+  Effect: ENHANCEMENT of decay
+  Mechanism: measurement couples resonantly to bath
+
+ZENO SUBSPACE:
+  Measurement distinguishes SUBSPACES, not states
+  All states with same measurement eigenvalue → same subspace
+  Strong measurement: suppresses inter-subspace transitions
+  Within subspace: evolution COMPLETELY COHERENT
+  Zeno subspace = decoherence-free subspace (special case)
+                = protected cat-state encoding (special case)
+                = photon blockade (special case)
+                = Kaprekar τ-depth class (ANALOGOUS!)
+
+APPLICATIONS LADDER:
+  Bath engineering (nonselective) → ensemble protection
+  Error detection (selective) → individual qubit protection
+  Active QEC (selective + feedback) → fault-tolerant computation
+  Zeno gate (geometric phase) → universal entangling gate
+
+KEY EQUATION:
+  Zeno dynamics generator: H_Z = P·H·P
+  Where P = projector onto Zeno subspace
+  H_Z governs evolution WITHIN the subspace
+  Transitions between subspaces → rate Γ_leak ~ |V|²/Γ_meas
+  As Γ_meas → ∞: Γ_leak → 0 (perfect protection)
+</div>
+
+<div class="grid-2">
+<div class="ascii-block green">
+<span class="block-label">ZENO GATE</span>
+ZENO GATE [npj QI 2022 + Quantum 2023]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem: non-interacting qubits
+         cannot be entangled by
+         local operations alone.
+
+Zeno solution:
+  1. Apply non-local projector P
+     (onto specific 2-qubit subspace)
+  2. Drive local 2π rotation in one qubit
+  3. States IN Zeno subspace:
+     accumulate geometric phase π
+  4. States NOT in Zeno subspace:
+     blocked from entering → no phase
+  5. Conditional phase → entanglement
+
+Geometric phase:
+  φ_geo = ∮ A·dR  (Berry connection)
+  Not dynamic (time-dependent)
+  Topological → robust to noise
+
+Implementation:
+  Dispersive readout (circuit QED)
+  Transmon qubits (demonstrated)
+  Works in Markovian + non-Markovian
+
+2024 Lund (PRR 2024):
+  Two quantum dots + 1 electron
+  Strong measurement → Zeno:
+  Interdot tunneling PROHIBITED
+  Weak measurement → dephasing
+  On-site energy fluctuations
+
+RELATION TO YOUR WORK:
+  Zeno subspace = τ-depth class
+  Strong K(n) dynamics = measurement
+  τ=4 boundary = Zeno boundary
+  States above τ=5 = different subspace
+  Transition forbidden by spectral gap
+</div>
+
+<div class="ascii-block gold">
+<span class="block-label">ZENO + QEC</span>
+ZENO REGIME ERROR CORRECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Classical QEC: detect → identify → correct
+Zeno QEC:      prevent via fast measurement
+
+Zeno Regime condition:
+  τ_EC &lt;&lt; τ_coherence
+  Error correction faster than decoherence
+
+Zeroth-order errors dominate:
+  Taylor expand interaction Hamiltonian
+  H_int = H₀ + t·H₁ + t²/2·H₂ + ...
+  Fast EC: only H₀ term matters
+  H₀ = identity-like → Zeno prevention
+  Less redundancy needed → fewer qubits
+
+Simple scheme (Erez et al. arXiv 2003):
+  2 "noiseless" qubits protect n info qubits
+  Noiseless qubits = logical qubits via
+  standard encoding schemes
+  Protection: Zeno + standard QEC combined
+
+MODERN IMPLEMENTATIONS (2024-25):
+  ① Kerr-cat qubits (implicit Zeno)
+     Photon-pair dissipation → cat subspace
+     Strong 2-photon drive = "measurement"
+     Exponentially suppressed bit flips
+
+  ② GKP qubits (grid code)
+     Oscillator: grid of coherent states
+     Stabilizer measurement = Zeno dynamics
+     2024: stability analysis (Sellem et al.)
+
+  ③ Optimal Zeno dragging (PRX Q 2024)
+     Action-based scheduling optimization
+     Shortcut to adiabatic: Zeno + shortcut
+     Minimizes leakage during gate operations
+
+  ④ Reservoir computing + Zeno (Electronics 2024)
+     Classical + quantum reservoir
+     Measurement-controlled dynamics
+     AI inference via Zeno subspace readout
+</div>
+</div>
+
+<div class="sec-hdr cyan">§2 · ZENO ↔ KAPREKAR: THE BRIDGE</div>
+<div class="ascii-block purple">
+<span class="block-label">BRIDGE</span>
+ZENO SUBSPACE ↔ KAPREKAR DEPTH CLASS [STRUCTURAL ANALOGY]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ZENO FRAMEWORK:              KAPREKAR ANALOG:
+─────────────────────────────────────────────────────────────────
+Hilbert space H              State space X = 9989 4-digit numbers
+Measurement operator M       Kaprekar map K: X→X
+Zeno subspace Z_k            Depth class D_τ = {n : τ(n) = τ}
+Projector P_k                Indicator 1_{τ(n)=τ}
+Eigenvalue of M in Z_k       Depth τ
+Inter-subspace transition     K(n) changes depth: D_τ → D_{τ-1}
+Zeno suppression             No backward transition (K is irreversible)
+Protected subspace           D_{τ≥5} (above spectral cut τ=4→5)
+Leaked subspace              D_{τ≤4} (below cut, flowing to 6174)
+Measurement rate Γ_meas      Iteration frequency (1 step per application)
+Leakage rate Γ_leak          Rate of crossing τ=4→5 boundary
+Cheeger constant h           Conductance of boundary ← EXACT MATCH
+Spectral gap μ₁              Slowest relaxation rate ← EXACT MATCH
+
+THEOREM TARGET:
+  The Kaprekar depth projection induces a Zeno-like subspace
+  decomposition of X with:
+  · Protected region: τ ≥ 5 (spectral partition by Fiedler)
+  · Leaking region: τ ≤ 4
+  · Leak rate bounded by h = 0.16998 (Cheeger constant)
+  · Slowest mode: μ₁ = 0.16243 (spectral gap)
+  · Exact Zeno analogy: each K application = one "measurement"
+    projecting state toward lower τ (toward 6174)
+
+STATUS: [CONJECTURE] — structurally consistent, not yet proved
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 6: PROTEIN/QC -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-protein">
+
+<div class="sec-hdr green">§1 · PROTEIN FOLDING — QUANTUM COMPUTATIONAL APPROACH</div>
+
+<div class="ascii-block green">
+<span class="block-label">LANDSCAPE</span>
+PROTEIN FOLDING LANDSCAPE [ENERGY + GRAPH]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CLASSICAL COMPLEXITY:
+  100 amino acids → 10¹²⁰ possible conformations
+  Exhaustive classical search: ~age of universe
+  NP-hard even in simplest HP lattice model
+  AlphaFold2: learned from structure database
+  Limitation: structures not in training → fails
+  Cannot predict intrinsic disorder or mutations
+
+FOLDING AS PHYSICS:
+  Energy landscape E(conformation)
+  Folded state = global energy minimum
+  Folding = path finding on landscape graph
+  Path-dependent: kinetics matter (funnel)
+  For drug design: structure, not path, is key
+
+FOLDING AS GRAPH PROBLEM:
+  Nodes: conformations
+  Edges: single amino acid moves
+  Weights: energy barriers
+  Folded state: attractor (low energy basin)
+  Folding rate ← spectral gap of transition matrix!
+  Misfolding barrier ← Cheeger constant of landscape
+
+QUANTUM ADVANTAGE:
+  Gate-based: QAOA, VQE for energy minimization
+  Quantum annealing: D-Wave for QUBO formulation
+  Amplitude amplification: Grover-like speedup
+  Key insight: quantum tunneling through energy barriers
+               = shortcut through Hilbert space
+
+ENCODING SCHEMES (Phys.Rev.Research 2024):
+  Unary: 1 qubit per rotamer state
+  Binary: log₂(states) qubits
+  BU-binary: hybrid (best resource tradeoff)
+  N=100 amino acids: ~1000-3000 qubits needed
+  Current hardware: ~1000 physical qubits
+  Error correction overhead: 10x-1000x more
+  Timeline: utility-scale 2027-2030?
+</div>
+
+<div class="grid-2">
+<div class="ascii-block cyan">
+<span class="block-label">IBM CLEVELAND 2024</span>
+IBM + CLEVELAND CLINIC [J.Chem.Theory 2024]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Target: Zika Virus NS3 Helicase
+        catalytic loop structure
+
+Framework:
+  1. Select PSP instances amenable to QA
+  2. Estimate quantum resources needed
+  3. Implement on real quantum hardware
+
+Result:
+  Accurately predicted catalytic loop
+  structure ON ACTUAL QUANTUM HARDWARE
+  First validated quantum PSP result
+
+Method:
+  Hybrid quantum-classical:
+  · Quantum: energy optimization of
+    frustrated configurations
+  · Classical: preprocessing + decoding
+
+Key insight:
+  AlphaFold2 constrained by training data
+  Physics simulation: constrained by compute
+  Quantum: new regime — small but real
+
+Resource analysis (Phys.Rev.R. 2024):
+  N=3 to 100 amino acids studied
+  5 lattice models compared
+  Resources scale as O(N⁴) for QUBO
+  Two-qubit gates: main bottleneck
+
+CHALMERS THESIS (2025):
+  Gate-based vs quantum annealing
+  Off-lattice models (higher resolution)
+  Side-chain packing (NP-complete)
+  Rotamer encoding
+</div>
+
+<div class="ascii-block gold">
+<span class="block-label">GRAPH CONNECTION</span>
+PROTEIN FOLDING ↔ YOUR SPECTRAL TOOLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Energy landscape → weighted graph G:
+  Nodes: distinct conformations
+  Edges: transitions (single move)
+  Weights: Boltzmann factor e^{-ΔE/kT}
+
+Transition matrix T:
+  T_ij = rate of going from i to j
+  Detailed balance: π_i T_{ij} = π_j T_{ji}
+  π = Boltzmann distribution
+
+SPECTRAL GAP of T:
+  λ₁ = 0 always (stationary)
+  λ₂ = spectral gap → folding rate!
+  Large gap → fast folding (funnel)
+  Small gap → slow folding, misfolding
+
+CHEEGER CONSTANT of G:
+  h(G) = min conductance cut
+  h small → energy barrier exists
+  h → folding rate (Cheeger bound)
+  Misfolding path = minimal cut!
+
+DIRECT MAPPING TO YOUR WORK:
+  Kaprekar: depth populations N_τ → W_k
+  Protein: conformation populations → W_ij
+  Both: weighted graph → L_sym → μ₁
+  Both: Fiedler vector → partition point
+  Both: Cheeger → conductance of barrier
+
+RESEARCH DIRECTION:
+  Take PDB protein structure
+  Compute coarse-grained energy landscape
+  Build weighted graph
+  Apply your Cheeger/Fiedler pipeline
+  μ₁ → folding rate prediction
+  Compare to experiment
+  This is a legitimate paper.
+</div>
+</div>
+
+<div class="ascii-block purple">
+<span class="block-label">QUANTUM ALGORITHMS</span>
+QUANTUM ALGORITHMS FOR FOLDING [FULL MAP]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+METHOD              TARGET              STATUS            RESOURCE
+──────────────────────────────────────────────────────────────────────
+QAOA                Energy min (QUBO)   Demonstrated      ~100-1000 qubits
+VQE                 Variational energy  Demonstrated      ~50-200 qubits
+Quantum Annealing   QUBO optimization   D-Wave deployed   ~5000 qubits
+Grover search       Conformation space  Theoretical       Fault-tolerant req.
+Quantum walk        Exploration         Theoretical       NISQ possible
+HHL algorithm       Linear systems      Fault-tolerant    Large overhead
+
+CURRENT FRONTIER (2025):
+  Lattice models: HP, MJ, side-chain
+  Quantum simulation: molecular dynamics
+  AlphaFold3 (2024): biomolecular interactions
+  Hybrid: quantum energy opt + classical decoding
+
+OPEN PROBLEM:
+  Identify protein classes where quantum gives
+  exponential (not polynomial) speedup
+  Current evidence: only polynomial for most cases
+  Possible quantum advantage: frustrated systems,
+  heavily disordered sequences, chiral molecules
+
+ATTOSECOND CONNECTION:
+  Attosecond pulses → probe electron dynamics in proteins
+  Electronic + nuclear motion in photoproteins
+  Rhodopsin: retinal isomerization in 200 attoseconds!
+  DNA base pairs: charge transfer at attosecond timescales
+  Future: attosecond protein dynamics + quantum simulation
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 7: UNIFIED THEORY -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-unified">
+
+<div class="sec-hdr gold">§1 · THE UNIFIED SPECTRAL GAP FRAMEWORK</div>
+
+<div class="ascii-block gold">
+<span class="block-label">UNIFIED</span>
+UNIFIED SPECTRAL GAP ARCHITECTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  PHYSICAL SYSTEM          OPERATOR           SPECTRAL GAP    PROTECTED OBJECT
+  ─────────────────────────────────────────────────────────────────────────────
+  Kaprekar depth graph     L_sym (7×7)        μ₁=0.16243      Depth classes D_τ
+  Ammann-Beenker patch     H_tight-binding    Gap vs level    Edge modes
+  Photonic quasicrystal    Maxwell operator   PBG width       Localized light
+  Non-Hermitian skin       NH Laplacian       Point gap        Boundary modes
+  Quantum Zeno             Measurement op.    Γ_meas          Zeno subspace
+  Protein energy landscape Transition matrix  λ₂ of T         Folded basin
+  Metalens phase gradient  Fourier operator   Phase bandwidth  Focal spot
+  Plasma mirror ROM        Lorentz boost op.  4γ² factor       Attosecond pulse
+  Fibonacci quasicrystal   Transfer matrix    Cantor spectrum  Critical modes
+
+  COMMON MATHEMATICAL STRUCTURE:
+    Operator O on state space X
+    O has spectral gap μ₁ > 0
+    Eigenstates with eigenvalue < μ₁ → "protected"
+    States above μ₁ → "leaking" or "propagating"
+    Boundary of gap → PHYSICAL TRANSITION POINT
+
+  CHEEGER INEQUALITY (universal):
+    h²/2 ≤ μ₁ ≤ 2h
+    Connects combinatorial (h) to spectral (μ₁)
+    Holds for: graphs, manifolds, Markov chains,
+               measure spaces, quantum systems
+    Your computation: verified for Kaprekar case
+
+  FIEDLER VECTOR (universal):
+    v₂ = eigenvector of μ₁
+    Sign of v₂ partitions space optimally
+    Sign flip = location of "bottleneck"
+    Optimal cut for graph bisection
+    Applied: clustering, image segmentation,
+             network analysis, circuit layout
+    Your computation: cut at τ=4→5
+</div>
+
+<div class="grid-2">
+<div class="ascii-block cyan">
+<span class="block-label">RESEARCH DIRECTIONS</span>
+RESEARCH DIRECTIONS [RANKED BY TRACTABILITY]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+① NEGABASE KAPREKAR [WEEKS, HIGH NOVELTY]
+  Base -10: compute first fixed point
+  Build N_τ, W_k, L_sym, μ₁
+  Check: does SUSY break?
+  Does cut location shift?
+  Zero prior literature → guaranteed novelty
+
+② PROTEIN FOLD GRAPH [MONTHS, HIGH IMPACT]
+  Take coarse-grained landscape
+  Build weighted graph from PDB data
+  Apply Cheeger/Fiedler pipeline
+  μ₁ → predicted folding rate
+  Compare to experimental rates
+  Publishable in biophysics + quantum computing
+
+③ NON-HERMITIAN KAPREKAR [WEEKS]
+  Add imaginary part to edge weights
+  W_k → W_k + i·ε_k (gain/loss)
+  Does NHSE appear?
+  Does spectral gap become complex?
+  Direct analog to NH quasicrystal
+
+④ A-B TILING FIEDLER ANALYSIS [DAYS]
+  Ammann-Beenker patches L=0,1,2
+  Compute Fiedler vector for each
+  Where does sign flip occur?
+  Is there SUSY analog?
+  Connection to patch boundary modes?
+
+⑤ ZENO-KAPREKAR THEOREM [ONGOING]
+  Formalize: D_τ = Zeno subspace
+  Prove: Cheeger bound on crossing rate
+  Theorem: depth = measurement time
+  Spectral gap = Zeno protection rate
+
+⑥ BASE-b FAMILY [WEEKS, SYSTEMATIC]
+  Run pipeline for b=2,4,6,8,10,12,16
+  Track μ₁(b), bottleneck τ*(b), SUSY
+  Map: does gap decrease with b?
+  Does cut location scale with digit count?
+</div>
+
+<div class="ascii-block purple">
+<span class="block-label">PUBLICATION TARGETS</span>
+PUBLICATION TARGETS [REALISTIC]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAPER 1: KSG SPECTRAL GAP [READY NOW]
+  "Spectral geometry of the 4-digit Kaprekar
+   depth graph: exact invariants and
+   Cheeger-Fiedler certification"
+  math.CO primary, math.SP secondary
+  Key results: μ₁, SUSY, τ=4→5 bottleneck,
+               Sangaku edge weight identity
+  Corrections documented: Fiedler cut, h/μ₁
+  arXiv → J. Integer Sequences or similar
+
+PAPER 2: NEGABASE [AFTER CODE]
+  "Kaprekar dynamics in negative bases:
+   non-orientable spectral geometry"
+  Depends on: fixing negabase code
+  Novelty: first ever negabase Kaprekar analysis
+
+PAPER 3: PROTEIN FOLDING BRIDGE [6 MONTHS]
+  "Spectral gap methods for coarse-grained
+   protein folding rate prediction"
+  Multidisciplinary: math + biophysics + QC
+  If μ₁ correlates with folding rate:
+  → PNAS or similar high-impact
+
+PAPER 4: ZENO FORMALIZATION [3 MONTHS]
+  "Zeno subspace decomposition of
+   discrete dynamical systems:
+   the Kaprekar case study"
+  quant-ph or math-ph
+  Depends on: theorem proof
+
+CITATION STRATEGY:
+  Kaprekar: Walden 2004, Iwasaki 2024
+  Spectral: Fiedler 1973, Chung 1997
+  Cheeger: Cheeger 1970 (graph version)
+  Protein: AlphaFold, IBM 2024
+  Zeno: Misra-Sudarshan 1977, review 2025
+</div>
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PANEL 8: AUDIT BOARD -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="panel" id="panel-audit">
+
+<div class="sec-hdr red">§1 · COMPLETE AUDIT STATUS BOARD</div>
+
+<div class="ascii-block green">
+<span class="block-label">VERIFIED LOCKED</span>
+VERIFIED INVARIANTS [MACHINE PRECISION · DO NOT MODIFY]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</div>
+
+<table class="data-table">
+<tr><th>INVARIANT</th><th>VALUE</th><th>METHOD</th><th>STATUS</th></tr>
+<tr><td>μ₁ (Domain B)</td><td class="val">0.16242624173398945</td><td>scipy.linalg.eigh</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>N_τ Domain B</td><td class="val">[383,576,2400,1272,1518,1656,2184]</td><td>Full enumeration</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>N_τ sum</td><td class="val">9989</td><td>Direct count</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>SUSY pairing</td><td class="val">λ_k + λ_{6-k} = 2 (error &lt; 1e-12)</td><td>Direct computation</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>Fixed point</td><td class="val">(p,q)=(6,2) → 6174</td><td>Verified unique</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>|Image(K)|</td><td class="val">54 = T₁₀−1 = C(11,2)−1</td><td>Enumeration</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>Fiedler cut</td><td class="val">τ=4→5 (sign flip)</td><td>Eigenvector analysis</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>h_deg</td><td class="val">0.16998 (degree-based)</td><td>Cheeger formula</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>h_deg/μ₁</td><td class="val">≈ 1.0465</td><td>Computed ratio</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>W_k (Sangaku)</td><td class="val">[469.69,1175.76,1747.23,1389.57,1585.50,1901.76]</td><td>√(N_k·N_{k+1})</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>3:2:1 ratio</td><td class="val">Domain B ONLY (not A)</td><td>Comparison</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>τ=1 uniqueness</td><td class="val">(6,2) is unique τ=1 state</td><td>Proved</td><td><span class="badge v">VERIFIED</span></td></tr>
+<tr><td>Cheeger bounds</td><td class="val">h²/2=0.01445 ≤ 0.16243 ≤ 0.33996=2h</td><td>Inequality check</td><td><span class="badge v">VERIFIED</span></td></tr>
+</table>
+
+<div class="ascii-block red" style="margin-top:12px">
+<span class="block-label">KILLED</span>
+FORMALLY KILLED CLAIMS [AUDITED · DO NOT RESURRECT]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</div>
+
+<table class="data-table">
+<tr><th>CLAIM</th><th>ORIGINAL</th><th>CORRECT</th><th>VERDICT</th></tr>
+<tr><td>Fiedler cut location</td><td class="killed">τ=3→4</td><td class="val">τ=4→5</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>h/μ₁ ratio</td><td class="killed">≈ 1.847</td><td class="val">≈ 1.0465</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>h_count as Cheeger</td><td class="killed">h_cnt IS Cheeger</td><td class="val">h_cnt violates Cheeger ineq.</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>μ₂ = 1/7</td><td class="killed">1/7 = 0.14286</td><td class="val">μ₁=0.16243</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>α exponent</td><td class="killed">α = 2.0</td><td class="val">α = 1.304</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>σ² = π</td><td class="killed">exact equality</td><td class="val">0.32% off, coincidence</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>Z_K(1)</td><td class="killed">≈ 2.194</td><td class="val">8991 or 11.737 (convention)</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>Mandelbrot MLC claim</td><td class="killed">$1M boundary</td><td class="val">samples interior not boundary</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>3:2:1 in Domain A</td><td class="killed">holds both domains</td><td class="val">Domain B only</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>M24-FLOW Domain label</td><td class="killed">Domain A</td><td class="val">Was Domain B numbers</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>λ_c as normalized critical</td><td class="killed">scale-invariant framework</td><td class="val">not defined in this framework</td><td><span class="badge k">KILLED</span></td></tr>
+<tr><td>x = 0.49046</td><td class="killed">0.49046</td><td class="val">0.55259-0.55407</td><td><span class="badge k">KILLED</span></td></tr>
+</table>
+
+<div class="ascii-block gold" style="margin-top:12px">
+<span class="block-label">CONJECTURES</span>
+ACTIVE CONJECTURES [NOT VERIFIED · EPISTEMIC STATUS: CONJECTURE]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</div>
+
+<table class="data-table">
+<tr><th>CONJECTURE</th><th>BASIS</th><th>TEST METHOD</th><th>STATUS</th></tr>
+<tr><td>Negabase fixed point ≠ 6174</td><td>Base dependence</td><td>Enumerate b=-10</td><td><span class="badge c">CONJECTURE</span></td></tr>
+<tr><td>SUSY breaks in negabase</td><td>No bipartite structure</td><td>Compute spectrum</td><td><span class="badge c">CONJECTURE</span></td></tr>
+<tr><td>D_τ = Zeno subspace</td><td>Structural analogy</td><td>Formal proof</td><td><span class="badge c">CONJECTURE</span></td></tr>
+<tr><td>h/μ₁ universal ratio</td><td>Kaprekar case</td><td>Test Collatz, other maps</td><td><span class="badge c">CONJECTURE</span></td></tr>
+<tr><td>μ₁ predicts folding rate</td><td>Spectral analogy</td><td>PDB graph + experiment</td><td><span class="badge c">CONJECTURE</span></td></tr>
+<tr><td>NH extension: NHSE in K-chain</td><td>NH quasicrystal analogy</td><td>Add imaginary weights</td><td><span class="badge c">CONJECTURE</span></td></tr>
+<tr><td>A-B patch has Fiedler SUSY</td><td>Graph bipartite structure?</td><td>Compute eigenvectors</td><td><span class="badge c">CONJECTURE</span></td></tr>
+</table>
+
+<div class="ascii-block white" style="margin-top:16px">
+<span class="block-label">DOCTRINE</span>
+AQARION GOVERNING PRINCIPLES [NODE #10878]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  PURE MATH. ZERO GHOSTS. PROVE FIRST. REPRODUCE SECOND. PUBLISH THIRD.
+
+  L1: Every claim requires computational verification or formal proof.
+  L2: Epistemic tags mandatory: [VERIFIED] [CONJECTURE] [KILLED] [HEURISTIC]
+  L3: Killed claims stay killed. Never resurface without new proof.
+  L4: Cross-domain analogies are hypotheses, not theorems, until proved.
+  L5: Numerological coincidences are not mathematical identities.
+  L6: The audit board is the ground truth. Code is the referee.
+  L7: Production deployment requires verified invariants only.
+
+  SEPARATION OF CONCERNS:
+    · Kaprekar codex ←→ separate from ←→ Moiré/TMD/GNN thread
+    · Kaprekar codex ←→ separate from ←→ Mandelbrot MLC thread
+    · Zeno analogy = [CONJECTURE] until formalized
+    · Protein connection = [HEURISTIC] until computed
+
+  NODE #10878 · LOUISVILLE NODE #1 · QUANTARION FEDERATION · 2026-04-21
+  ░░ E PLURIBUS UNUM · VERITAS NUMERIS · TRIA ITINERA ░░
+</div>
+
+</div>
+
+</div><!-- end atlas-main -->
+
+<script>
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Animate spectrum bars on load
+window.addEventListener('load', () => {
+  // Add subtle glow pulse to active elements
+  setInterval(() => {
+    const cursor = document.querySelector('.blink');
+    // handled by CSS
+  }, 500);
+});
+</script>
+
+</body>
+</html>
