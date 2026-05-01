@@ -1,0 +1,20 @@
+graph LR
+    IMG["Image Graph<br/>136 nodes<br/>Adjacency A"]
+    LAP["Laplacian L<br/>= D - A"]
+    EIG["Eigendecomposition<br/>8 non-zero eigs"]
+    CLUST["Spectral Clustering<br/>k-means on eigenvecs"]
+    PART["Recovered Partition<br/>20 clusters"]
+    TAU["τ-Shells<br/>95.6% purity"]
+    
+    IMG --> LAP
+    LAP --> EIG
+    EIG --> CLUST
+    CLUST --> PART
+    PART --> TAU
+    
+    style IMG fill:#e3f2fd
+    style LAP fill:#bbdefb
+    style EIG fill:#90caf9
+    style CLUST fill:#64b5f6
+    style PART fill:#42a5f5
+    style TAU fill:#2196f3,color:#fff
