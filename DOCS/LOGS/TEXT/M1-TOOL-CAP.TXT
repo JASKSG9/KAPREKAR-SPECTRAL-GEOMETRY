@@ -1,0 +1,58 @@
+
+---
+
+## TOOL CAPABILITIES MATRIX
+
+| Capability | Claude | Deepseek | Grok | Perplexity | Gemini | Gemini 2.0 |
+|:----------:|:------:|:--------:|:----:|:----------:|:------:|:---------:|
+| Formal Proofs | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Code Generation | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Numerical Analysis | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| Edge Case Testing | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |
+| Web Search | ⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| Visualization | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Documentation | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Synthesis | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+
+---
+
+## ACKNOWLEDGMENTS
+
+### Research Support
+- Anthropic (Claude infrastructure)
+- Deepseek (computational resources)
+- xAI (Grok access)
+- Perplexity (web search integration)
+- Google (Gemini & Gemini 2.0)
+
+### Mathematical References
+- Perron-Frobenius Theory (spectral methods)
+- Davis-Kahan Theorem (perturbation bounds)
+- Cheeger Inequality (graph conductance)
+- Markov Chain Theory (mixing times)
+
+### Computational Libraries
+- NumPy (numerical computing)
+- SciPy (scientific computing)
+- scikit-learn (machine learning)
+- Matplotlib (visualization)
+- Graphviz (graph rendering)
+
+---
+
+## FUTURE COLLABORATION OPPORTUNITIES
+
+We welcome contributions from:
+- **Mathematicians**: Formal proofs, conjecture verification
+- **Computer Scientists**: Algorithm optimization, implementation
+- **Researchers**: Cross-domain applications (protein folding, cryptography)
+- **Educators**: Tutorial development, course materials
+- **AI Systems**: Advanced analysis, novel approaches
+
+---
+
+**Last Updated**: 2026-05-01 09:16 EDT
+**Status**: Preliminary Research Release v1.0.0
+**License**: MIT (Open Source)
+
+For collaboration inquiries, contact: research@kaprekar-spectral-geometry.org
