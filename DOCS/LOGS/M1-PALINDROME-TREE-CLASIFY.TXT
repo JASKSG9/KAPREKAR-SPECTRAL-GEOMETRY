@@ -1,0 +1,30 @@
+graph TD
+    P["90 Palindromes<br/>n = abba"]
+    
+    P0["a=b<br/>1 palindrome<br/>0000"]
+    P1["a≠b<br/>89 palindromes"]
+    
+    P0 -->|K| A0["K = 0<br/>τ = 0"]
+    
+    P1 -->|K| G["3 Gateways"]
+    
+    G1["1089<br/>36 palindromes<br/>τ = 4"]
+    G2["2178<br/>26 palindromes<br/>τ = 6"]
+    G3["5445<br/>28 palindromes<br/>τ = 5"]
+    
+    G --> G1
+    G --> G2
+    G --> G3
+    
+    G1 -->|K| AT1["6174<br/>τ = 0"]
+    G2 -->|K| AT2["6174<br/>τ = 0"]
+    G3 -->|K| AT3["6174<br/>τ = 0"]
+    
+    style P0 fill:#ffcccc
+    style P1 fill:#ccffcc
+    style G1 fill:#ffffcc
+    style G2 fill:#ccccff
+    style G3 fill:#ffccff
+    style AT1 fill:#ff6b6b
+    style AT2 fill:#ff6b6b
+    style AT3 fill:#ff6b6b
