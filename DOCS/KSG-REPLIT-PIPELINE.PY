@@ -191,8 +191,4 @@ if __name__ == "__main__":
     for r in results:
         print(f"{r['name']:15} |Ω|={r['N']:6} |Im|={r['img_size']:3} τ_max={r['tau_max']} 
 
-
-https://replit.com/@QuanTarius/Kaprekar-Pipeline?s=app
-
-
-https://4690d789-5ded-4a3b-a005-137878d51479-00-1akkq7gu3cmz5.riker.replit.dev/explorer
+https://1f448049-a222-49e0-9fb8-7d9c0b17bde5-00-2upy7rn9wo6st.expo.spock.replit.dev/
