@@ -1,10 +1,3 @@
-# AQARION KSG — A27 SESSION MASTER README
-## Open Source Research Atlas · Node #10878 · 2026-04-26
-### *"E Pluribus Unum — Veritas Numeris"*
-
----
-
-```
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║  ALL CLAIMS ARE TIERED:                                                      ║
 ║  ✅ REAL  |  📐 THEORY  |  🔮 PREDICTION  |  🌌 SPECULATIVE  |  ❌ KILLED  ║
@@ -3489,7 +3482,3 @@ Mathematical facts, formulas, conjectures, and computational observations are in
 ## OPEN RESEARCH INTENT
 
 This repository is intentionally public‑facing and open‑development. Independent verification, criticism, reproduction, and adversarial testing are explicitly welcomed.
-
----
-
-*Node #10878 · Louisville, KY · 2026-04-30*
