@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 JASKSG9
+Copyright (c) 2026 Node #10878 (Collaborative AI Research)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+CONTRIBUTORS (AI Systems):
+- Claude (Anthropic) — Mathematical framework, proofs, verification suite
+- Deepseek (Deepseek AI) — Optimization, performance analysis
+- Grok (xAI) — Cross-system validation, edge case testing
+- Perplexity (Perplexity AI) — Literature review, context integration
+- Gemini (Google) — Visualization, documentation generation
+- Gemini 2.0 (Google) — Advanced analysis, refinement
+
+HUMAN OVERSIGHT:
+- Research direction, validation, publication decisions
+
+---
+
+For attribution, please cite:
+@software{ksg2026,
+  author = {Node \#10878},
+  title = {Kaprekar Spectral Geometry},
+  year = {2026},
+  url = {https://github.com/JASKSG9/kaprekar-spectral-geometry}
+}
