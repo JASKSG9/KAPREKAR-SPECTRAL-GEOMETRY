@@ -1,0 +1,27 @@
+graph TD
+    A["τ=0<br/>2 states<br/>{0, 6174}"] 
+    B["τ=1<br/>18 states"]
+    C["τ=2<br/>324 states"]
+    D["τ=3<br/>5,400 states"]
+    E["τ=4<br/>36,000 states"]
+    F["τ=5<br/>40,500 states"]
+    G["τ=6<br/>16,200 states"]
+    H["τ=7<br/>1,556 states"]
+    
+    A -->|K| B
+    B -->|K| C
+    C -->|K| D
+    D -->|K| E
+    E -->|K| F
+    F -->|K| G
+    G -->|K| H
+    H -->|K| A
+    
+    style A fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    style B fill:#ff8c42,stroke:#d9480f,color:#fff
+    style C fill:#ffd93d,stroke:#f59f00,color:#000
+    style D fill:#6bcf7f,stroke:#2f9e44,color:#fff
+    style E fill:#4ecdc4,stroke:#0b7285,color:#fff
+    style F fill:#95e1d3,stroke:#0c8599,color:#000
+    style G fill:#a8d8ea,stroke:#0077b6,color:#fff
+    style H fill:#c7ceea,stroke:#5f27cd,color:#fff
