@@ -1,5 +1,32 @@
 # Kaprekar Spectral Geometry
 
++--------------------------------------------------------------------------+
+|                    KAPREKAR SPECTRAL GEOMETRY (KSG)                     |
++--------------------------------------------------------------------------+
+
+KSG is a LUT-accelerated DIGraph framework designed to analyze discrete dynamical systems through structured graph construction and spectral decomposition. At its core, it converts digit-rewrite or iterative transformation rules into a directed weighted graph, then studies the induced Laplacian spectrum to detect when the system collapses into a low-dimensional geometric regime. In this setting, quotient partitions (τ-classes) act as structural compressions of the state space, allowing occupancy measures, transition weights, and spectral eigenmodes to be compared on a shared geometric footing. The framework is not asserting universality; rather, it provides a computational lens for identifying rank-1 spectral collapse behavior in finite dynamical systems, where dynamics, distribution, and diffusion align along a dominant latent structure.
+
+
+   RAW STATES
+       ↓
+   LUT INDEXING
+       ↓
+   DIGRAPH CONSTRUCTION
+       ↓
+   LAPLACIAN SPECTRUM
+       ↓
+   STRUCTURAL COLLAPSE DETECTION
+
+
+Key idea:
+If  occupancy  ≈  spectral mode  ≈  τ-geometry
+then system behaves like a 1D latent flow embedded in higher dimension.
+
++--------------------------------------------------------------------------+
+|   OUTPUT: Detects whether a system exhibits rank-1 spectral collapse    |
+|           via alignment of occupancy, τ-structure, and eigenmodes.      |
++--------------------------------------------------------------------------+
+
 **A rigorous mathematical analysis of the Kaprekar routine (d=4, b=10) using spectral graph theory, with applications to discrete dynamical systems and protein structure prediction.**
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
