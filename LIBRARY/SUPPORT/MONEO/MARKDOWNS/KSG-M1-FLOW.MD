@@ -3831,3 +3831,7 @@ Every claim is tiered. Every mistake is documented. Every boundary is hard.
 Out of many, one — truth through numbers.
 τ = exact · Spectrum = probe · Paradox = resolved.
 AQARION Node 10878 · 2026‑04‑26
+
+curl https://huggingface.co/spaces/Aqarion-TB13/KAPREKAR/agents.md
+https://huggingface.co/spaces/Aqarion-TB13/KAPREKAR/resolve/main/FLOWS/KSG-M1-FLOW.MD
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/LIBRARY/SUPPORT/MONEO/MARKDOWNS/KSG-M1-FLOW.MD
