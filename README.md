@@ -1,8 +1,15 @@
-# Kaprekar Spectral Geometry
+# Kaprekar Spectral Geometry (KSG)
 
-+--------------------------------------------------------------------------+
-|                    KAPREKAR SPECTRAL GEOMETRY (KSG)                     |
-+--------------------------------------------------------------------------+
+Research program studying spectral, combinatorial, and quotient-graph
+structures induced by Kaprekar dynamical systems.
+
+Current focus:
+- semiconjugacy quotient structure
+- weighted path graph constructions
+- spectral graph invariants
+- finite-state dynamical geometry
+
+~~~
 
 KSG is a LUT-accelerated DIGraph framework designed to analyze discrete dynamical systems through structured graph construction and spectral decomposition. At its core, it converts digit-rewrite or iterative transformation rules into a directed weighted graph, then studies the induced Laplacian spectrum to detect when the system collapses into a low-dimensional geometric regime. In this setting, quotient partitions (τ-classes) act as structural compressions of the state space, allowing occupancy measures, transition weights, and spectral eigenmodes to be compared on a shared geometric footing. The framework is not asserting universality; rather, it provides a computational lens for identifying rank-1 spectral collapse behavior in finite dynamical systems, where dynamics, distribution, and diffusion align along a dominant latent structure.
 
@@ -848,8 +855,14 @@ classifiers = [
 Homepage = "https://github.com/JASKSG9/kaprekar-spectral-geometry"
 Documentation = "https://kaprekar-spectral-geometry.readthedocs.io"
 Repository = "https://github.com/JASKSG9/kaprekar-spectral-geometry.git"
-Issues = "https://github.com/JASKSG9/kaprekar-spectral-geometry/issues"
+Issues =
+
+"https://github.com/JASKSG9/kaprekar-spectral-geometry/issues"
+
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--cov=src --cov-report=html --cov-report=term-missing"
+
+
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
