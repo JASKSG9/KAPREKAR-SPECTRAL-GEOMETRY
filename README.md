@@ -121,10 +121,10 @@ higher-digit spectral asymptotics
 
 
 
-
-
 Status
 
 
 Active independent research project.
 Numerical claims are being progressively audited, corrected, and formalized.
+
+This project self-corrects aggressively.
