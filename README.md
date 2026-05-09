@@ -1,5 +1,7 @@
 # Kaprekar Spectral Geometry (KSG)
 
+A non-normal operator admits a family of observable-dependent spectral measures induced by resolvent functionals; their overlap, quantified by Ω, defines a continuous transition from spectral monism to split-dominance.
+
 Research program studying spectral, combinatorial, and quotient-graph
 structures induced by Kaprekar dynamical systems.
 Kaprekar Spectral Geometry (KSG)
