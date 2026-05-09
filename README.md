@@ -128,3 +128,186 @@ Active independent research project.
 Numerical claims are being progressively audited, corrected, and formalized.
 
 This project self-corrects aggressively.
+
+~~~
+
+
+# UBF‑3R: Empirical Conductance Geometry & Spectral Localization
+
+**Reversible birth–death transport operators on weighted path graphs**  
+**Unified Bottleneck Framework – 3rd Revision**
+
+[![arXiv](https://img.shields.io/badge/arXiv-XXXX.XXXXX-red)](https://arxiv.org/abs/XXXX.XXXXX)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+---
+
+## Abstract
+
+We construct a class of **reversible birth–death transport operators** induced by empirical conductance geometries on weighted path graphs. Spectral properties – spectral gap, eigenvector localization, and bottleneck formation – are fully determined by the underlying conductance field. In the continuum limit, the operators converge to a **Sturm–Liouville diffusion** with log‑conductance drift. A **gauge transformation** reveals an equivalent **Schrödinger operator** whose effective potential encodes localization structure directly from geometry.
+
+Quasi‑periodic conductance deformations generate hierarchical bottlenecks, spectral‑gap collapse, and failure of coarse‑grained lumpability. This provides a unified framework connecting reversible Markov processes, spectral graph theory, and localization phenomena in a data‑driven setting.
+
+**Key results (5 core theorems, numerically validated):**
+
+1. **Bottleneck exponent** – μ₁ ∝ ε⁰·⁷⁴² (single edge), μ₁ ∝ ε⁰·⁸⁰⁰ (two edges), independent of Laplacian normalization.
+2. **Gauge transform** – Normalized Laplacian ↔ discrete Schrödinger with V_eff = ¼(∇U)² – ½ΔU.
+3. **Localization transition** – Lyapunov γ > 0 at β_c ≈ 0.034; IPR 50% at β_c ≈ 0.441.
+4. **Lumpability obstruction** – ‖PΠ – ΠP‖₂ ≥ C > 0 uniformly for quasi‑periodic conductances.
+5. **Mosco convergence** – Discrete Dirichlet forms converge at O(h²) to continuum Sturm–Liouville.
+
+---
+
+## Repository Structure
+
+```
+
+.
+├── README.md                      # You are here
+├── TOC.md                         # Table of contents
+├── ABSTRACT.md                    # Extended abstract
+├── DEFINITIONS.md                 # Formal definitions
+├── CLAIMS.md                      # Core claims (8 statements)
+├── THEOREMS.md                    # 5 theorems with full statements
+├── SCRIPTS.md                     # How to run and reproduce
+├── PDF.md                         # LaTeX source for PDF generation
+├── ASCII_ATLAS.md                 # Pure ASCII diagrams (terminal‑friendly)
+├── DIAGRAMS.md                    # Mermaid & other rich diagrams
+├── ubf3r_final_suite.py           # Main executable script
+├── figures/
+│   └── ubf3r_final_unified_suite.png
+└── data/
+└── ubf3r_data_manifest.json   # All numerical results (JSON)
+
+```
+
+---
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ubf3r.git
+cd ubf3r
+
+# Install dependencies
+pip install numpy scipy matplotlib
+
+# Run the full suite
+python ubf3r_final_suite.py
+```
+
+Expected console output (excerpt):
+
+```
+UBF-3R FINAL SUITE — RUNNING...
+β	IPR		λ₁		γ		Agmon
+0.00	0.0050	0.0987	0.000000	0.0000
+0.03	0.0061	0.0985	0.000001	0.0012
+...
+Single‑edge: normalized exponent = 0.742, unnormalized = 0.742
+Two‑edge:   normalized exponent = 0.800, unnormalized = 0.800
+```
+
+Generated figure: figures/ubf3r_final_unified_suite.png (unified β‑sweep + Cheeger scaling panels).
+
+---
+
+Five Core Theorems (Short Form)
+
+# Theorem Key Numerical Value
+1 Bottleneck exponent – single weak edge μ₁ ∝ ε⁰·⁷⁴²
+2 Gauge transform – ℒ ≅ –Δ + V_eff V_eff = ¼(U′)² – ½U″, U = –log π
+3 Localization transition – Lyapunov γ β_c (γ>0) ≈ 0.034; IPR 50% ≈ 0.441
+4 Lumpability obstruction – coarse‑graining fails ‖PΠ – ΠP‖₂ ≥ 0.65 for all n
+5 Mosco convergence – discrete → continuum Error ∝ n⁻²·⁰³
+
+For full statements, see THEOREMS.md.
+
+---
+
+Visual Overview
+
+ASCII Pipeline (simplified)
+
+```
+Empirical c_i → A, deg, π → L_norm = I−D^{-1/2}AD^{-1/2}
+       ↓
+Eigenpairs (λ_k, ψ_k)
+       ↓
+IPR ← λ₁ ← V_eff ← Lyapunov γ
+       ↓
+Agmon decay ← Mosco limit O(h²) → Sturm–Liouville
+```
+
+Mermaid Flow (rich diagrams available in DIAGRAMS.md)
+
+```mermaid
+flowchart TD
+    A[Empirical conductances c_i] --> B[Build A, deg, π = deg/∑deg]
+    B --> C[L_norm = I - D^{-1/2} A D^{-1/2}]
+    C --> D[Eigenpairs (λ_k, ψ_k)]
+    D --> E[Extract λ₁, λ₂, ψ₁, ψ₂]
+    E --> F[Dirichlet form ℰ(ψ) = ½ Σ A_ij (ψ_i - ψ_j)²]
+    B --> K[U = -log π]
+    K --> L[V_eff = ¼(∇U)² - ½ΔU]
+    L --> M[Lyapunov γ from transfer matrix]
+    M --> N[Localization transition β_c ≈ 0.034]
+    C --> O[Mosco limit: O(h²) convergence]
+    O --> P[Sturm–Liouville continuum]
+```
+
+---
+
+Reproducibility
+
+· All numerical results are generated by ubf3r_final_suite.py.
+· The script is self‑contained (only NumPy, SciPy, Matplotlib).
+· Every figure and table in the paper can be reproduced by running the script.
+· A complete JSON manifest of all computed values is saved to data/ubf3r_data_manifest.json.
+
+---
+
+Citation
+
+If you use UBF‑3R in your research, please cite:
+
+```bibtex
+@article{Skaggs2026UBF3R,
+  title={UBF-3R: Empirical Conductance Geometry, Spectral Localization, and the Sturm--Liouville Continuum Limit},
+  author={Skaggs, James Aaron},
+  journal={arXiv preprint},
+  year={2026}
+}
+```
+
+---
+
+License
+
+MIT License – see LICENSE file.
+
+---
+
+Contact & Contributing
+
+Issues and pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Maintainer: James Aaron Skaggs
+GitHub: @JASKSG9
+
+---
+
+Acknowledgements
+
+This work builds on the Kaprekar Spectral Geometry (KSG) project and incorporates insights from:
+
+· Wang, Yu, Sun & Zhai (2025) – driven dynamics in the Aubry–André model
+· Knyazev (2025) – signed Laplacian inertia
+· Monchietti et al. (2025) – negative probabilities and contextuality
+· Bradley (2025) – p‑adic theta‑diffusion
+
+All errors and interpretations are my own,
+   THIS PROJECT UPDATES AGRESSIVELY
