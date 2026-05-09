@@ -1,5 +1,7 @@
 # Kaprekar Spectral Geometry (KSG)
 
+    The resolvent defines a non-unique observable spectrum in non-normal systems.
+
 A non-normal operator admits a family of observable-dependent spectral measures induced by resolvent functionals; their overlap, quantified by Ω, defines a continuous transition from spectral monism to split-dominance.
 
 Research program studying spectral, combinatorial, and quotient-graph
