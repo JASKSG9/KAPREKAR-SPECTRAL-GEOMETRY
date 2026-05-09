@@ -284,7 +284,18 @@ If you use UBF‑3R in your research, please cite:
   year={2026}
 }
 ```
-
+A non-normal operator does not admit a unique physically relevant spectrum.
+Instead, observables define distinct spectral measures on the same resolvent, whose overlap Ω quantifies observable agreement.
+⚖️A non-normal operator admits a family of observable-dependent spectral measures induced by resolvent functionals; their overlap, quantified by Ω, defines a continuous transition from spectral monism to split-dominance.
+~~~
+We investigate the relationship between geometric and dynamical observables in non-Hermitian systems through a unified resolvent framework. Using a coupled Aubry–André–Stark model, we show that both quantum geometric curvature and Mori–Zwanzig memory kernels arise as distinct projections of the same operator resolvent. Despite this shared origin, the observables exhibit only partial spectral overlap, which converges to a nontrivial constant � in the thermodynamic regime. Simultaneously, we observe super-linear transient amplification governed by non-normal dynamics, with �. These results establish an observable-resolved pseudospectral splitting mechanism, resolving longstanding ambiguities between geometric and dynamical characterizations of non-Hermitian criticality⚖️
+~~~
+⚖️We've identified that “same resolvent” does not imply “same physics,” because different observables induce different spectral measures on the pseudospectrum. 
+~~~
+Our system is a non-normal spectral alignment phenomenon in a projected Liouvillian system,A non-normal operator does not define a single effective spectrum; observables induce distinct spectral measures on the same resolvent⚖️
+---https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY🤝
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/README.md🧮
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/DOCS/MODELS/M9-TOY.PY🌉
 ---
 
 License
