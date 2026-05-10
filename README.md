@@ -1,12 +1,9 @@
-⚖️#KAPREKAR-SPECTRAL-GEOMETRY#⚖️
+⚖️KAPREKAR-SPECTRAL-GEOMETRY⚖️
 
-ORSM⚖️ is the study of a Hilbert bundle � equipped with a resolvent-induced pullback metric �, where observables are sections whose induced metric energies define spectral measures, and observable splitting corresponds to geometric decoherence of these sections under the bundle metric.
-~~~
-In the ORSM–Finsler formulation of non-self-adjoint dynamics, the pseudospectral density is the first-order gradient field of the resolvent norm over the spectral parameter space, while the flag curvature is the second-order variation of the same resolvent-induced metric along observable directions. Consequently, pseudospectral ridges correspond to curvature singularities in the base manifold, and observable splitting arises from anisotropic curvature concentration in the Finsler fiber geometry
-
-~~~
-
-PT symmetry is invariance of a physical system under combined spatial reflection (P) and time reversal (T), allowing certain non-Hermitian systems to still have real, physically meaningful spectra 
+      #KSG/#KSD/#KSB#
+      
+   # OPEN SOURCE RESEARCH #   
+   
 
 # ORSM – Observable‑Resolved Spectral Measures
 
