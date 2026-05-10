@@ -4,8 +4,7 @@
       
    # OPEN SOURCE RESEARCH #   
 
-
-# ORSM – Observable‑Resolved Spectral Measures
+# Observable‑Resolved Spectral Measures
 
 [![arXiv](https://img.shields.io/badge/arXiv-2605.xxxxx-red)](https://arxiv.org/abs/2605.xxxxx)
 [![DOI](https://img.shields.io/badge/DOI-10.xxxxx/xxxxx-blue)](https://doi.org/10.xxxxx/xxxxx)
@@ -411,3 +410,5 @@ Final Statement (for citation & record)
 ORSM v3.0 – May 2026
 James Aaron Skaggs
 [End of Documentation]
+
+---
