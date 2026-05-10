@@ -1,3 +1,24 @@
+# ORSM: Observable-Resolved Spectral Measures
+
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243.svg?logo=numpy&logoColor=white)](https://numpy.org/)
+[![SciPy](https://img.shields.io/badge/SciPy-Analysis-8CAAE6.svg?logo=scipy&logoColor=white)](https://scipy.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-Plotting-11557C.svg?logo=python&logoColor=white)](https://matplotlib.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Research%20Prototype-orange.svg)]()
+
+**ORSM** studies how different physical observables sample the same non-normal resolvent differently, producing observable‑dependent spectral measures.  
+The framework quantifies overlap with the invariant \(\Omega(A,B)\in[0,1]\) and reveals that partial splitting, not universal decoherence, is the generic behaviour.
+
+## Demo
+
+![ORSM demo](demo/orsm-demo.gif)
+
+*Resolvent sweep over the pseudospectrum, observable overlap \(\Omega\), and the separation between edge and bulk responses in the Hatano‑Nelson model.*
+
+### Visual summary
+Edge and bulk observables sample different resolvent sectors, producing measurable overlap splitting in non‑normal dynamics (NHSE, Kaprekar dynamics, PT‑symmetric systems).
+
 # JAS/KSG Research Organization README
 
 **JAS Global Open Research Federation**  
