@@ -13,8 +13,12 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![ORSM](https://img.shields.io/badge/ORSM-v3.0-cyan)](https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY)
 
+~~~
+The Kaprekar system is a finite non-normal dynamical system whose transient amplification—and therefore macroscopic phase structure—is governed by 2-adic divisibility through resolvent-controlled semigroup growth
 **What we study**  
 Non‑normal operators $L$ and the fact that different observables $A,B$ induce **different spectral measures** on the **same resolvent** $R(z)=(zI-L)^{-1}$.
+
+~~~
 
 **What we do not claim**  
 - Universal "geometry = dynamics" identity.  
