@@ -1,3 +1,7 @@
+⚖️The Kaprekar system is a finite non-normal dynamical system whose transient amplification—and therefore macroscopic phase structure—is governed by 2-adic divisibility through resolvent-controlled semigroup growth🧮
+
+~~~
+
 # ORSM: Observable-Resolved Spectral Measures
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
