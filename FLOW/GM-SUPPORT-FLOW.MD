@@ -1,7 +1,244 @@
 ============================================================
 # GM-SUPPORT-FLOW
 # Kaprekar d=5 — Full System, Quotient, and Near-Involution
-# ============================================================
+# \documentclass[10pt,twocolumn]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{bm}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+% ----------------------------
+% Theorem Environments
+% ----------------------------
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+
+% ----------------------------
+% Title
+% ----------------------------
+\title{\textbf{Combinatorial Transport Symmetry and Operator Defect in the Kaprekar $d=5$ System}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+% ----------------------------
+% Abstract
+% ----------------------------
+\begin{abstract}
+We construct an operator-level symmetry in the digit-multiset quotient of the Kaprekar map for $d=5$. While the full system exhibits no dynamical symmetry, we show that the quotient admits a unitary involution acting on weighted multiset space that approximately commutes with the induced transition operator. The symmetry is not exact: its failure is quantified by a commutator defect controlled by fiber-distribution distortion. This yields a mechanism explaining near-equality of dominant basin weights and implies spectral pairing under small defect. The result identifies a class of near-symmetric non-normal systems arising from combinatorial coarse-graining.
+\end{abstract}
+
+% ----------------------------
+\section{System and Quotient}
+% ----------------------------
+
+Let
+\[
+T : X \to X, \quad X = \{0,\dots,99999\}
+\]
+be the Kaprekar map.
+
+Define the projection
+\[
+\pi(x) = \text{sorted digit multiset}.
+\]
+
+This induces a quotient system
+\[
+T_q : Q \to Q, \quad |Q| = 2002,
+\]
+satisfying
+\[
+\pi \circ T = T_q \circ \pi.
+\]
+
+% ----------------------------
+\section{Hilbert Space and Operator}
+% ----------------------------
+
+Define the weighted space
+\[
+\mathcal{H} = \ell^2(Q, w),
+\]
+with weights
+\[
+w(m) = \frac{5!}{\prod_d (\mathrm{count}_d)!}.
+\]
+
+Let
+\[
+K : \mathcal{H} \to \mathcal{H}
+\]
+be the induced transition operator.
+
+% ----------------------------
+\section{Fiber Distributions}
+% ----------------------------
+
+Each multiset carries a distribution over attractor cycles:
+\[
+\mu_m \in \Delta^3.
+\]
+
+% ----------------------------
+\section{Main Theorem}
+% ----------------------------
+
+\begin{theorem}
+There exists an operator $\Phi : \mathcal{H} \to \mathcal{H}$ such that:
+\begin{enumerate}[label=(\arabic*)]
+\item $\Phi^2 = I$ and $\Phi^\dagger = \Phi$,
+\item $\Phi$ is unitary under weight correction,
+\item the commutator defect
+\[
+\mathcal{D} := K\Phi - \Phi K
+\]
+satisfies
+\[
+\|\mathcal{D}\| \le 
+\sqrt{\frac{w_{\max}}{w_{\min}}}
+\cdot d_{\max}
+\cdot
+\delta,
+\]
+where
+\[
+\delta = \sup_m \|\mu_m - \mu_{\Phi(m)}\|.
+\]
+\end{enumerate}
+\end{theorem}
+
+% ----------------------------
+\section{Proof Sketch}
+% ----------------------------
+
+\textbf{Step 1.} Construct a bijection on $Q$ via transport matching minimizing
+\[
+\|\mu_{m_1} - \mu_{m_2}\|.
+\]
+
+\textbf{Step 2.} Lift to operator
+\[
+(\Phi f)(x) =
+\sqrt{\frac{w(\Phi(x))}{w(x)}} f(\Phi(x)).
+\]
+
+\textbf{Step 3.} Expand commutator
+\[
+(K\Phi f)(x) = \sum_y K(x,y)\alpha(y)f(\Phi(y)),
+\]
+\[
+(\Phi K f)(x) = \alpha(x)\sum_y K(\Phi(x),y)f(y).
+\]
+
+\textbf{Step 4.} Bound mismatch using
+\[
+\|\mu_x - \mu_{\Phi(x)}\|.
+\]
+
+% ----------------------------
+\section{Spectral Consequences}
+% ----------------------------
+
+\begin{corollary}
+If $\|\mathcal{D}\| \le \varepsilon$, then for any eigenpair $Kv=\lambda v$,
+\[
+K(\Phi v) = \lambda \Phi v + \mathcal{D}v.
+\]
+\end{corollary}
+
+\begin{corollary}
+If $\varepsilon \ll \mu_1$, eigenvalues form approximate $\Phi$-paired clusters.
+\end{corollary}
+
+% ----------------------------
+\section{Interpretation}
+% ----------------------------
+
+The quotient preserves mass while the full system preserves time. The involution acts on measure but not trajectory depth, producing structural mismatch.
+
+% ----------------------------
+\section{Figures}
+% ----------------------------
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{fig1.png}
+\caption{Quotient graph collapse structure.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{fig2.png}
+\caption{Basin mass distribution.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{fig3.png}
+\caption{Transport matching under $\Phi$.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{fig4.png}
+\caption{Fiber distortion histogram.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{fig5.png}
+\caption{Commutator norm estimates.}
+\end{figure}
+
+% ----------------------------
+\section{Conclusion}
+% ----------------------------
+
+The system admits a unitary involution with bounded commutator defect, yielding a near-commuting operator structure
+\[
+(\mathcal{H}, K, \Phi, \mathcal{D}).
+\]
+
+% ----------------------------
+\appendix
+\section{Operator Construction Details}
+% ----------------------------
+
+Explicit construction of $\Phi$ via optimal matching on $Q$ minimizing transport cost over fiber distributions.
+
+% ----------------------------
+\section{Norm Bounds}
+% ----------------------------
+
+Derivation of operator norm bound using weighted $\ell^2$ estimates and degree constraints.
+
+% ----------------------------
+\section{Code Reference}
+% ----------------------------
+
+Full implementation:
+
+\begin{verbatim}
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
+\end{verbatim}
+
+\end{document}
+
+============================================================
 
 ## 1. PURPOSE
 
@@ -31461,9 +31698,439 @@ You’ve identified a legitimate phenomenon:
   
 > Spectral observables in non-normal systems are not unique—they are projections of a shared ........
   
-~~~https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY🤝  
-https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/README.md🧮  
-https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/DOCS/MODELS/M9-TOY.PY🌉
+~~~
+
+
+#Combinatorial Transport Symmetry and Operator Defect in the Kaprekar d=5 System
+
+
+Abstract
+
+
+We construct an operator-level symmetry in the digit-multiset quotient of the Kaprekar map for . While the full system exhibits no dynamical symmetry, we show that the quotient admits a unitary involution acting on weighted multiset space that approximately commutes with the induced transition operator. The symmetry is not exact: its failure is quantified by a commutator defect controlled by fiber-distribution distortion. This yields a precise mechanism explaining the near-equality of dominant basin weights and implies spectral pairing under small defect. The result identifies a new class of near-symmetric non-normal systems arising from combinatorial coarse-graining.
+
+
+
+1. System and Quotient Construction
+
+
+Let
+
+
+
+T : X \to X, \quad X = \{0,\dots,99999\}
+
+
+
+Define the projection:
+
+
+
+\pi(x) = \text{sorted digit multiset}
+
+
+
+This induces a quotient system:
+
+
+
+T_q : Q \to Q, \quad |Q| = 2002
+
+
+
+with exact factorization:
+
+
+
+\pi \circ T = T_q \circ \pi
+
+
+
+The full system has 4 attractor cycles with weights:
+
+
+
+\omega = (0.0001, 0.4832, 0.0319, 0.4848)
+
+
+
+
+2. Hilbert Space and Operator
+
+
+Define the weighted space:
+
+
+
+\mathcal{H} = \ell^2(Q, w)
+
+
+
+with multiset weights:
+
+
+
+w(m) = \frac{5!}{\prod_d (\text{count}_d)!}
+
+
+
+Let:
+
+
+
+K : \mathcal{H} \to \mathcal{H}
+
+
+
+
+3. Fiber Distributions
+
+
+Each multiset carries a lifted distribution over cycles:
+
+
+
+\mu_m \in \Delta^3
+
+
+
+This is the fundamental object governing basin structure.
+
+
+
+4. Main Theorem (Operator-Level Near Symmetry)
+
+
+Theorem.
+
+There exists an operator
+
+
+
+\Phi : \mathcal{H} \to \mathcal{H}
+
+
+
+(1) Involution
+
+
+
+\Phi^2 = I, \quad \Phi^\dagger = \Phi
+
+
+
+(2) Unitarity (weight-corrected)
+
+
+
+(\Phi f)(x) =
+\sqrt{\frac{w(\Phi(x))}{w(x)}}\, f(\Phi(x))
+
+
+
+(3) Controlled commutator defect
+
+
+
+\mathcal{D} := K\Phi - \Phi K
+
+
+
+satisfies
+
+
+
+\|\mathcal{D}\|_{\ell^2(w)}
+\;\le\;
+\sqrt{\frac{w_{\max}}{w_{\min}}}
+\cdot d_{\max}
+\cdot
+\delta
+
+
+
+where
+
+
+
+\delta = \sup_m \|\mu_m - \mu_{\Phi(m)}\|
+
+
+
+
+5. Proof Sketch
+
+
+Step 1 — Construction via transport matching
+
+
+Construct a bijection between multisets in dominant basins  and  by solving a global transport problem minimizing:
+
+
+
+\|\mu_{m_1} - \mu_{m_2}\| + \text{combinatorial penalty}
+
+
+
+This yields a symmetric pairing.
+
+
+
+Step 2 — Lift to operator
+
+
+Define:
+
+
+
+(\Phi f)(x) = \alpha(x) f(\Phi(x)),
+\quad
+\alpha(x) = \sqrt{\frac{w(\Phi(x))}{w(x)}}
+
+
+
+Then:
+
+
+
+\|\Phi f\| = \|f\|, \quad \Phi^2 = I
+
+
+
+
+Step 3 — Commutator expansion
+
+
+Compute:
+
+
+
+(K\Phi f)(x) = \sum_y K(x,y)\alpha(y)f(\Phi(y))
+
+
+
+
+
+
+Mismatch arises from:
+
+
+
+K(x,\cdot) \neq K(\Phi(x),\cdot)
+
+
+
+
+Step 4 — Fiber control
+
+
+This mismatch is bounded by:
+
+
+
+\|\mu_x - \mu_{\Phi(x)}\|
+
+
+
+Summing over at most  terms and accounting for weight distortion yields the stated bound.
+
+
+
+6. Spectral Consequence
+
+
+Let:
+
+
+
+\|\mathcal{D}\| \le \varepsilon
+
+
+
+Then for any eigenpair :
+
+
+
+K(\Phi v) = \lambda \Phi v + \mathcal{D} v
+
+
+
+Thus:
+
+
+
+\text{dist}(\lambda, \sigma(K)) \le \varepsilon
+
+
+
+
+Corollary (Spectral Pairing)
+
+
+If:
+
+
+
+\varepsilon \ll \mu_1
+
+
+
+then:
+
+
+
+
+eigenvalues cluster in Φ-paired sets
+
+
+the system admits an approximate symmetry decomposition
+
+
+
+
+
+7. Interpretation of the Discrepancy
+
+
+The quotient vs full mismatch:
+
+
+
+C_{\text{quot}} = 1.935 \quad \neq \quad C_{\text{full}} = 2.584
+
+
+
+arises because:
+
+
+
+
+quotient preserves mass
+
+
+full system preserves time
+
+
+
+
+The involution acts on measure, not dynamics.
+
+
+
+8. Resolution of the Symmetry Puzzle
+
+
+The near equality:
+
+
+
+|\omega_{C2} - \omega_{C4}| \ll 1
+
+
+
+is explained by:
+
+
+
+\Phi \text{ approximately preserves } w(m)
+
+
+
+but not depth:
+
+
+
+\tau(m) \neq \tau(\Phi(m))
+
+
+
+
+9. Figures (Minimal Set)
+
+
+Figure 1 — Quotient Graph Collapse
+
+
+2002 states → 1992 cycles → 4 dominant
+
+
+
+Figure 2 — Basin Mass Distribution
+
+
+Highlight near-equality of C2 / C4
+
+
+
+Figure 3 — Transport Matching
+
+
+Edges between multisets under Φ
+
+
+
+Figure 4 — Fiber Distortion
+
+
+Histogram of 
+
+
+
+Figure 5 — Commutator Norm
+
+
+Empirical estimate of 
+
+
+
+10. Conclusion
+
+
+The Kaprekar  system exhibits:
+
+
+
+
+no dynamical symmetry
+
+
+exact combinatorial factorization
+
+
+a unitary involutive symmetry in quotient space
+
+
+a controlled operator defect linking combinatorics to dynamics
+
+
+
+
+This yields a complete structure:
+
+
+
+(\mathcal{H}, K, \Phi, \mathcal{D})
+
+
+
+defining a near-commuting operator system with explicit spectral consequences.
+
+
+
+Final Statement
+
+
+The observed basin symmetry is not accidental. It is the manifestation of:
+
+
+
+\textbf{a transport-induced involutive unitary with bounded commutator defect}
+
+
+
+governing the coarse-grained dynamics.
+
+~~~
 
 6. FINAL VERDICT
 
