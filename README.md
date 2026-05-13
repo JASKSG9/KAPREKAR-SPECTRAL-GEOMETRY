@@ -1,11 +1,7 @@
- ⚖️KAPREKAR
-       SPECTRAL 
-              GEOMETRY⚖️
+⚖️KAPREKAR-SPECTRAL-GEOMETRY
 
-      #KSG/#KSD/#KSB
-      
-   #OPEN-SOURCE-RESEARCH  
-   
+# Kaprekar spectral geometry reduces, under Schur collapse, to a one-dimensional birth–death operator whose Cheeger bottleneck controls μ₁, and whose inverse gap controls Kreiss amplification—placing the entire system in a spectral funnel universality class.
+
 
 > **Observable‑Resolved Spectral Measures | τ‑Filtration | Schur Reduction | Kreiss Amplification**
 
