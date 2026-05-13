@@ -1,4 +1,6 @@
-⚖️KAPREKAR-SPECTRAL-GEOMETRY⚖️
+ ⚖️KAPREKAR
+       SPECTRAL 
+              GEOMETRY⚖️
 
       #KSG/#KSD/#KSB
       
