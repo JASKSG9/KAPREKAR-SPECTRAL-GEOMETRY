@@ -1,7 +1,51 @@
-⚖️KAPREKAR-SPECTRAL-GEOMETRY
+#KAPREKAR-SPECTRAL-GEOMETRY 
 
-# Kaprekar spectral geometry reduces, under Schur collapse, to a one-dimensional birth–death operator whose Cheeger bottleneck controls μ₁, and whose inverse gap controls Kreiss amplification—placing the entire system in a spectral funnel universality class.
+#Hierarchical Non-Normal Spectral Reduction for Metastable Transport Operators
 
+#What this repository is about
+We study a class of deterministic dynamical systems — including Kaprekar‑type digit maps — and their induced functional graph operators acting on finite state spaces.
+
+#These systems admit a hierarchical decomposition in which spectral and transient behavior separate across scales:
+
+· Long‑time / spectral behavior
+    Under Schur block reduction, the operator collapses to an effective one‑dimensional birth–death (Jacobi‑type) operator.
+    Its spectral gap is controlled by a Cheeger bottleneck in the induced quotient geometry.
+· Short‑time / transient behavior
+    A non‑normal residual survives the reduction and governs transient amplification.
+    This component lives in the Schur interaction layer and drives resolvent growth, producing pseudospectral effects not captured by the eigenvalue spectrum.
+
+Why it matters
+This framework produces a separation between:
+
+· Spectral geometry (asymptotic decay, metastability, Cheeger‑controlled gaps), and
+· Pseudospectral dynamics (finite‑time amplification, Kreiss‑type growth, inter‑scale feedback).
+
+This separation emerges from a hierarchical block structure and is quantified by a coupling‑to‑gap ratio:
+
+\gamma = \frac{\text{coupling strength}}{\text{local spectral gap}}.
+
+Repository contents (summary)
+
+· Operator construction on finite functional graphs
+· Schur reduction to Jacobi‑type effective dynamics
+· Cheeger‑type inequalities on quotient chains
+· Pseudospectral analysis (resolvent norms, Kreiss constants)
+· Numerical experiments on Kaprekar maps (canonical case: b=10, d=4)
+· Empirical evidence for structured spectral separation in graded deterministic transport systems
+
+Quick start
+The central decomposition is:
+
+L = J + R,
+
+where:
+
+· J: reversible birth–death operator governing spectral structure
+· R: non‑normal residual governing transient amplification
+
+All observed behavior — spectral gaps, metastable timescales, and pseudospectral inflation — arises from this decomposition across scales.
+
+~~~
 
 > **Observable‑Resolved Spectral Measures | τ‑Filtration | Schur Reduction | Kreiss Amplification**
 
