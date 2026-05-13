@@ -1,6 +1,7 @@
 ============================================================
 # GM-SUPPORT-FLOW
 # Kaprekar d=5 — Full System, Quotient, and Near-Involution
+
 # \documentclass[10pt,twocolumn]{article}
 
 \usepackage[margin=0.75in]{geometry}
