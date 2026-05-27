@@ -1,3 +1,600 @@
+# Kaprekar Chamber Dynamics
+## Exact Piecewise-Affine Automaton Framework
+
+### TIMESTAMP-1127
+### From Spectral Overreach to Exact Symbolic Dynamics
+
+---
+
+# Overview
+
+This project studies the classical 4-digit Kaprekar map through:
+
+- exact borrow algebra,
+- quotient-state reduction,
+- symbolic chamber decomposition,
+- finite automaton dynamics,
+- exact integer affine transition operators.
+
+The project originally explored spectral/operator formulations of the Kaprekar process. Computational falsification at TIMESTAMP-1124 demonstrated that global least-squares affine fitting crossed chamber discontinuities and produced invalid spectral claims.
+
+The framework has since been rebuilt around:
+
+> exact intra-chamber derivation.
+
+The current objective is to derive one fully validated chamber cell:
+
+K(g) = Aσ g + bσ
+
+with:
+- exact symbolic arithmetic,
+- zero residual,
+- exact quotient projection,
+- exact Smith normal form.
+
+---
+
+# Central Structural Statement
+
+Kaprekar dynamics =
+finite symbolic automaton
++
+exact integer affine transition algebra
+
+This is currently the strongest defensible structural interpretation.
+
+---
+
+# Current Verified Results
+
+## Foundational Theorems [V]
+
+- Universal quotient kernel
+- Quotient factorization
+- 55-state quotient dynamics
+- Gap-simplex bijection
+- Determinant divisibility laws
+- Quotient scalar-word structure
+
+## Computational Results [V]
+
+- Complete 55-state orbit graph
+- Verified base-15 2-cycles
+- 2-cycle bases:
+  {15,16,17}
+- Arithmetic periodicity:
+  Lmax(p)=ordp(4)
+
+## Methodological Upgrade [V]
+
+The correct mathematical object is:
+
+- NOT a single global operator,
+- BUT a finite chamber automaton with exact local affine maps.
+
+---
+
+# Falsified Claims
+
+The following claims are computationally falsified:
+
+- tr(QW)=0
+- det(QW)=-16
+- det(I-QW)=-15
+- λ=±4
+- original resonance realizability theorem
+
+Cause:
+global regression crossed chamber boundaries.
+
+These claims remain falsified.
+
+---
+
+# The Exact Chamber Program
+
+Each chamber is refined as:
+
+σ=(P,C,T)
+
+where:
+- P = digit permutation structure
+- C = carry/borrow pattern
+- T = tie-order metadata
+
+Inside a refined chamber:
+- carries freeze,
+- permutations freeze,
+- subtraction structure freezes,
+
+therefore:
+the Kaprekar map becomes exactly affine.
+
+---
+
+# Blocking Milestone
+
+## One Fully Validated Chamber Cell [B]
+
+Deliverables:
+- exact chamber definition
+- exact affine operator Aσ,bσ
+- exhaustive zero-residual verification
+- exact quotient projection Qσ
+- exact determinant
+- exact Smith normal form
+
+This is the gateway milestone for:
+- chamber-word operators,
+- arithmetic resonance,
+- symbolic transition graphs,
+- modular dynamics,
+- higher-digit extensions.
+
+---
+
+# Project Structure
+
+## Foundation
+
+- README.md
+- THEOREMS_v7.md
+- EPISTEMIC_AUDIT.md
+- COMPUTATIONAL_VALIDATION.md
+
+## Core Framework
+
+- CHAMBER_AUTOMATON.md
+- EXACT_DERIVATION.md
+- RESEARCH_PROGRAM.md
+- EXECUTION_PLAN.md
+
+## Algebra
+
+- BORROW_ALGEBRA.md
+- WORD_SPECTRUM.md
+- COMPUTATION_WORKSHEET.md
+
+## Navigation
+
+- MASTER_INDEX.md
+- REVISION_SUMMARY.md
+- TIMESTAMP_1125_SUMMARY.txt
+- TIMESTAMP_1126_SUMMARY.txt
+
+---
+
+# Critical Rules
+
+DO NOT:
+- use least-squares fitting,
+- use floating-point determinants,
+- mix chambers,
+- claim spectral laws without exact derivation.
+
+DO:
+- use exact symbolic arithmetic,
+- verify zero residual exhaustively,
+- compute Smith normal forms,
+- maintain explicit epistemic status.
+
+---
+
+# Immediate Objective
+
+Derive ONE exact chamber atlas cell completely and rigorously.
+
+Everything downstream depends on this.
+
+---
+
+# Epistemic Status
+
+[V] Verified
+[B] Blocking
+[C] Candidate
+[F] Falsified
+[S] Speculative
+[H] Heuristic
+
+---
+
+Last updated:
+TIMESTAMP-1127
+
+
+
+
+CHECKPOINT.md
+
+
+# CHECKPOINT.md
+## TIMESTAMP-1127
+## Exact Chamber Derivation Checkpoint
+
+---
+
+# Current Position
+
+The project has completed a major methodological transition:
+
+FROM:
+- global approximate spectral fitting
+
+TO:
+- exact symbolic chamber automaton derivation.
+
+The earlier spectral program is no longer considered structurally valid.
+
+The exact chamber framework is now the canonical direction.
+
+---
+
+# Verified Foundation
+
+## Fully Verified [V]
+
+### Structural
+- universal quotient kernel
+- quotient factorization
+- 55-state quotient reduction
+- gap-simplex bijection
+
+### Computational
+- complete orbit graph
+- base-15 2-cycles
+- periodicity computations
+- determinant divisibility laws
+
+### Methodological
+- exact chamber automaton framework
+
+---
+
+# Falsified Claims [F]
+
+The following are permanently invalidated:
+
+- tr(QW)=0
+- det(QW)=-16
+- det(I-QW)=-15
+- λ=±4
+- regression-derived resonance theorem
+
+Reason:
+cross-chamber regression contamination.
+
+---
+
+# Blocking Milestone [B]
+
+## One Exact Chamber Cell
+
+Required deliverables:
+
+[ ] refined chamber σ=(P,C,T)
+[ ] exact integer matrix Aσ
+[ ] exact vector bσ
+[ ] zero residual for ALL states
+[ ] exact quotient operator
+[ ] determinant validation
+[ ] Smith normal form
+
+No downstream spectral/arithmetic claims proceed without this.
+
+---
+
+# Current Interpretation
+
+Kaprekar dynamics appears to be:
+
+finite symbolic automaton
++
+piecewise exact affine arithmetic dynamics.
+
+This interpretation is strongly supported.
+
+---
+
+# Immediate Computational Priorities
+
+## Priority 1 — Chamber Refinement Engine
+
+Automatically classify states by:
+- permutation,
+- carry pattern,
+- tie metadata.
+
+Output:
+σ=(P,C,T)
+
+---
+
+## Priority 2 — Exact Symbolic Solver
+
+Use:
+- SymPy matrices,
+- rational arithmetic,
+- exact symbolic solving.
+
+Avoid ALL floating arithmetic.
+
+---
+
+## Priority 3 — Exhaustive Residual Verifier
+
+For every chamber state:
+verify exactly:
+
+K(g)=Aσg+bσ
+
+Residual MUST equal zero.
+
+---
+
+## Priority 4 — Quotient Projection
+
+Compute exactly:
+Qσ=πAσπ^-1
+
+Then:
+- determinant,
+- characteristic polynomial,
+- SNF,
+- cokernel structure.
+
+---
+
+## Priority 5 — Chamber Transition Graph
+
+Construct:
+- symbolic chamber graph,
+- SCC decomposition,
+- recurrent symbolic classes,
+- primitive chamber words.
+
+---
+
+# Research Direction
+
+After one exact chamber succeeds:
+
+1. derive chamber-word operators,
+2. compute exact SNFs,
+3. test arithmetic resonance,
+4. classify universal vs restricted words,
+5. study modular reductions,
+6. extend to higher digits.
+
+---
+
+# Critical Discipline Rules
+
+Never:
+- fit across chambers,
+- use approximate determinants,
+- infer spectral structure heuristically.
+
+Always:
+- derive exactly,
+- validate exhaustively,
+- preserve epistemic separation.
+
+---
+
+# Current Status Summary
+
+[V] Foundational algebra
+[V] Quotient dynamics
+[V] Exact automaton framework
+[F] Old spectral program
+[B] Exact chamber derivation
+[C] Exact operator arithmetic
+[S] General resonance framework
+
+---
+
+# Core Goal
+
+One rigorously exact chamber atlas cell.
+
+That is now the central bottleneck and the gateway to the entire downstream theory.
+
+---
+
+Last updated:
+TIMESTAMP-1127
+
+
+
+
+NEXT STEPS
+
+
+Immediate Execution Sequence
+
+
+STEP 1 — Build Chamber Refinement Enumerator
+
+
+Input:
+
+
+
+
+base B
+
+
+quotient state g=(x,y,z)
+
+
+
+
+Output:
+
+
+
+
+σ=(P,C,T)
+
+
+exact digit ordering
+
+
+exact borrow pattern
+
+
+
+
+This becomes the canonical chamber classifier.
+
+
+
+STEP 2 — Enumerate Interior Chambers
+
+
+Start ONLY with:
+
+
+
+
+strict inequalities,
+
+
+no repeated digits,
+
+
+stable borrow regimes.
+
+
+
+
+Avoid:
+
+
+
+
+ties,
+
+
+boundary chambers,
+
+
+zero gaps.
+
+
+
+
+Goal:
+find first truly stable chamber.
+
+
+
+STEP 3 — Symbolically Derive One Chamber Map
+
+
+Derive:
+
+
+
+K(g)=A_\sigma g+b_\sigma
+
+
+
+using:
+
+
+
+
+exact symbolic elimination,
+
+
+exact carry propagation,
+
+
+exact digit formulas.
+
+
+
+
+NO regression.
+
+
+
+STEP 4 — Exhaustive Validation
+
+
+For EVERY chamber state:
+verify:
+
+
+
+K(g)-A_\sigma g-b_\sigma=0
+
+
+
+identically.
+
+
+Any failure:
+split chamber further.
+
+
+
+STEP 5 — Compute Exact Quotient Arithmetic
+
+
+After validation:
+compute:
+
+
+
+
+determinant,
+
+
+characteristic polynomial,
+
+
+SNF,
+
+
+cokernel structure.
+
+
+
+
+This becomes the first true arithmetic chamber invariant.
+
+
+
+STEP 6 — Construct Chamber Graph
+
+
+Once 2–5 chambers exist:
+build:
+
+
+
+
+transition automaton,
+
+
+SCC decomposition,
+
+
+recurrent symbolic classes,
+
+
+primitive chamber words.
+
+
+
+
+This may become the project’s canonical global object.
+
+~~~
+
 #Hierarchical Non-Normal Spectral Reduction for Metastable Transport Operators
 
 What this repository is about
