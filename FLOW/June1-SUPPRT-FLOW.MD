@@ -1,4 +1,4 @@
-# CHECKPOINT.md — Kaprekar Spectral Geometry
+Kaprekar Spectral Geometry
 
 **Date:** 2026-06-02  
 **Node:** RSU-10878  
