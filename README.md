@@ -1,4 +1,483 @@
-#KAPREKAR-SPECTRAL-GEOMETRY 
+Kaprekar Spectral Geometry
+
+
+A computational and mathematical investigation of the classical 4-digit Kaprekar map through quotient dynamical systems, finite operator theory, entropy observables, and affine compression structures.
+
+
+Status: Verification suite passing (June 2026)
+
+
+
+Overview
+
+
+The Kaprekar routine acts on a four-digit integer by:
+
+
+
+
+Sorting its digits in descending and ascending order.
+
+
+Subtracting the smaller number from the larger.
+
+
+Repeating the process.
+
+
+
+
+In base 10, almost every initial state converges to the famous fixed point
+
+
+[
+6174.
+]
+
+
+This repository studies the Kaprekar map as a finite dynamical system and develops a hierarchy of exact quotient representations that expose its combinatorial, algebraic, spectral, and information-theoretic structure.
+
+
+Rather than focusing solely on the attractor 6174, the project investigates the full state-space geometry underlying the dynamics.
+
+
+
+Main Contributions
+
+
+Quotient Dynamical System
+
+
+A verified gap projection
+
+
+[
+\pi(a,b,c,d) = (d-a,; c-b)
+]
+
+
+maps the 705 sorted non-repdigit states onto only 54 quotient states.
+
+
+The induced quotient dynamics preserve evolution through a verified semiconjugacy
+
+
+[
+\pi \circ K = \widetilde{K} \circ \pi.
+]
+
+
+
+Affine Compression
+
+
+The quotient dynamics admit an exact affine decomposition into 16 verified affine regions.
+
+
+This provides a compact piecewise-linear representation of the system while preserving exact dynamics.
+
+
+
+Spectral Structure
+
+
+The quotient transition operator exhibits:
+
+
+
+
+Spectral radius 1
+
+
+Unique attracting fixed point
+
+
+Nilpotent transient structure
+
+
+Depth-controlled Jordan organization
+
+
+
+
+The quotient graph therefore separates naturally into transient and attracting components.
+
+
+
+Entropy Analysis
+
+
+Fiber entropy is used to quantify information loss under quotienting.
+
+
+The repository includes a complete entropy census of the quotient fibers and reproducible computations of:
+
+
+
+
+Mean entropy
+
+
+Extremal entropy fibers
+
+
+Depth–entropy relationships
+
+
+Cross-base statistical comparisons
+
+
+
+
+
+Verified Results
+
+
+Base-10 Census
+
+
+
+
+Quantity
+Value
+
+
+
+
+Sorted states
+705
+
+
+Gap classes
+54
+
+
+Gap attractor
+(6,2)
+
+
+Maximum gap depth
+6
+
+
+
+
+Gap Depth Distribution
+
+
+
+
+Depth
+Count
+
+
+
+
+0
+1
+
+
+1
+3
+
+
+2
+12
+
+
+3
+10
+
+
+4
+10
+
+
+5
+10
+
+
+6
+8
+
+
+
+
+Total quotient states: 54
+
+
+
+Verified Properties
+
+
+
+
+Deterministic quotient dynamics
+
+
+Semiconjugacy
+
+
+Unique attractor
+
+
+Spectral radius = 1
+
+
+Nilpotent transient component
+
+
+Fiber entropy census
+
+
+Exact 16-block affine atlas
+
+
+Exhaustive verification over all 705 sorted states
+
+
+
+
+All claims above are verified by the included test suite.
+
+
+
+Repository Structure
+
+
+Core Dynamics
+
+
+
+
+kaprekar_core.py
+
+
+verify_gap_quotient.py
+
+
+
+
+Affine Compression
+
+
+
+
+verify_affine_atlas.py
+
+
+affine_entropy_corrector.py
+
+
+test_affine_corrector.py
+
+
+
+
+Spectral Analysis
+
+
+
+
+jordan_audit.py
+
+
+
+
+Experiments
+
+
+
+
+compression_experiment.py
+
+
+
+
+Documentation
+
+
+
+
+README-LITE.md
+
+
+CHECKPOINT.md
+
+
+NEXTSTEPS.md
+
+
+ASCII_SEEDED_ATLAS.md
+
+
+
+
+
+Reproducing Results
+
+
+Run:
+
+
+python verify_gap_quotient.py
+python verify_affine_atlas.py
+python test_affine_corrector.py
+python jordan_audit.py
+python compression_experiment.py
+
+
+
+Expected outcome:
+
+
+All verification scripts complete successfully.
+
+
+
+
+Research Status
+
+
+Verified
+
+
+
+
+Gap quotient determinism
+
+
+Semiconjugacy
+
+
+Quotient census
+
+
+Entropy census
+
+
+Affine atlas verification
+
+
+Spectral audit
+
+
+
+
+Active Research Problems
+
+
+OP-14: Affine atlas optimality
+
+
+Determine whether the verified 16-block affine atlas is globally minimal.
+
+
+OP-15: General gap quotients
+
+
+Extend quotient analysis across bases and digit lengths.
+
+
+OP-16: Jordan–Weyr lifting theory
+
+
+Develop a general lifting framework for quotient dynamical systems.
+
+
+OP-17: Higher-digit Kaprekar systems
+
+
+Extend the affine and entropy frameworks beyond four digits.
+
+
+
+Mathematical Scope
+
+
+This project lies at the intersection of:
+
+
+
+
+Finite Dynamical Systems
+
+
+Combinatorial Dynamics
+
+
+Quotient Automata
+
+
+Spectral Graph Theory
+
+
+Operator Theory
+
+
+Information Theory
+
+
+
+
+A central goal of the repository is to clearly distinguish:
+
+
+
+
+Proven mathematical statements
+
+
+Computationally verified results
+
+
+Open conjectures
+
+
+
+
+
+Related Documentation
+
+
+
+
+CHECKPOINT.md — verification ledger
+
+
+NEXTSTEPS.md — research roadmap
+
+
+README-LITE.md — concise project summary
+
+
+
+
+
+Citation
+
+
+If this repository contributes to your work, please cite the repository and associated manuscript drafts.
+
+
+
+Status
+
+
+Verification Suite: Passing
+
+
+Documentation: Active
+
+
+Research Stage: External Review Candidate
+
+
+Louisville Node • QUANTARION
+
+
+June 2026
+
 
 #Hierarchical Non-Normal Spectral Reduction for Metastable Transport Operators
 
@@ -818,6 +1297,134 @@ Copy the four blocks above into the corresponding files in your repository:
 · TOC.md
 · THEORY.md
 · .github/workflows/ci.yml
+
+~~~
+
+Kaprekar Spectral Geometry — Structural Overview
+
+
+                         KAPREKAR SPECTRAL GEOMETRY
+                    Quotient Dynamics • Entropy • Operators
+
+┌─────────────────────────────────────────────────────────────┐
+│                     RAW DIGIT STRINGS                       │
+│                    9,990 four-digit states                  │
+└─────────────────────────────┬───────────────────────────────┘
+                              │
+                              │ Sort digits
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     SORTED STATE SPACE                      │
+│                  S₁₀,₄ = 705 non-repdigits                 │
+└─────────────────────────────┬───────────────────────────────┘
+                              │
+                              │ Kaprekar map K
+                              │
+                              ▼
+                    Finite Dynamical System
+                              │
+                              │ Gap projection
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    GAP QUOTIENT SPACE                       │
+│                         54 states                           │
+│                                                             │
+│                π(a,b,c,d) = (d−a, c−b)                     │
+└─────────────────────────────┬───────────────────────────────┘
+                              │
+                              │ Verified semiconjugacy
+                              │
+                              │ π∘K = K̃∘π
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 QUOTIENT DYNAMICAL SYSTEM                   │
+│                                                             │
+│                    Unique attractor (6,2)                  │
+│                    Maximum depth = 6                       │
+│                    54-state automaton                      │
+└──────────────┬───────────────────────┬─────────────────────┘
+               │                       │
+               │                       │
+               │                       │
+               ▼                       ▼
+
+┌──────────────────────┐   ┌──────────────────────────────┐
+│   ENTROPY ANALYSIS   │   │      SPECTRAL ANALYSIS       │
+│                      │   │                              │
+│ Fiber cardinalities  │   │ Transition operator         │
+│ Fiber entropy census │   │ Spectral radius = 1         │
+│ Compression metrics  │   │ Nilpotent transient part    │
+│ Mean = 3.3617 bits   │   │ Jordan-depth structure      │
+└──────────┬───────────┘   └──────────────┬───────────────┘
+           │                              │
+           └──────────────┬───────────────┘
+                          │
+                          ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│                    AFFINE COMPRESSION                       │
+│                                                             │
+│                 Verified 16-block atlas                     │
+│                                                             │
+│        Exact affine representation of quotient map          │
+└─────────────────────────────┬───────────────────────────────┘
+                              │
+                              ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│                  CROSS-BASE INVESTIGATIONS                  │
+│                                                             │
+│     Bases 5–12 • Entropy • Depth • Degeneracy Studies      │
+│                                                             │
+│         Weak pooled depth-entropy correlation              │
+│                     r ≈ -0.1503                            │
+└─────────────────────────────┬───────────────────────────────┘
+                              │
+                              ▼
+
+┌─────────────────────────────────────────────────────────────┐
+│                      OPEN PROBLEMS                          │
+│                                                             │
+│ OP-14  Affine atlas optimality                             │
+│ OP-15  General gap quotients                               │
+│ OP-16  Jordan–Weyr lifting theory                          │
+│ OP-17  Higher-digit Kaprekar systems                       │
+└─────────────────────────────────────────────────────────────┘
+
+
+
+
+Project Status
+
+
+✅ Verification Suite Passing
+
+
+✅ Gap Quotient Verified
+
+
+✅ Semiconjugacy Verified
+
+
+✅ Entropy Census Complete
+
+
+✅ Spectral Audit Complete
+
+
+✅ 16-Block Affine Atlas Verified
+
+
+⚠ Open theoretical questions remain (see NEXTSTEPS.md)
+
+
+
+Louisville Node • QUANTARION
+
+
+June 2026
+
 
 All files are self‑contained, reproducible, and production‑ready. The theory document now clearly separates proven, conditionally valid, empirical, and conjectural statements — eliminating any overclaim.
 
