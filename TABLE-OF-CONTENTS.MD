@@ -2,7 +2,1195 @@
 
 ---
 
-## 📋 TABLE OF CONTENTS (TOC.MD)
+
+Kaprekar Spectral Geometry
+
+
+Extended Repository Table of Contents
+
+
+Version: June 2026
+
+
+
+1. Repository Overview
+
+
+Kaprekar Spectral Geometry is a computational and mathematical investigation of the classical four-digit Kaprekar routine viewed as a finite dynamical system.
+
+
+The project develops a hierarchy of exact quotient constructions that reduce the original state space while preserving the essential dynamics.
+
+
+The central objectives are:
+
+
+
+
+Construction of a verified quotient dynamical system
+
+
+Measurement of information loss under quotienting
+
+
+Spectral analysis of the induced transition operator
+
+
+Exact affine representations of quotient dynamics
+
+
+Cross-base comparison of dynamical and information-theoretic behavior
+
+
+
+
+The repository deliberately separates:
+
+
+
+
+Proven mathematical statements
+
+
+Computationally verified results
+
+
+Experimental observations
+
+
+Open conjectures
+
+
+
+
+
+2. Core Dynamical System
+
+
+kaprekar_core.py
+
+
+Purpose:
+
+
+Provides the canonical implementation of the four-digit Kaprekar map.
+
+
+Responsibilities:
+
+
+
+
+Enumeration of admissible states
+
+
+Digit sorting
+
+
+Kaprekar iteration
+
+
+State-space generation
+
+
+Transition construction
+
+
+
+
+This file serves as the foundational reference implementation used by all verification scripts.
+
+
+All higher-level analyses ultimately depend on the correctness of this module.
+
+
+
+verify_gap_quotient.py
+
+
+Purpose:
+
+
+Verifies the quotient construction induced by the gap projection.
+
+
+Main Tasks:
+
+
+
+
+Enumerates all sorted states
+
+
+Computes gap representatives
+
+
+Builds quotient transition graph
+
+
+Verifies quotient determinism
+
+
+Computes depth distributions
+
+
+Confirms attractor structure
+
+
+
+
+Key Result:
+
+
+Establishes the verified reduction
+
+
+705 states → 54 states
+
+
+without loss of dynamical information at the quotient level.
+
+
+
+3. Quotient Geometry
+
+
+The central quotient map is
+
+
+π(a,b,c,d) = (d−a, c−b)
+
+
+defined on sorted digit states
+
+
+a ≤ b ≤ c ≤ d.
+
+
+This projection partitions the sorted state space into fibers.
+
+
+The resulting quotient is the primary object studied throughout the project.
+
+
+Verified properties include:
+
+
+
+
+Deterministic quotient dynamics
+
+
+Unique attractor
+
+
+Maximum transient depth 6
+
+
+Exact state census
+
+
+
+
+
+4. Affine Atlas Framework
+
+
+verify_affine_atlas.py
+
+
+Purpose:
+
+
+Constructs and verifies a piecewise-affine representation of the quotient dynamics.
+
+
+Responsibilities:
+
+
+
+
+Detect affine regions
+
+
+Verify affine consistency
+
+
+Confirm complete coverage
+
+
+Check exactness of affine fits
+
+
+
+
+Key Result:
+
+
+The quotient dynamics admit a verified decomposition into sixteen affine regions.
+
+
+
+ASCII_SEEDED_ATLAS.md
+
+
+Purpose:
+
+
+Human-readable description of the affine decomposition.
+
+
+Contains:
+
+
+
+
+Region boundaries
+
+
+Affine maps
+
+
+Structural interpretation
+
+
+Atlas visualization
+
+
+
+
+This document provides the conceptual bridge between the raw quotient dynamics and the affine-compression viewpoint.
+
+
+
+affine_entropy_corrector.py
+
+
+Purpose:
+
+
+Experimental framework for reconstruction and correction of quotient information using affine structure.
+
+
+Conceptual Role:
+
+
+Treats affine regions as structured redundancy capable of supporting error detection and partial reconstruction.
+
+
+This module explores the information-theoretic consequences of the atlas decomposition.
+
+
+
+test_affine_corrector.py
+
+
+Purpose:
+
+
+Verification suite for affine reconstruction experiments.
+
+
+Checks:
+
+
+
+
+Atlas consistency
+
+
+Region assignments
+
+
+Reconstruction validity
+
+
+Error-detection behavior
+
+
+
+
+
+5. Entropy and Information Theory
+
+
+compression_experiment.py
+
+
+Purpose:
+
+
+Measures information loss induced by quotienting.
+
+
+Primary Quantities:
+
+
+
+
+Fiber cardinality
+
+
+Fiber entropy
+
+
+Compression ratios
+
+
+Entropy distributions
+
+
+
+
+The script produces the entropy census used throughout the manuscript.
+
+
+Verified Results:
+
+
+Mean entropy:
+3.3617 bits
+
+
+Maximum entropy:
+4.9069 bits
+
+
+Minimum entropy:
+0 bits
+
+
+These measurements quantify the information discarded by the quotient map.
+
+
+
+STATISTICAL_ANALYSIS.json
+
+
+Purpose:
+
+
+Machine-readable archive of statistical outputs.
+
+
+Contains:
+
+
+
+
+Entropy measurements
+
+
+Correlation statistics
+
+
+Cross-base experiments
+
+
+Aggregated summaries
+
+
+
+
+Acts as a reproducibility artifact for manuscript figures and tables.
+
+
+
+6. Spectral Analysis
+
+
+jordan_audit.py
+
+
+Purpose:
+
+
+Studies the transition operator associated with the quotient dynamics.
+
+
+Responsibilities:
+
+
+
+
+Matrix construction
+
+
+Eigenvalue computation
+
+
+Spectral-radius verification
+
+
+Jordan-chain analysis
+
+
+Nilpotence detection
+
+
+
+
+Verified Results:
+
+
+
+
+Spectral radius = 1
+
+
+Nilpotence index = 6
+
+
+Single attracting component
+
+
+Transient Jordan structure
+
+
+
+
+This module provides the operator-theoretic perspective of the project.
+
+
+
+7. Cross-Base Investigations
+
+
+Purpose:
+
+
+Evaluate whether observed phenomena persist outside base ten.
+
+
+Studied Bases:
+
+
+5–12
+
+
+Measured Quantities:
+
+
+
+
+State counts
+
+
+Depth distributions
+
+
+Entropy distributions
+
+
+Correlation statistics
+
+
+Degeneracy phenomena
+
+
+
+
+Current Finding:
+
+
+Depth and entropy appear only weakly coupled across cycle-producing bases.
+
+
+The pooled effect remains statistically small.
+
+
+
+8. Verification Suite
+
+
+The repository is designed around independent verification.
+
+
+Recommended Execution Order:
+
+
+python verify_gap_quotient.py
+python verify_affine_atlas.py
+python test_affine_corrector.py
+python jordan_audit.py
+python compression_experiment.py
+
+
+
+Expected Outcome:
+
+
+All verification checks pass successfully.
+
+
+The project should reproduce all headline numerical results from a clean environment.
+
+
+
+9. Documentation
+
+
+README.md
+
+
+Primary repository entry point.
+
+
+Provides:
+
+
+
+
+Motivation
+
+
+Mathematical context
+
+
+Main results
+
+
+Reproduction instructions
+
+
+
+
+
+README-LITE.md
+
+
+Compact overview suitable for quick inspection.
+
+
+Summarizes:
+
+
+
+
+Quotient construction
+
+
+Verification status
+
+
+Principal invariants
+
+
+
+
+
+CHECKPOINT.md
+
+
+Formal project snapshot.
+
+
+Records:
+
+
+
+
+Verified results
+
+
+Numerical invariants
+
+
+Corrections
+
+
+Current status
+
+
+
+
+Designed as a stable reference document.
+
+
+
+NEXTSTEPS.md
+
+
+Research roadmap.
+
+
+Separates:
+
+
+
+
+Immediate software goals
+
+
+Mathematical development
+
+
+Long-term directions
+
+
+
+
+
+MAIN_DIAGRAM.md
+
+
+High-level structural diagram.
+
+
+Visualizes:
+
+
+9990 raw states
+
+
+↓
+
+
+705 sorted states
+
+
+↓
+
+
+54 quotient states
+
+
+↓
+
+
+Entropy / Spectral Analysis
+
+
+↓
+
+
+16-block affine atlas
+
+
+↓
+
+
+Cross-base investigations
+
+
+
+10. Manuscript Materials
+
+
+DELIVERABLE_10_complete_manuscript.tex
+
+
+Primary manuscript source.
+
+
+Contains:
+
+
+
+
+Mathematical definitions
+
+
+Proofs
+
+
+Computational results
+
+
+Figures
+
+
+Statistical analysis
+
+
+Literature context
+
+
+
+
+Represents the most complete written account of the project.
+
+
+
+11. Open Problems
+
+
+OP-14
+
+
+Affine Atlas Optimality
+
+
+Determine whether sixteen affine blocks are globally minimal.
+
+
+Current Status:
+
+
+Open.
+
+
+
+OP-15
+
+
+General Gap Quotients
+
+
+Extend quotient constructions to:
+
+
+
+
+Additional bases
+
+
+Larger digit lengths
+
+
+
+
+Current Status:
+
+
+Open.
+
+
+
+OP-16
+
+
+Jordan–Weyr Lifting Theory
+
+
+Develop a general lifting framework relating quotient operators to parent dynamical systems.
+
+
+Current Status:
+
+
+Open.
+
+
+
+OP-17
+
+
+Higher-Digit Affine Structures
+
+
+Generalize atlas methods beyond four-digit systems.
+
+
+Current Status:
+
+
+Planned.
+
+
+
+12. Mathematical Areas
+
+
+The project intersects multiple research domains:
+
+
+
+
+Finite Dynamical Systems
+
+
+Discrete Mathematics
+
+
+Quotient Automata
+
+
+Combinatorial Dynamics
+
+
+Spectral Graph Theory
+
+
+Operator Theory
+
+
+Information Theory
+
+
+Computational Experimentation
+
+
+
+
+
+Repository Status
+
+
+Verification Suite: PASS
+
+
+Documentation: ACTIVE
+
+
+Manuscript Status: Submission Candidate
+
+
+Research Status: External Review Candidate
+
+
+Louisville Node • QUANTARION
+
+
+~~~
+
+
+Version: June 2026
+
+---
+
+# 1. Project Overview
+
+| File | Description |
+|--------|-------------|
+| README.md | Main project introduction and verified results |
+| README-LITE.md | Condensed project overview |
+| CHECKPOINT.md | Current project verification status |
+| NEXTSTEPS.md | Active research roadmap |
+
+---
+
+# 2. Core Mathematics
+
+## Quotient Construction
+
+| File | Description |
+|--------|-------------|
+| kaprekar_core.py | Core Kaprekar implementation |
+| verify_gap_quotient.py | Verification of gap quotient |
+| verify_semiconjugacy.py* | Semiconjugacy validation (if present) |
+
+Central map:
+
+π(a,b,c,d) = (d−a, c−b)
+
+---
+
+## Gap Dynamics
+
+Topics:
+
+- 705 sorted states
+- 54 gap classes
+- Quotient dynamics
+- Depth structure
+- Attractor analysis
+
+Verified quantities:
+
+- Max depth = 6
+- Attractor = (6,2)
+- Layer profile = 1,3,12,10,10,10,8
+
+---
+
+# 3. Affine Atlas
+
+| File | Description |
+|--------|-------------|
+| verify_affine_atlas.py | Atlas verification |
+| ASCII_SEEDED_ATLAS.md | Human-readable atlas |
+| affine_entropy_corrector.py | Affine correction framework |
+| test_affine_corrector.py | Atlas test suite |
+
+Verified result:
+
+- Exact 16-block affine atlas
+
+Open:
+
+- Global optimality proof
+
+(OP-14)
+
+---
+
+# 4. Entropy & Information Theory
+
+| File | Description |
+|--------|-------------|
+| compression_experiment.py | Compression analysis |
+| STATISTICAL_ANALYSIS.json | Statistical output |
+
+Measurements:
+
+- Mean entropy = 3.3617 bits
+- Max entropy = 4.9069 bits
+- Min entropy = 0 bits
+
+Topics:
+
+- Fiber entropy
+- Quotient compression
+- Information loss
+- Entropy-depth correlation
+
+---
+
+# 5. Spectral Analysis
+
+| File | Description |
+|--------|-------------|
+| jordan_audit.py | Spectral verification |
+
+Verified:
+
+- Spectral radius = 1
+- Nilpotence index = 6
+- One attracting fixed point
+- Transient Jordan structure
+
+Topics:
+
+- Quotient operators
+- Functional graph spectra
+- Jordan chains
+- Nilpotent transients
+
+---
+
+# 6. Cross-Base Studies
+
+Topics:
+
+- Bases 5–12
+- Cycle vs fixed-point behavior
+- Entropy-depth statistics
+- Degenerate quotient systems
+
+Results summarized in:
+
+CHECKPOINT.md
+
+---
+
+# 7. Verification Suite
+
+Run:
+
+```bash
+python verify_gap_quotient.py
+python verify_affine_atlas.py
+python test_affine_corrector.py
+python jordan_audit.py
+python compression_experiment.py
+
+
+
+Expected outcome:
+
+
+All tests pass.
+
+
+
+8. Documentation
+
+
+Reference Documents
+
+
+
+
+File
+Description
+
+
+
+
+CHECKPOINT.md
+Verified project snapshot
+
+
+NEXTSTEPS.md
+Open problems
+
+
+TOC.md
+Repository map
+
+
+MAIN_DIAGRAM.md
+Structural overview diagram
+
+
+
+
+
+9. Manuscript Materials
+
+
+Primary Paper
+
+
+DELIVERABLE_10_complete_manuscript.tex
+
+
+Contents:
+
+
+
+
+Quotient dynamics
+
+
+Semiconjugacy
+
+
+Entropy census
+
+
+Affine atlas
+
+
+Spectral analysis
+
+
+Cross-base study
+
+
+
+
+
+10. Open Problems
+
+
+OP-14
+
+
+Affine Atlas Optimality
+
+
+Prove the verified 16-block atlas is globally minimal.
+
+
+OP-15
+
+
+General Gap Quotients
+
+
+Extend quotient construction to:
+
+
+
+
+Larger bases
+
+
+More digits
+
+
+
+
+OP-16
+
+
+Jordan–Weyr Lifting
+
+
+Develop quotient lifting theory for finite dynamical systems.
+
+
+OP-17
+
+
+Higher-Digit Affine Structures
+
+
+Generalize atlas methods beyond d=4.
+
+
+
+11. Mathematical Areas
+
+
+This project intersects:
+
+
+
+
+Finite Dynamical Systems
+
+
+Combinatorial Dynamics
+
+
+Quotient Automata
+
+
+Spectral Graph Theory
+
+
+Operator Theory
+
+
+Information Theory
+
+
+
+
+
+Repository Status
+
+
+Verification Suite: PASS
+
+
+Documentation: ACTIVE
+
+
+Research Stage: External Review Candidate
+
+
+Louisville Node • QUANTARION
+
+
+June 2026
+
+
+
+One improvement I'd strongly recommend: place this `TOC.md` near the top of the README and add a visual repository map such as:
+
+```text
+README.md
+│
+├── Core
+│   ├── kaprekar_core.py
+│   └── verify_gap_quotient.py
+│
+├── Affine Atlas
+│   ├── verify_affine_atlas.py
+│   ├── affine_entropy_corrector.py
+│   └── test_affine_corrector.py
+│
+├── Spectral Analysis
+│   └── jordan_audit.py
+│
+├── Entropy
+│   └── compression_experiment.py
+│
+├── Documentation
+│   ├── CHECKPOINT.md
+│   ├── NEXTSTEPS.md
+│   ├── MAIN_DIAGRAM.md
+│   └── TOC.md
+│
+└── Manuscript
+    └── DELIVERABLE_10_complete_manuscript.
+
+
+#MAY 2026
 
 ```markdown
 # KAPREKAR SPECTRAL GEOMETRY — Complete Documentation Index
