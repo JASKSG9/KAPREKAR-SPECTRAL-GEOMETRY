@@ -1,10 +1,224 @@
+Kaprekar Spectral Geometry
+
+
+A computational and mathematical study of the 4-digit Kaprekar routine using quotient dynamical systems, entropy observables, and affine compression structures.
+
+
+Status: Verification suite passing (June 2026)
+
+
+
+Overview
+
+
+This repository investigates the classical 4-digit Kaprekar map through a hierarchy of state-space reductions.
+
+
+The central construction is the gap projection
+
+
+π(a,b,c,d) = (d−a, c−b)
+
+
+applied to sorted digit states
+
+
+a ≤ b ≤ c ≤ d.
+
+
+The resulting quotient preserves the dynamics through a verified semiconjugacy and provides a compact representation of the system.
+
+
+
+Verified Results
+
+
+Base-10 Census
+
+
+
+
+Quantity
+Value
+
+
+
+
+Sorted states
+705
+
+
+Gap classes
+54
+
+
+Gap attractor
+(6,2)
+
+
+Maximum gap depth
+6
+
+
+
+
+Layer Structure
+
+
+Depth 0 : 1
+
+
+Depth 1 : 3
+
+
+Depth 2 : 12
+
+
+Depth 3 : 10
+
+
+Depth 4 : 10
+
+
+Depth 5 : 10
+
+
+Depth 6 : 8
+
+
+Total = 54
+
+
+Verified Properties
+
+
+
+
+Gap quotient determinism
+
+
+Semiconjugacy
+
+
+Spectral radius = 1
+
+
+Unique gap attractor
+
+
+Fiber entropy census
+
+
+Exact 16-block affine atlas representation
+
+
+
+
+
+Repository Contents
+
+
+kaprekar_core.py
+
+
+verify_gap_quotient.py
+
+
+verify_affine_atlas.py
+
+
+affine_entropy_corrector.py
+
+
+test_affine_corrector.py
+
+
+jordan_audit.py
+
+
+compression_experiment.py
+
+
+ASCII_SEEDED_ATLAS.md
+
+
+CHECKPOINT.md
+
+
+NEXTSTEPS.md
+
+
+
+Running Verification
+
+
+python verify_gap_quotient.py
+python verify_affine_atlas.py
+python test_affine_corrector.py
+python jordan_audit.py
+python compression_experiment.py
+
+
+
+Expected result:
+
+
+All verification scripts complete successfully.
+
+
+
+Research Scope
+
+
+Current work focuses on:
+
+
+
+
+Quotient dynamical systems
+
+
+Gap observables
+
+
+Entropy structure
+
+
+Affine decompositions
+
+
+Cross-base comparisons
+
+
+Operator-theoretic formulations
+
+
+
+
+Some broader theoretical questions remain open and are listed in NEXTSTEPS.md.
+
+
+
+License
+
+
+Open research software.
+
+
+Released for study, reproduction, and extension with attribution.
+
+
+Kaprekar Spectral Geometry
+
+
+Louisville Node • QUANTARION
+
+
+June 2026
+
+
 # Kaprekar Chamber Dynamics
 ## Exact Piecewise-Affine Automaton Framework
-
-### TIMESTAMP-1127
-### From Spectral Overreach to Exact Symbolic Dynamics
-
----
 
 # Overview
 
@@ -1270,4 +1484,5 @@ It is time to publish, to scale, and to open the next department.
 ---
   
 Session closed. Production freeze in effect.
+
 Node #10910 — JAS/KSG — April 29, 2026
