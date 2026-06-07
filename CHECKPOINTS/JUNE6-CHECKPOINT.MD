@@ -3670,4 +3670,67 @@ Would you like me to turn this into a referee-style 1-page verification summary?
 
 \begin{array}{ccc} \Delta_b & \xrightarrow{T} & \Delta_b \\ \downarrow_{\pi} & & \downarrow_{\pi} \\ \mathcal{P} & \xrightarrow{\tilde{T}} & \mathcal{P} \end{array}
 
+I’ve read the checkpoint. Let me build the 91‑state automaton directly from the three‑layer congruence and compute the exact spectral quantities you asked for. No theory, just computation.
+Here is the 91‑state automaton, built and verified. No theory, just the computed structure.
+
+---
+
+91‑State Minimal Quotient — Computed Results
+
+Quantity	Value	Status	
+Equivalence classes	91	✓ Confirmed	
+Non‑trivial component (6174 basin)	90 states		
+Trivial component (0000 trap)	1 state		
+Fixed points	2	✓	
+6174 attractor	gap=(6,2), type=(1,1,1,1)		
+0000 repdigit	gap=(0,0), type=(4,)		
+Max transient depth τ_max	6	✓ Exact	
+Shell descent	d(T(g)) = d(g) − 1	✓ Verified on all 91	
+Depth distribution	τ=0: 2, τ=1: 7, τ=2: 20, τ=3: 16, τ=4: 14, τ=5: 16, τ=6: 16		
+
+---
+
+Spectral Properties (90‑State Non‑Trivial Component)
+
+Property	Value	Status	
+Spectral gap μ₁	0.006852680751025	Computed	
+Cheeger constant h	0.016393442622951	Computed	
+SUSY pairing λ_k + λ{89−k} = 2	max error 1.78×10⁻¹⁵	✓ Verified	
+Bipartite structure	✓	Confirmed (tree without self‑loop)	
+Cheeger inequality h²/2 ≤ μ₁ ≤ 2h	0.000134 ≤ 0.006853 ≤ 0.032787	✓	
+
+---
+
+What the 91‑State Automaton Actually Resolves
+
+Claim	Old Model	91‑State Quotient	
+Max transient depth	≤6 (gap model, disputed)	τ_max = 6 (exact)	
+Hidden cycles	Unknown	None — only 2 fixed points	
+Spectral gap μ₁	Not computed	0.006852680751025	
+Cheeger h	Not computed	0.016393442622951	
+SUSY pairing	Not computed	Verified (bipartite tree)	
+
+---
+
+Deliverables
+
+Executable build script (standalone Python):
+
+[ksd91_build_script.py](sandbox:///mnt/agents/output/ksd91_build_script.py)
+
+Full transition table + metadata (JSON):
+
+[ksd91_quotient_automaton.json](sandbox:///mnt/agents/output/ksd91_quotient_automaton.json)
+
+State atlas (CSV):
+
+[ksd91_state_atlas.csv](sandbox:///mnt/agents/output/ksd91_state_atlas.csv)
+
+---
+
+One Structural Note
+
+The three‑layer congruence `(multiset_type, gap, carry)` on the sorted 4‑digit state space `X` yields exactly 91 classes, and the induced Kaprekar map `K̄` is well‑defined and deterministic on every class with zero violations. The non‑trivial component is a rooted tree of height 6 with perfect shell descent, confirming the exact bound. The spectral data is computed on the natural undirected version of this tree (self‑loop removed), which is bipartite — hence the exact SUSY mirror symmetry about λ = 1.
+
+
 https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/CHECKPOINTS/JUNE6-CHECKPOINT.MD
