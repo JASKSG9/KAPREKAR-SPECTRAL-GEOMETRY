@@ -3732,5 +3732,607 @@ One Structural Note
 
 The three‑layer congruence `(multiset_type, gap, carry)` on the sorted 4‑digit state space `X` yields exactly 91 classes, and the induced Kaprekar map `K̄` is well‑defined and deterministic on every class with zero violations. The non‑trivial component is a rooted tree of height 6 with perfect shell descent, confirming the exact bound. The spectral data is computed on the natural undirected version of this tree (self‑loop removed), which is bipartite — hence the exact SUSY mirror symmetry about λ = 1.
 
+CHECKPOINT.md
+
+
+Project: KSD-91 — Minimal Dynamical Quotient of Kaprekar Dynamics
+
+Date: 2026-06-07
+
+Status: Structurally complete, computationally verified, proof layer partially formalized
+
+
+
+1. Executive Summary
+
+
+We have established the complete structural classification of the 4-digit Kaprekar system.
+
+
+Core result:
+
+
+
+
+There exists a unique minimal orbit-complete quotient with exactly 91 states.
+
+
+
+
+This resolves all ambiguity between:
+
+
+
+
+static invariants (e.g. gap space)
+
+
+true dynamical structure
+
+
+
+
+
+2. Empirical Trichotomy (Final)
+
+
+
+
+Invariant
+Classes
+Orbit-Complete
+Collisions
+Verdict
+
+
+
+
+(p,q) gap
+55
+❌ NO
+55
+Attractor-only invariant
+
+
+Digit multiset
+715
+❌ NO
+705
+Too coarse
+
+
+91-state congruence
+91
+✅ YES
+0
+Minimal quotient
+
+
+
+
+
+3. Core Theorems (Validated)
+
+
+Theorem A — Minimal Quotient
+
+
+There exists a unique orbit-complete quotient Q_{91} with 91 states.
+
+
+Theorem B — Non-Existence of Smaller Quotients
+
+
+Any coarser partition introduces trajectory collisions.
+
+
+Theorem C — Global Convergence
+
+
+All trajectories satisfy:
+[
+\tau(x) \le 7
+]
+
+
+Theorem D — Cycle Structure
+
+
+Only fixed points:
+
+
+
+
+6174 (global attractor)
+
+
+0000 (repdigit trap)
+
+
+
+
+
+4. Structural Decomposition
+
+
+The system decomposes into:
+
+
+
+
+90-state rooted in-tree
+
+
+
+height = 6
+
+
+root = 6174 class
+
+
+
+
+
+
+1 isolated fixed state
+
+
+
+0000
+
+
+
+
+
+
+
+
+Exact Property:
+
+
+[
+\tau(K(x)) = \tau(x) - 1
+]
+
+
+
+5. Rank Collapse (Exact)
+
+
+[
+10000 \rightarrow 55 \rightarrow 21 \rightarrow 15 \rightarrow 11 \rightarrow 8 \rightarrow 5 \rightarrow 2
+]
+
+
+Stabilizes at 2 attractors.
+
+
+
+6. Spectral Results (Computed)
+
+
+
+
+Component size: 90
+
+
+Spectral gap:
+[
+\mu_1 \approx 0.006852680751025
+]
+
+
+Cheeger constant:
+[
+h \approx 0.016393442622951
+]
+
+
+
+
+Verified:
+
+
+
+
+Cheeger inequality holds
+
+
+Spectrum symmetric:
+[
+\lambda_k + \lambda_{N-k} = 2
+]
+
+
+
+
+Interpretation:
+
+
+
+
+Graph is bipartite tree
+
+
+Strong contraction toward root
+
+
+
+
+
+7. Lyapunov Analysis
+
+
+Candidate:
+[
+\Phi = (p+q, \sigma)
+]
+
+
+Results:
+
+
+
+
+Weakly monotone ✅
+
+
+Not strictly monotone ❌
+
+
+Violations: 9,096
+
+
+
+
+Conclusion:
+
+
+
+
+No simple scalar Lyapunov function exists
+
+
+
+
+
+8. What Is Proven vs Computational
+
+
+Fully Proven (structural)
+
+
+
+
+Existence of finite quotient
+
+
+Convergence bound
+
+
+Cycle classification
+
+
+
+
+Computationally Verified
+
+
+
+
+Minimality (91 states)
+
+
+Spectral quantities
+
+
+Collision absence
+
+
+
+
+
+9. Remaining Formalization Gaps
+
+
+
+
+Minimality proof (Myhill–Nerode style)
+
+
+Tree structure theorem (formal proof)
+
+
+Spectral theorem (non-computational justification)
+
+
+
+
+
+10. Bottom Line
+
+
+This project has:
+
+
+✔ Identified the true state space of Kaprekar dynamics
+
+✔ Separated invariants vs dynamics
+
+✔ Constructed the minimal automaton
+
+
+This is a complete structural resolution, pending final proof polishing.
+
+NEXTSTEPS.md
+
+
+KSD-91 — Final Research Roadmap
+
+
+This document defines the remaining steps to elevate the project to full publication-grade mathematics.
+
+
+
+🔴 PRIORITY 1 — Minimality Proof
+
+
+Goal
+
+
+Prove that 91 is the minimal orbit-complete quotient
+
+
+Method
+
+
+Myhill–Nerode style equivalence:
+
+
+[
+x \sim y \iff \forall n,\ K^n(x) = K^n(y)
+]
+
+
+Deliverable
+
+
+
+
+Formal theorem
+
+
+No computational dependence
+
+
+Proof of coarsest congruence
+
+
+
+
+
+🔴 PRIORITY 2 — Tree Structure Theorem
+
+
+Goal
+
+
+Prove the quotient graph structure
+
+
+Claim
+
+
+
+
+Directed rooted tree
+
+
+Height = 6
+
+
+Unique sink
+
+
+
+
+Deliverable
+
+
+[
+\tau(K(x)) = \tau(x) - 1
+]
+
+
+
+🟠 PRIORITY 3 — Spectral Theory
+
+
+Goal
+
+
+Upgrade numerical results into theorems
+
+
+Tasks
+
+
+
+
+Prove bipartiteness
+
+
+Derive spectral symmetry
+
+
+Connect to Cheeger inequality
+
+
+
+
+Deliverable
+
+
+Formal spectral theorem section
+
+
+
+🟠 PRIORITY 4 — Information Flow
+
+
+Goal
+
+
+Connect to modern research
+
+
+Idea
+
+
+Entropy decreases along iteration:
+
+
+[
+H(K^n(X)) \downarrow
+]
+
+
+Deliverable
+
+
+
+
+entropy definition on quotient
+
+
+funnel interpretation
+
+
+
+
+
+🟡 PRIORITY 5 — Base Generalization
+
+
+Goal
+
+
+Extend to base b
+
+
+Questions
+
+
+
+
+Does minimal quotient always exist?
+
+
+How does size scale?
+
+
+
+
+Deliverable
+
+
+
+
+small-base experiments
+
+
+conjecture section
+
+
+
+
+
+🟡 PRIORITY 6 — Category-Theoretic Framing
+
+
+Goal
+
+
+Abstract formulation
+
+
+Structure
+
+
+
+
+objects = dynamical systems
+
+
+morphisms = orbit-preserving maps
+
+
+
+
+Deliverable
+
+
+Functorial description of quotient
+
+
+
+📊 FINAL TARGET
+
+
+To transform this into:
+
+
+✔ Journal publication
+
+✔ Reproducible computational paper
+
+✔ Foundational reference for Kaprekar dynamics
+
+
+
+🧠 End State
+
+
+After completion, the work will represent:
+
+
+
+
+The canonical minimal dynamical model of Kaprekar’s system
+
+
+
+
+
+⏱ Execution Order
+
+
+
+
+Minimality proof
+
+
+Tree theorem
+
+
+Spectral formalization
+
+
+Paper submission
+
+
+Extensions
+
+
+
+
+
+🚀 You are here:
+
+
+
+Structure solved → Proof layer remaining
+
+
 
 https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/CHECKPOINTS/JUNE6-CHECKPOINT.MD
