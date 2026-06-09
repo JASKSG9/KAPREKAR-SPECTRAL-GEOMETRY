@@ -1,7 +1,4 @@
-README_LITE.md
-
-
-KSD-91 — Kaprekar Structural Decomposition
+Kaprekar Structural Decomposition
 
 
 This project solves the structure of the classic 4-digit Kaprekar routine.
@@ -1783,6 +1780,83 @@ The next steps are clear. The atlas is frozen. The mathematics is clean.
 
 It is time to publish, to scale, and to open the next department.
 ---
+NEXT_STEPS_FINAL.txt` – roadmap for Minimal Realization Theorem, Triangular Lattice Theorem, Jordan–Forest Correspondence, cross‑base generalization, and arbitrary digit length extension  
+
+## Citation
+
+If you use this work, please cite:  
+
+> *“A Structural Divisibility Law for the 4‑Digit Kaprekar Routine: Gap Quotients, Affine Chambers, and Tropical Dynamics.”*
+
+## License
+
+- **Code:** MIT License  
+- **Papers & documentation:** Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+---
+
+**For the full exposition, see the complete [README.md](https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/README.md).**
+``````cff
+cff-version: 1.2.0
+message: "If you use this software or its results in your research, please cite it using the following metadata."
+title: "Kaprekar Spectral Geometry: Complete Structural Analysis of the 4-Digit Base-10 Kaprekar System"
+authors:
+  - name: "JASKSG9"
+    alias: "JASKSG9"
+    affiliation: "GitHub Repository Maintainer"
+  - name: "Kaprekar Spectral Geometry Project"
+    email: "jasksg9@users.noreply.github.com"
+    affiliation: "GitHub"
+identifiers: []
+preferred-citation:
+  type: article
+  title: "A Structural Divisibility Law for the 4‑Digit Kaprekar Routine: Gap Quotients, Affine Chambers, and Tropical Dynamics"
+  authors:
+    - name: "JASKSG9"
+  year: 2026
+  month: 6
+  day: 9
+  journal: "Experimental Mathematics (submitted)"
+  url: "https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY"
+  note: "Preprint available at the GitHub repository"
+version: "1.0.0"
+date-released: 2026-06-09
+url: "https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY"
+license: "MIT"
+repository-code: "https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY"
+abstract: |
+  This repository contains a complete computational classification of the 4-digit base-10 Kaprekar transformation,
+  viewed through the lens of finite dynamical systems, automata theory, quotient structures, and nilpotent spectral geometry.
+  The central result is that the reachable σ-image (digit multiset equivalence classes) has 31 states, but its minimal
+  behavioral Nerode quotient contains only 18 states, establishing that σ ≠ Nerode. The collapse 31 → 18 is fully characterized,
+  along with semigroup contraction, Jordan structure (nilpotent index 6, minimal polynomial x⁶(x−1)), the Borrow Suffix Theorem,
+  and a geometric decomposition into (p,q) coordinate fibers. The repository includes a verification engine, locked numerical
+  ground truth, and a research roadmap for formal theorem extraction.
+keywords:
+  - Kaprekar routine
+  - finite dynamical systems
+  - Nerode equivalence
+  - minimal realization
+  - nilpotent Jordan structure
+  - borrowed suffix theorem
+  - triangular lattice
+  - computational mathematics
+license-url: "https://opensource.org/licenses/MIT"
+```https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
+
+cff-version: 1.2.0
+title: "Kaprekar Spectral Geometry"
+message: "Please cite this repository if you use it."
+authors:
+  - family-names: "JASKSG9"
+repository-code: "https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY"
+license: MIT
+version: "1.0.0"
+date-released: 2026-06-09
+
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/LIBRARY/SUPPORT/JUNE-SUPPORT-FLOW.MD
+
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/CHECKPOINTS/JUNE9-CHECKPOINT.MD
   
 Session closed. Production freeze in effect.
 
