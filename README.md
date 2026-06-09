@@ -1,7 +1,463 @@
-KAPREKAR SPECTRAL GEOMETRY
+Kaprekar Spectral Geometry
 
 
-Complete Structural Analysis of the 4-Digit Base-10 Kaprekar System
+A complete computational and structural analysis of the 4-digit base-10 Kaprekar system through finite dynamical systems, quotient structures, automata theory, semigroup dynamics, and nilpotent spectral geometry.
+
+
+Repository:
+
+
+
+Overview
+
+
+This project studies the classical 4-digit Kaprekar transformation as a finite dynamical system.
+
+
+Rather than analyzing individual numbers, the system is compressed through a hierarchy of quotient structures, ultimately revealing a minimal behavioral realization of the dynamics.
+
+
+The central verified result is:
+
+
+
+
+The reachable σ-image contains 31 states, while the minimal Nerode quotient contains only 18 states.
+
+
+
+
+Thus:
+
+
+[
+31 \rightarrow 18
+]
+
+
+is a genuine behavioral collapse, proving that the reachable σ-image is not minimal.
+
+
+
+Verified Object Hierarchy
+
+
+
+
+Level
+Object
+Size
+
+
+
+
+L0
+Raw digit strings
+10,000
+
+
+L1
+Sorted multisets
+715
+
+
+L2
+Full σ-partition
+91
+
+
+L3
+Reachable σ-image
+31
+
+
+L4
+Nerode quotient
+18
+
+
+
+
+Critical Correction
+
+
+Earlier analyses incorrectly asserted that σ coincides with the Nerode quotient.
+
+
+Verified computation shows:
+
+
+[
+\sigma \neq \text{Nerode}
+]
+
+
+and the true minimal realization is obtained only after the collapse
+
+
+[
+31 \rightarrow 18.
+]
+
+
+
+Core Verified Invariants
+
+
+
+
+Invariant
+Value
+
+
+
+
+Reachable states
+31
+
+
+Nerode classes
+18
+
+
+Cycle states
+2
+
+
+Transient states
+29
+
+
+Maximum depth
+6
+
+
+Nilpotent index
+6
+
+
+Jordan blocks
+[6,5,5,3,2,1,1,1,1,1,1,1,1]
+
+
+Weyr characteristic
+[13,5,4,3,3,1]
+
+
+Minimal polynomial
+x^6(x-1)
+
+
+Borrow suffix violations
+0
+
+
+Semigroup contraction
+31→18→13→9→6→3→2
+
+
+
+
+
+Main Results
+
+
+1. Reachable Image Theorem
+
+
+The induced Kaprekar dynamics closes on exactly 31 reachable σ-states.
+
+
+
+2. Minimal Realization Phenomenon
+
+
+Behavioral minimization yields exactly 18 Nerode classes.
+
+
+This establishes:
+
+
+[
+|Image_\sigma| = 31
+]
+
+
+but
+
+
+[
+|Nerode| = 18.
+]
+
+
+
+3. Borrow Suffix Theorem
+
+
+Every subtraction borrow vector occurring in the reachable image is of the form
+
+
+[
+0^a1^b.
+]
+
+
+No violations were found.
+
+
+This property drives the piecewise structure of the induced dynamics.
+
+
+
+4. Jordan–Forest Structure
+
+
+The transient portion of the system forms a rooted forest whose chain lengths coincide with the Jordan block decomposition of the nilpotent operator.
+
+
+Verified chain lengths:
+
+
+[
+[6,5,5,3,2,1,1,1,1,1,1,1,1].
+]
+
+
+
+5. Semigroup Contraction
+
+
+Repeated image contraction produces:
+
+
+[
+31 \rightarrow 18 \rightarrow 13 \rightarrow 9 \rightarrow 6 \rightarrow 3 \rightarrow 2.
+]
+
+
+This sequence stabilizes on the attractor structure.
+
+
+
+(p,q) Geometry
+
+
+For a sorted state
+
+
+[
+(a \le b \le c \le d)
+]
+
+
+define
+
+
+[
+p=a+d
+]
+
+
+and
+
+
+[
+q=b+c.
+]
+
+
+The reachable image decomposes into nine verified fibers:
+
+
+
+
+Fiber
+Size
+
+
+
+
+(8,10)
+10
+
+
+(10,8)
+10
+
+
+(9,9)
+5
+
+
+(0,0)
+1
+
+
+(9,18)
+1
+
+
+(10,17)
+1
+
+
+(11,16)
+1
+
+
+(12,15)
+1
+
+
+(13,14)
+1
+
+
+
+
+The dominant fibers form a triangular lattice structure that appears to control the synchronization responsible for the 31→18 collapse.
+
+
+
+Repository Contents
+
+
+Core Verification
+
+
+
+
+kaprekar_master.py
+
+
+CHECKPOINT.md
+
+
+NEXT_STEPS_FINAL.txt
+
+
+
+
+Checkpoints
+
+
+Research Support Material
+
+
+
+Research Roadmap
+
+
+The computational atlas is complete.
+
+
+Current work focuses on theorem extraction.
+
+
+Priority A
+
+
+
+
+Minimal Realization Theorem
+
+
+Triangular Lattice Theorem
+
+
+Jordan–Forest Correspondence
+
+
+
+
+Priority B
+
+
+
+
+Cross-base generalization
+
+
+Arbitrary digit-length extension
+
+
+Closed formulas for image and Nerode sizes
+
+
+
+
+Priority C
+
+
+
+
+Spectral extensions
+
+
+Algebraic combinatorics formulation
+
+
+Open-source package release
+
+
+
+
+
+Citation
+
+
+If you use this work, please cite:
+
+
+
+
+A Structural Divisibility Law for the 4-Digit Kaprekar Routine: Gap Quotients, Affine Chambers, and Tropical Dynamics.
+
+
+
+
+Repository:
+
+
+
+License
+
+
+Code
+
+
+MIT License
+
+
+Papers and Documentation
+
+
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+
+
+Project Status
+
+
+Computational Atlas: Complete
+
+
+Numerical Verification: Complete
+
+
+Structural Classification: Complete
+
+
+Theorem Extraction: Active
+
+
+Formal Proof Development: In Progress
+
+
+The principal mathematical object of the project is the 31-state reachable σ-image together with its 18-state minimal realization.
+
+
 
 
 Status: Computational Classification Complete
