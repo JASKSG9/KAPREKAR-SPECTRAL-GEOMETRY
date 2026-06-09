@@ -13942,6 +13942,15 @@ keywords:
   - computational mathematics
 license-url: "https://opensource.org/licenses/MIT"
 ```
+cff-version: 1.2.0
+title: "Kaprekar Spectral Geometry"
+message: "Please cite this repository if you use it."
+authors:
+  - family-names: "JASKSG9"
+repository-code: "https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY"
+license: MIT
+version: "1.0.0"
+date-released: 2026-06-09
 
 **For the full exposition, see the complete [README.md]
 (https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/README.md).**
