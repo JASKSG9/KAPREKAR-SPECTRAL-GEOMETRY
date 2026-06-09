@@ -1,3 +1,555 @@
+KAPREKAR SPECTRAL GEOMETRY
+
+
+Complete Structural Analysis of the 4-Digit Base-10 Kaprekar System
+
+
+Status: Computational Classification Complete
+
+Date: 2026-06-09
+
+Repository Stage: Theorem Extraction and Formalization
+
+
+
+Overview
+
+
+This repository contains a complete computational classification of the 4-digit base-10 Kaprekar transformation, viewed through the lens of finite dynamical systems, automata theory, quotient structures, and nilpotent spectral geometry.
+
+
+The central result is that the classical Kaprekar process admits several distinct levels of abstraction:
+
+
+
+
+Level
+Object
+Size
+
+
+
+
+L0
+Raw 4-digit strings
+10,000
+
+
+L1
+Sorted digit multisets
+715
+
+
+L2
+Full σ-partition
+715
+
+
+L3
+Reachable σ-image
+31
+
+
+L4
+Nerode quotient
+18
+
+
+
+
+A major correction established during verification is:
+
+
+
+
+The reachable σ-image has 31 states, but its minimal behavioral realization contains only 18 states.
+
+
+
+
+Thus,
+
+
+
+
+σ ≠ Nerode
+
+
+
+
+and the collapse
+
+
+
+
+31 → 18
+
+
+
+
+is a genuine mathematical phenomenon.
+
+
+
+Main Verified Results
+
+
+Reachable Dynamics
+
+
+
+
+Quantity
+Value
+
+
+
+
+Reachable states
+31
+
+
+Nerode classes
+18
+
+
+Fixed points / cycles
+2
+
+
+Maximum depth
+6
+
+
+Nilpotent index
+6
+
+
+
+
+
+Semigroup Contraction
+
+
+Iterating the image operator produces:
+
+
+31 → 18 → 13 → 9 → 6 → 3 → 2
+
+
+
+This contraction sequence terminates at the two absorbing cycle states.
+
+
+
+Jordan Structure
+
+
+The transient forest decomposes into Jordan chains of sizes
+
+
+[6, 5, 5, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1]
+
+
+
+giving:
+
+
+Nilpotent index = 6
+
+
+
+and Weyr characteristic
+
+
+[13, 5, 4, 3, 3, 1]
+
+
+
+The associated minimal polynomial is
+
+
+x⁶(x − 1)
+
+
+
+
+Borrow Suffix Theorem
+
+
+Every Kaprekar subtraction within the reachable image satisfies a strict borrow structure.
+
+
+For every transition:
+
+
+borrow pattern = 0ᵃ1ᵇ
+
+
+
+No violations were found.
+
+
+Verified count:
+
+
+0 violations
+
+
+
+
+Geometric Structure
+
+
+(p,q) Coordinates
+
+
+For a sorted state
+
+
+(a,b,c,d)
+
+
+
+define
+
+
+p = a + d
+q = b + c
+
+
+
+The reachable image decomposes into exactly nine fibers.
+
+
+
+
+(p,q)
+Size
+
+
+
+
+(0,0)
+1
+
+
+(8,10)
+10
+
+
+(9,9)
+5
+
+
+(9,18)
+1
+
+
+(10,8)
+10
+
+
+(10,17)
+1
+
+
+(11,16)
+1
+
+
+(12,15)
+1
+
+
+(13,14)
+1
+
+
+
+
+Two dominant fibers contain
+
+
+T₄ = 10
+
+
+
+states each, revealing an unexpected triangular geometry.
+
+
+
+Nerode Quotient
+
+
+The behavioral quotient contains exactly
+
+
+18 classes
+
+
+
+of which:
+
+
+8 classes have size > 1
+10 classes are singletons
+
+
+
+Largest class size:
+
+
+4
+
+
+
+These classes represent states with identical future behavior under all subsequent Kaprekar iterations.
+
+
+
+Repository Contents
+
+
+kaprekar_master.py
+
+
+Complete verification engine.
+
+
+Reproduces:
+
+
+
+
+hierarchy sizes
+
+
+reachable image
+
+
+Nerode quotient
+
+
+depth structure
+
+
+Jordan chains
+
+
+Weyr characteristic
+
+
+borrow-suffix verification
+
+
+semigroup contraction
+
+
+geometric fiber decomposition
+
+
+
+
+
+CHECKPOINT.md
+
+
+Locked computational ground truth.
+
+
+Contains all verified numerical invariants and corrections to earlier analyses.
+
+
+
+NEXT_STEPS_FINAL.txt
+
+
+Research roadmap and theorem extraction plan.
+
+
+Includes:
+
+
+
+
+Minimal Realization Theorem
+
+
+Triangular Lattice Theorem
+
+
+Jordan–Forest Correspondence
+
+
+Cross-base generalization
+
+
+Arbitrary digit-length extension
+
+
+
+
+
+Critical Corrections
+
+
+Earlier drafts contained an incorrect claim:
+
+
+“All 465 pairs separate immediately.”
+
+
+
+This statement is false.
+
+
+Verified computation shows:
+
+
+
+
+several σ-states share identical futures
+
+
+13 reachable states are behaviorally redundant
+
+
+the minimal realization contains 18 states
+
+
+
+
+Therefore:
+
+
+31-state reachable image
+≠
+18-state Nerode quotient
+
+
+
+All repository conclusions are based on the corrected computation.
+
+
+
+Current Research Program
+
+
+Priority 1
+
+
+Minimal Realization Theorem
+
+
+Formal proof that the reachable image collapses from 31 states to exactly 18 behavioral classes.
+
+
+
+Priority 2
+
+
+Triangular Lattice Theorem
+
+
+Derive a closed-form piecewise dynamical system on the (p,q)-plane.
+
+
+
+Priority 3
+
+
+Jordan–Forest Correspondence
+
+
+Prove that Jordan block sizes coincide with chain lengths in the transient predecessor forest.
+
+
+
+Priority 4
+
+
+Cross-Base Theory
+
+
+Determine:
+
+
+|Imageσ(b)|
+|Nerode(b)|
+
+
+
+as functions of base.
+
+
+
+Priority 5
+
+
+General Digit Length
+
+
+Extend the theory from 4 digits to arbitrary digit length d.
+
+
+
+Research Status
+
+
+
+
+Component
+Status
+
+
+
+
+Computational Atlas
+COMPLETE
+
+
+Numerical Verification
+COMPLETE
+
+
+Structural Classification
+COMPLETE
+
+
+Error Audit
+COMPLETE
+
+
+Theorem Extraction
+ACTIVE
+
+
+Formal Proof Writing
+PENDING
+
+
+
+
+
+Principal Mathematical Object
+
+
+The central object of study is:
+
+
+
+
+The 31-state reachable Kaprekar σ-image together with its 18-state minimal Nerode realization.
+
+
+
+
+All numerical claims in this repository are reproducible from the verification engine.
+
+
+
+ 
  Kaprekar Structural Decomposition
 
 
