@@ -42,3 +42,12 @@ For attribution, please cite:
   year = {2026},
   url = {https://github.com/JASKSG9/kaprekar-spectral-geometry}
 }
+cff-version: 1.2.0
+title: "Kaprekar Spectral Geometry"
+message: "Please cite this repository if you use it."
+authors:
+  - family-names: "JASKSG9"
+repository-code: "https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY"
+license: MIT
+version: "1.0.0"
+date-released: 2026-06-09
