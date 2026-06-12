@@ -5234,10 +5234,198 @@ This project has:
 
 This is a complete structural resolution, pending final proof polishing.
 
+# README-LITE — Kaprekar Dynamics (Core Results Summary)
 
+## Project Status
+This project studies the **4-digit Kaprekar map** and its induced structure on quotient representations, transition graphs, and associated operator forms (Koopman / Jordan analysis).
 
+The current state is:
 
+- Some results are **formally proven**
+- Some are **computationally verified**
+- Some are **suggestive but not structurally nontrivial**
+- One major claim (T11) is a **tautological reformulation of hitting time**
 
+---
+
+# 1. Core System Definition
+
+We study the deterministic map:
+
+\[
+K(n) = \text{desc}(n) - \text{asc}(n)
+\]
+
+on 4-digit states in base 10 (excluding repdigits).
+
+This induces a finite directed graph:
+
+- Nodes: sorted digit configurations
+- Edges: application of Kaprekar map
+- Terminal structure: convergence to fixed point (6174 in base 10)
+
+---
+
+# 2. Structural Reduction (Q₂₀)
+
+The system reduces to a quotient representation:
+
+- Q₂₀ = image-core coordinate space
+- Dynamics: induced map \( T_{\text{gap}} \)
+- Fixed point: unique sink state
+
+This yields a finite functional digraph with absorption.
+
+---
+
+# 3. VERIFIED RESULTS
+
+## T9 — Borrow Feasibility (PROVED)
+A structural constraint on digit redistribution under subtraction.
+
+- Ensures valid realizations of quotient transitions
+- Nontrivial combinatorial constraint
+
+---
+
+## T10 — Nerode-Minimality (PROVED)
+The quotient Q₂₀ is minimal under observational equivalence.
+
+- No further compression of state space is possible
+- Establishes canonical nature of representation
+
+---
+
+## T11 — Depth Equation (FORMAL BUT TAUTOLOGICAL)
+
+\[
+d(x) = 1 + d(T(x)), \quad d(\text{sink}) = 0
+\]
+
+Equivalent forms:
+
+- \((I - U^T)d = 1\)
+- Green’s function interpretation (FORMAL ONLY)
+
+### Important clarification:
+This is simply:
+
+> depth = hitting time to sink
+
+It is a definition of a finite absorbing Markov/deterministic system, not a new analytic structure.
+
+---
+
+# 4. KOOPMAN / JORDAN STRUCTURE
+
+The Koopman operator on the transient subspace:
+
+- is nilpotent
+- has finite Jordan blocks
+- encodes absorption depth structure
+
+### Empirical findings (base 10):
+
+- Nilpotency index: 5
+- Jordan block structure: non-uniform distribution
+- Largest block size: 5
+
+---
+
+# 5. COMPARATIVE SPECTRAL ANALYSIS
+
+Comparison against random functional graphs:
+
+| Base | Behavior |
+|------|----------|
+| 5    | borderline deviation |
+| 10   | marginally atypical (p ≈ 0.049) |
+| 15   | no clear deviation |
+
+### Interpretation:
+- Slight deviations exist in some cases
+- Effect size is small to moderate
+- No strong universality violation established
+
+---
+
+# 6. WHAT IS ACTUALLY NONTRIVIAL
+
+## Proven
+- T9: Structural borrow constraint
+- T10: Minimal quotient structure
+
+## Verified but NOT deep
+- T1–T4, T6–T8: computational structure
+- T11: hitting time identity (tautology)
+
+## Suggestive (NOT PROVEN)
+- Jordan structure deviations vs random graphs
+- Base-b spectral variation trends
+- Possible weak structural bias in Kaprekar dynamics
+
+---
+
+# 7. WHAT IS NOT TRUE / SHOULD NOT BE CLAIMED
+
+The following are **not supported as meaningful mathematical structure**:
+
+- “Poisson equation interpretation of depth”
+- “Green’s function structure”
+- “Cohomological cocycle interpretation”
+- “Koopman eigenfunction for depth”
+
+These are restatements of finite hitting-time algebra.
+
+---
+
+# 8. WHAT THIS PROJECT REALLY CONTRIBUTES
+
+### Genuine contributions:
+- A clean quotient reduction of Kaprekar dynamics
+- Identification of minimal observational structure (T10)
+- A combinatorial constraint system (T9)
+- Empirical study of absorption graphs and Jordan structure
+
+### Broader significance:
+This system behaves like a:
+
+> finite deterministic absorbing digraph with structured quotient collapse
+
+---
+
+# 9. FINAL STATUS
+
+- No new fundamental invariant has been discovered
+- No nontrivial spectral theorem has been established yet
+- Structure is consistent with known theory of:
+  - functional graphs
+  - absorbing Markov chains
+  - nilpotent linear operators
+
+---
+
+# 10. NEXT REAL RESEARCH DIRECTIONS
+
+The only remaining potentially nontrivial directions are:
+
+1. Formal comparison of Koopman/Jordan structure vs random functional graphs
+2. Explicit construction of Jordan chains in (S, g₂) coordinates
+3. Base-b universality or non-universality classification
+4. Identification of true invariants beyond hitting time structure
+
+---
+
+# 11. SUMMARY
+
+This project has successfully:
+
+- identified correct quotient structure
+- eliminated incorrect analytic interpretations
+- isolated true combinatorial content (T9, T10)
+- shown that deeper spectral claims are currently unsubstantiated
+
+---
 
 All files are self‑contained, reproducible, and production‑ready. The theory document now clearly separates proven, conditionally valid, empirical, and conjectural statements — eliminating any overclaim.
 
