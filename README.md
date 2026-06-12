@@ -5427,6 +5427,728 @@ This project has successfully:
 
 ---
 
+KAPREKAR-SPECTRAL-GEOMETRY
+
+
+KSG-KYND Program
+
+
+Kaprekar Spectral Geometry & Quotient Dynamics
+
+
+Maintainer: James A. Skaggs
+
+Status: Active Research Repository
+
+License: MIT (recommended)
+
+Last Updated: 2026-06-12
+
+
+
+Overview
+
+
+KAPREKAR-SPECTRAL-GEOMETRY (KSG) is a research program devoted to the mathematical structure of generalized Kaprekar dynamics.
+
+
+The project studies finite-state digit transformations through:
+
+
+
+
+Exact quotient constructions
+
+
+Functional graph dynamics
+
+
+Semiconjugacy theory
+
+
+Height-function methods
+
+
+Automata-theoretic reductions
+
+
+Nerode equivalence analysis
+
+
+Spectral graph techniques
+
+
+Computational verification systems
+
+
+
+
+The primary objective is to identify exact structural invariants of Kaprekar-type maps and to distinguish rigorously proved results from computational evidence, conjectures, and exploratory interpretations.
+
+
+
+Research Philosophy
+
+
+This repository follows a strict evidence hierarchy.
+
+
+
+
+Tag
+Meaning
+
+
+
+
+[T]
+Formally proved theorem
+
+
+[V]
+Computationally verified result
+
+
+[C]
+Conjecture or open problem
+
+
+[R]
+Motivational, heuristic, or exploratory material
+
+
+
+
+A result may only be promoted from [C] to [T] after a complete proof has been written and independently checked.
+
+
+Computational evidence alone does not constitute proof.
+
+
+
+Core Mathematical Program
+
+
+The central KSG-KYND program investigates the structure of generalized Kaprekar maps
+
+
+[
+K : X \rightarrow X
+]
+
+
+through exact finite quotients
+
+
+[
+\pi : X \rightarrow Q
+]
+
+
+and induced dynamics
+
+
+[
+\widetilde K : Q \rightarrow Q.
+]
+
+
+The long-term objective is to classify:
+
+
+
+
+quotient geometries,
+
+
+dynamical invariants,
+
+
+automata structures,
+
+
+attractor mechanisms,
+
+
+spectral reductions,
+
+
+and universality phenomena
+
+
+
+
+across arbitrary bases and digit lengths.
+
+
+
+Principal Results
+
+
+[T] Quotient Projection Theorem
+
+
+A finite quotient map exists that identifies dynamically equivalent states while preserving forward dynamics.
+
+
+
+[T] Exact 55-State Lattice Characterization
+
+
+For the classical four-digit decimal Kaprekar system, the quotient image is a triangular lattice
+
+
+[
+Q={(S,g_2):0\le g_2\le S\le 9}
+]
+
+
+containing exactly
+
+
+[
+|Q|=55
+]
+
+
+states.
+
+
+
+[T] Height Function Lyapunov Theorem
+
+
+A height function
+
+
+[
+h(x)
+]
+
+
+exists such that every transient state satisfies
+
+
+[
+h(K(x))=h(x)-1.
+]
+
+
+This provides a strict discrete Lyapunov structure and establishes monotone descent toward attractors.
+
+
+
+[T] Semiconjugacy Theorem
+
+
+The quotient dynamics satisfy
+
+
+[
+\pi \circ K
+
+
+\widetilde K \circ \pi.
+]
+
+
+This semiconjugacy forms the central structural theorem of the KSG-KYND framework.
+
+
+
+[V] Generalized Base-b Enumeration
+
+
+Extensive computational verification has been performed across multiple bases and digit lengths.
+
+
+These computations support the extension of quotient structures beyond the classical decimal case.
+
+
+
+[V] Computational Verification Framework
+
+
+The repository includes independent verification systems for:
+
+
+
+
+quotient construction,
+
+
+state enumeration,
+
+
+transition validation,
+
+
+attractor detection,
+
+
+semiconjugacy verification.
+
+
+
+
+
+Open Problems
+
+
+The following problems remain active.
+
+
+[C] Minimal Automaton Classification
+
+
+Determine the minimal deterministic automaton associated with generalized Kaprekar dynamics.
+
+
+
+[C] Full Nerode Characterization
+
+
+Determine the exact Nerode equivalence classes and prove minimality results where applicable.
+
+
+
+[C] Spectral Universality
+
+
+Investigate whether quotient-level spectral structures exhibit universal behavior across bases and dimensions.
+
+
+
+Repository Structure
+
+
+Root Files
+
+
+
+
+File
+Description
+
+
+
+
+README.md
+Repository overview
+
+
+DISCLAIMER.MD
+Scope and limitations
+
+
+DEPRECATED-CLAIMS.MD
+Retired claims and corrections
+
+
+June6-Kaprekar-Bisimulation-Fixed-Point.py
+Bisimulation experiments
+
+
+JUNE6-KSG-TOY.PY
+Toy model implementations
+
+
+JUNE6-GROUND-TRUTH-REGISTRY.PY
+Verification registry
+
+
+
+
+
+ARxIX/
+
+
+Primary manuscript collection.
+
+
+Contains:
+
+
+
+
+KSG-KYND-FLOW.MD
+
+
+M3-KSG-KYND-README-LITE.MD
+
+
+
+
+These files contain the main theorem development and publication drafts.
+
+
+
+ATLAS/
+
+
+Reference atlas.
+
+
+Includes:
+
+
+
+
+theorem registries,
+
+
+quotient catalogs,
+
+
+invariant databases,
+
+
+state-space summaries,
+
+
+census data.
+
+
+
+
+
+CHECKPOINTS/
+
+
+Historical checkpoints documenting:
+
+
+
+
+discoveries,
+
+
+corrections,
+
+
+theorem evolution,
+
+
+verification milestones.
+
+
+
+
+
+DOCS/
+
+
+Technical documentation.
+
+
+Includes:
+
+
+
+
+specifications,
+
+
+implementation notes,
+
+
+data formats,
+
+
+reproducibility guides.
+
+
+
+
+
+FLOW/
+
+
+Research workflow documents.
+
+
+Includes:
+
+
+
+
+proof pipelines,
+
+
+verification pipelines,
+
+
+publication workflows,
+
+
+project roadmaps.
+
+
+
+
+
+MAPS/
+
+
+State-space maps and registries.
+
+
+Recommended contents:
+
+
+
+
+quotient_map.json
+
+
+transition_registry.json
+
+
+state_lookup_tables
+
+
+
+
+These files form the primary reproducibility layer of the project.
+
+
+
+MODELS/
+
+
+Formal dynamical models.
+
+
+Examples include:
+
+
+
+
+quotient systems,
+
+
+automata models,
+
+
+spectral operators,
+
+
+graph reductions.
+
+
+
+
+
+TERMINOLOGY/
+
+
+Formal definitions and naming conventions used throughout the repository.
+
+
+
+REQUIREMENTS/
+
+
+Reproducibility specifications.
+
+
+Recommended files:
+
+
+
+
+requirements.txt
+
+
+environment.yml
+
+
+dependency manifests
+
+
+
+
+
+ALGORITHM/
+
+
+Algorithmic frameworks.
+
+
+MARKOV-CONLEY.MD
+
+
+Topics:
+
+
+
+
+Conley index methods,
+
+
+invariant sets,
+
+
+cubical complexes,
+
+
+homological analysis.
+
+
+
+
+Classification: [V]
+
+
+
+SPECTRAL-SSF-FLOW.MD
+
+
+Topics:
+
+
+
+
+graph Laplacians,
+
+
+Cheeger inequalities,
+
+
+Fiedler vectors,
+
+
+spectral reductions.
+
+
+
+
+Classification: [V]/[R]
+
+
+This document applies established spectral graph techniques to Kaprekar dynamics. Standard spectral machinery should not be interpreted as a novel invariant without a corresponding theorem.
+
+
+
+LIBRARY/
+
+
+Supporting archives.
+
+
+A27-KSG.MD
+
+
+Classification: [R]
+
+
+Contains exploratory cross-domain analogies and speculative interpretations.
+
+
+Not part of the formal theorem stack.
+
+
+
+A28-DR_KAPREKAR-DEDICATED.MD
+
+
+Classification: [V]
+
+
+Bibliographic and source-tracking ledger.
+
+
+
+Reproducibility Standards
+
+
+A complete archival release should include:
+
+
+
+
+LICENSE
+
+
+requirements.txt
+
+
+environment.yml
+
+
+quotient_map.json
+
+
+transition_registry.json
+
+
+verification scripts
+
+
+automated tests
+
+
+
+
+Claims designated [V] should be reproducible using repository artifacts.
+
+
+
+Disclaimer
+
+
+This repository contains both rigorous mathematics and exploratory research.
+
+
+Only statements explicitly marked [T] should be interpreted as proved theorems.
+
+
+Statements marked [V] are computationally supported.
+
+
+Statements marked [C] remain open.
+
+
+Statements marked [R] are motivational or exploratory and are not claimed as mathematical results.
+
+
+
+Citation
+
+
+If using this repository in academic work, please cite the repository version, commit hash, and any associated manuscript contained in the ARxIX directory.
+
+
+
+Long-Term Goal
+
+
+The ultimate objective of KSG-KYND is a complete structural theory of generalized Kaprekar dynamics based on:
+
+
+
+
+exact finite quotients,
+
+
+automata-theoretic reductions,
+
+
+dynamical invariants,
+
+
+spectral decompositions,
+
+
+and provably minimal representations.
+
+
+
+
+The program seeks to transform Kaprekar dynamics from a collection of numerical curiosities into a coherent mathematical framework with rigorous foundations and reproducible verification.
+
+
+
 All files are self‑contained, reproducible, and production‑ready. The theory document now clearly separates proven, conditionally valid, empirical, and conjectural statements — eliminating any overclaim.
 
 Node #10878 — Louisville, KY
