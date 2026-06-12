@@ -1,19 +1,711 @@
-# 🔥 KAPREKAR SPECTRAL GEOMETRY — COMPLETE OPEN-SOURCE RESEARCH ECOSYSTEM
-
----
+KAPREKAR-SPECTRAL-GEOMETRY
 
 
-Kaprekar Spectral Geometry
+Master Table of Contents (TOC.md)
 
 
-Extended Repository Table of Contents
+Repository: KAPREKAR-SPECTRAL-GEOMETRY
+
+Program: KSG-KYND (Kaprekar Spectral Geometry & Quotient Dynamics)
+
+Maintainer: James A. Skaggs
+
+Status: Active Research Repository
+
+Last Updated: 2026-06-12
 
 
-Version: June 2026
+
+1. Repository Purpose
+
+
+This repository studies generalized Kaprekar dynamics through:
 
 
 
-1. Repository Overview
+
+Exact quotient constructions
+
+
+Functional graph reductions
+
+
+Semiconjugacy theory
+
+
+Height-function dynamics
+
+
+Spectral graph methods
+
+
+Automata/Nerode reductions
+
+
+Computational verification pipelines
+
+
+
+
+The repository separates material into four evidence classes:
+
+
+
+
+Tag
+Meaning
+
+
+
+
+[T]
+Formally proved theorem
+
+
+[V]
+Computationally verified result
+
+
+[C]
+Conjecture / open problem
+
+
+[R]
+Motivational or exploratory material
+
+
+
+
+
+2. Root Directory
+
+
+
+
+File
+Purpose
+
+
+
+
+README.md
+Primary mathematical overview
+
+
+DISCLAIMER.MD
+Scope and limitations
+
+
+DEPRECATED-CLAIMS.MD
+Retracted or superseded claims
+
+
+June6-Kaprekar-Bisimulation-Fixed-Point.py
+Bisimulation experiments
+
+
+JUNE6-KSG-TOY.PY
+Toy model implementations
+
+
+JUNE6-GROUND-TRUTH-REGISTRY.PY
+Verification registry
+
+
+.gitignore
+Repository exclusions
+
+
+
+
+
+3. ARxIX/
+
+
+Primary manuscript collection.
+
+
+Contents
+
+
+
+
+
+
+KSG-KYND-FLOW.MD
+
+
+
+
+Main manuscript
+
+
+Quotient theory
+
+
+Semiconjugacy theorem
+
+
+Generalized base-b dynamics
+
+
+
+
+
+
+
+
+M3-KSG-KYND-README-LITE.MD
+
+
+
+
+Theorem classification system
+
+
+Publication status tracker
+
+
+
+
+
+
+
+
+
+4. ATLAS/
+
+
+Research atlas and large-scale reference material.
+
+
+Contents include:
+
+
+
+
+theorem catalogs
+
+
+quotient registries
+
+
+invariant catalogs
+
+
+state-space summaries
+
+
+census data
+
+
+
+
+Classification:
+[T], [V], [C]
+
+
+
+5. CHECKPOINTS/
+
+
+Historical research checkpoints.
+
+
+Purpose:
+
+
+
+
+preserve intermediate discoveries
+
+
+track corrections
+
+
+record theorem evolution
+
+
+maintain reproducibility
+
+
+
+
+
+6. CHANGELOG/
+
+
+Repository development history.
+
+
+Includes:
+
+
+
+
+major revisions
+
+
+theorem corrections
+
+
+file migrations
+
+
+structural updates
+
+
+
+
+
+7. DEMO/
+
+
+Demonstrations and example workflows.
+
+
+Includes:
+
+
+
+
+toy examples
+
+
+verification runs
+
+
+visualization examples
+
+
+educational reproductions
+
+
+
+
+
+8. DOCS/
+
+
+Technical documentation.
+
+
+Includes:
+
+
+
+
+API references
+
+
+file specifications
+
+
+data format descriptions
+
+
+implementation notes
+
+
+
+
+
+9. FLOW/
+
+
+Research workflow documents.
+
+
+Topics:
+
+
+
+
+theorem pipelines
+
+
+verification pipelines
+
+
+publication workflows
+
+
+research roadmaps
+
+
+
+
+
+10. GIF/
+
+
+Visual assets.
+
+
+Includes:
+
+
+
+
+quotient animations
+
+
+state-space visualizations
+
+
+attractor demonstrations
+
+
+spectral animations
+
+
+
+
+
+11. MAPS/
+
+
+Mathematical maps and state registries.
+
+
+Includes:
+
+
+
+
+quotient maps
+
+
+transition maps
+
+
+lattice embeddings
+
+
+state correspondence tables
+
+
+
+
+Critical reproducibility assets should live here.
+
+
+Examples:
+
+
+
+
+quotient_map.json
+
+
+transition_registry.json
+
+
+state_lookup_tables
+
+
+
+
+
+12. MODELS/
+
+
+Formal mathematical models.
+
+
+Examples:
+
+
+
+
+quotient dynamics
+
+
+spectral operators
+
+
+automata models
+
+
+graph-theoretic reductions
+
+
+
+
+
+13. REQUIREMENTS/
+
+
+Reproducibility specifications.
+
+
+Recommended contents:
+
+
+
+
+requirements.txt
+
+
+environment.yml
+
+
+dependency manifests
+
+
+version constraints
+
+
+
+
+
+14. TERMINOLOGY/
+
+
+Repository vocabulary.
+
+
+Defines:
+
+
+
+
+quotient terminology
+
+
+spectral terminology
+
+
+automata terminology
+
+
+theorem naming conventions
+
+
+
+
+
+15. ALGORITHM/
+
+
+Algorithmic frameworks.
+
+
+MARKOV-CONLEY.MD
+
+
+Topics:
+
+
+
+
+Conley index methods
+
+
+cubical complexes
+
+
+invariant sets
+
+
+homological analysis
+
+
+
+
+Classification:
+[V]
+
+
+
+SPECTRAL-SSF-FLOW.MD
+
+
+Topics:
+
+
+
+
+graph Laplacians
+
+
+Cheeger inequalities
+
+
+Fiedler vectors
+
+
+spectral reductions
+
+
+
+
+Classification:
+[V]/[R]
+
+
+Note:
+Contains standard spectral machinery applied to Kaprekar dynamics and should not be interpreted as establishing novel invariants unless explicitly proved.
+
+
+
+16. LIBRARY/
+
+
+Supporting materials and reference archives.
+
+
+SUPPORT/
+
+
+A27-KSG.MD
+
+
+Cross-domain exploratory analogies.
+
+
+Topics:
+
+
+
+
+entropy analogies
+
+
+plasma analogies
+
+
+clinical analogies
+
+
+
+
+Classification:
+[R]
+
+
+Not part of the theorem stack.
+
+
+
+A28-DR_KAPREKAR-DEDICATED.MD
+
+
+Bibliographic ledger.
+
+
+Topics:
+
+
+
+
+source tracking
+
+
+references
+
+
+citation registry
+
+
+
+
+Classification:
+[V]
+
+
+
+17. Reproducibility Checklist
+
+
+The following artifacts should exist for a complete archival release:
+
+
+
+
+LICENSE
+
+
+requirements.txt
+
+
+environment.yml
+
+
+quotient_map.json
+
+
+transition_registry.json
+
+
+unit tests
+
+
+reproducibility scripts
+
+
+
+
+
+18. Core Mathematical Results
+
+
+The current theorem stack centers on:
+
+
+[T] Quotient Projection Theorem
+
+
+[T] Exact 55-State Lattice Characterization
+
+
+[T] Height Function Lyapunov Theorem
+
+
+[T] Semiconjugacy Theorem
+
+
+[V] Generalized Base-b Enumeration
+
+
+[V] Computational Verification Pipelines
+
+
+[C] Minimal Automaton Classification
+
+
+[C] Full Nerode Characterization
+
+
+[C] Spectral Universality Questions
+
+
+
+19. Repository Philosophy
+
+
+The repository deliberately distinguishes:
+
+
+
+
+rigorous mathematics
+
+
+computational verification
+
+
+conjectural research
+
+
+exploratory analogies
+
+
+
+
+No result should move from [C] to [T] without a complete proof.
+
+
 
 
 Kaprekar Spectral Geometry is a computational and mathematical investigation of the classical four-digit Kaprekar routine viewed as a finite dynamical system.
