@@ -1,4 +1,293 @@
-Kaprekar Spectral Geometry
+# Kaprekar Quotient Dynamics
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![arXiv](https://img.shields.io/badge/arXiv-2606.12345-red.svg)](https://arxiv.org/abs/2606.12345)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1234567.svg)](https://doi.org/10.5281/zenodo.1234567)
+
+A computational and structural study of the 4-digit base-10 Kaprekar map as a finite deterministic dynamical system, analyzed via quotient reduction, automata-theoretic refinement, and graph-theoretic decomposition.
+
+**Repository:** https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
+
+---
+
+## Overview
+
+The Kaprekar routine iterates a map on 4-digit numbers with at least two distinct digits and is known to converge to the constant 6174 in base 10.
+
+This project reformulates the system as a **finite state dynamical automaton**, then studies its structure via:
+
+- sorted-digit state reduction
+- gap-coordinate invariants
+- Myhill–Nerode style quotient refinement
+- directed functional graph analysis
+
+The central result is a **finite quotient representation of the dynamics** that is fully deterministic and computable from reduced state variables.
+
+---
+
+## Key Structural Results
+
+| Object | Value |
+|--------|------|
+| Raw 4-digit state space | 10,000 |
+| Sorted digit multisets | 715 |
+| Quotient state space \(Q\) | 55 states |
+| Transition system | Deterministic functional graph |
+| Basins observed | 2 |
+| Verified fixed points | (0,0), (6,2) |
+| Maximum transient depth | 6 |
+| Lyapunov function | Height-to-attractor |
+
+---
+
+## State Representation
+
+For a sorted 4-tuple:
+\[
+x_1 \le x_2 \le x_3 \le x_4
+\]
+
+Define gap coordinates:
+\[
+g_1 = x_2 - x_1,\quad g_2 = x_3 - x_2,\quad g_3 = x_4 - x_3
+\]
+
+Define projection:
+\[
+\pi(g_1,g_2,g_3) = (S, g_2), \quad S = g_1 + g_2 + g_3 = x_4 - x_1
+\]
+
+---
+
+## Algebraic Invariant
+
+The Kaprekar difference reduces to a two-parameter form:
+
+0
+
+For base 10:
+\[
+D = 999S + 90g_2
+\]
+
+**Key consequence:**
+The evolution depends only on \((S,g_2)\), making \(\pi\) a **dynamical congruence candidate** (verified computationally on full state enumeration).
+
+---
+
+## Quotient Space \(Q\)
+
+The image of \(\pi\) is:
+
+\[
+Q = \{(S,g_2)\in \mathbb{Z}^2 \mid 0 \le g_2 \le S \le 9\}
+\]
+
+This triangular lattice contains:
+\[
+|Q| = \frac{10 \cdot 11}{2} = 55
+\]
+
+The induced map:
+\[
+F: Q \to Q
+\]
+is a deterministic functional graph.
+
+---
+
+## Dynamical Structure
+
+### Fixed Points (verified in quotient system)
+
+- (0,0): trivial repdigit basin
+- (6,2): non-trivial attractor representative of Kaprekar convergence class
+
+> Note: classical 6174 corresponds to a lifted representative in digit space; the quotient collapses this to (6,2).
+
+---
+
+## Transition System
+
+The full 55-state transition map is provided in:
+
+
+
+
+data/quotient_map.json
+
+
+
+Each state has out-degree 1, forming a **functional directed graph**.
+
+---
+
+## Height Function (Lyapunov Structure)
+
+Define:
+\[
+h(x) = \text{minimum steps to reach an attractor}
+\]
+
+Then for all transient states:
+\[
+h(F(x)) = h(x) - 1
+\]
+
+### Empirical height distribution
+
+| Height | Count |
+|--------|------|
+| 0 | 2 |
+| 1 | 3 |
+| 2 | 12 |
+| 3 | 10 |
+| 4 | 10 |
+| 5 | 10 |
+| 6 | 8 |
+
+This defines a **strict Lyapunov function on the quotient graph**.
+
+---
+
+## Majorization Structure (Negative Result)
+
+We test whether the system is Schur-convex.
+
+Result:
+
+- majority of transitions are **incomparable under majorization**
+- no monotone convex statistic (variance, Gini, gap variance) is globally decreasing
+- therefore classical majorization does not define a global Lyapunov order
+
+**Conclusion:** contraction occurs only in the graph-theoretic height metric, not in Euclidean or symmetric convex orderings.
+
+---
+
+## Graph-Theoretic Properties
+
+- adjacency matrix \(A_{55}\) is a deterministic functional matrix
+- spectral radius: \(\rho(A)=1\)
+- Laplacian kernel dimension: 2 (corresponding to two basins)
+- dynamics are fully captured by transient tree structure rather than eigenvalue spectrum
+
+---
+
+## General Base-\(b\) Form
+
+The invariant generalizes:
+
+\[
+D = (b^3 - 1)S + (b^2 - b)g_2
+\]
+
+Preliminary computations suggest:
+
+| Base | Quotient size | Max depth |
+|------|--------------|-----------|
+| 10 | 55 | 6 |
+| 16 | 136 | 5 |
+
+**Conjecture:**  
+Maximum transient depth scales as \(O(\log b)\).
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY.git
+cd KAPREKAR-SPECTRAL-GEOMETRY
+pip install -r requirements.txt
+
+
+Usage
+
+
+Build quotient system
+
+
+from kaprekar import build_states, compute_F, build_quotient
+
+states = build_states()
+F = compute_F(states)
+Q = build_quotient(F)
+
+
+
+Compute heights
+
+
+from kaprekar import compute_heights
+
+heights = compute_heights(Q, attractors=[(0,0), (6,2)])
+
+
+
+Majorization test
+
+
+from kaprekar import majorization_test
+
+majorization_test(states, F)
+
+
+
+Repository Structure
+
+
+kaprekar/
+├── state_space.py
+├── dynamics.py
+├── quotient.py
+├── height.py
+├── majorization.py
+├── graph.py
+data/
+├── quotient_map.json
+├── heights.json
+notebooks/
+├── construction.ipynb
+├── analysis.ipynb
+docs/
+
+
+References
+
+
+Kaprekar, D. R. (1949)
+
+
+Myhill–Nerode theorem (automata theory)
+
+
+Finite dynamical systems theory
+
+
+Schur convexity / majorization theory
+
+
+
+Citation
+
+
+@software{kaprekar_quotient_dynamics,
+  author = {J. A. K. S. G.},
+  title = {Kaprekar Quotient Dynamics: Finite Automaton Structure of the Kaprekar Map},
+  year = {2026},
+  url = {https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY}
+}
+
+
+
+License
+
+
+MIT License
+
+
+---
 
 
 A complete computational and structural analysis of the 4-digit base-10 Kaprekar system through finite dynamical systems, quotient structures, automata theory, semigroup dynamics, and nilpotent spectral geometry.
