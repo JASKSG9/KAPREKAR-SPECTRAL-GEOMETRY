@@ -1727,6 +1727,746 @@ It is an invariant of the chosen observational equivalence and should not be int
 
 ---
 
+
+KSG-4D — Kaprekar Spectral Geometry
+
+
+Structural Quotient Theory of Four-Digit Kaprekar Dynamics
+
+
+Version: v10.10 (Publication Freeze)
+
+Date: 2026-06-16
+
+Status: Verified Computational Foundation
+
+
+
+Executive Summary
+
+
+KSG-4D develops an exact structural model of the classical four-digit Kaprekar map.
+
+
+Instead of studying all 10,000 decimal digit strings independently, the Kaprekar operator is shown to factor exactly through a finite gap-coordinate representation.
+
+
+For decimal width four,
+
+
+[
+K = F \circ \pi,
+]
+
+
+where
+
+
+
+
+π projects a sorted digit tuple onto two ordered gap coordinates,
+
+
+F is an explicit affine map,
+
+
+
+
+[
+F(g_1,g_2)
+
+
+(b^3-1)g_1+(b^2-b)g_2.
+]
+
+
+For decimal,
+
+
+[
+F(g_1,g_2)=999g_1+90g_2.
+]
+
+
+This factorization induces a deterministic finite dynamical system on only 54 gap states, replacing the original 10,000-state arithmetic system with an exact quotient representation.
+
+
+
+Core Structural Architecture
+
+
+Ω705
+(sorted non-repdigit states)
+
+        │
+        ▼
+
+π
+
+        │
+
+G*
+54 gap states
+
+        │
+        ▼
+
+T
+
+        │
+
+54-state quotient dynamics
+
+        │
+        ▼
+
+Image filtration
+
+54 → 20 → 14 → 10 → 7 → 4 → 1
+
+        │
+        ▼
+
+6174
+
+
+
+Closed-system variant (including repdigits):
+
+
+Ω715
+↓
+
+G55
+
+↓
+
+Q21
+
+↓
+
+{0000,6174}
+
+
+
+The two domains are mathematically distinct and are treated separately throughout the project.
+
+
+
+Fundamental Theorems
+
+
+T1 — Exact Affine Factorization
+
+
+For every width-four base-b Kaprekar step,
+
+
+[
+K = F\circ\pi.
+]
+
+
+This is an exact identity, not an approximation.
+
+
+Status:
+
+
+PROVED
+
+
+
+T2 — Well-Defined Quotient Dynamics
+
+
+The factorization induces a deterministic map
+
+
+[
+T:G^\rightarrow G^.
+]
+
+
+Kaprekar evolution depends only on the gap coordinates.
+
+
+Status:
+
+
+PROVED
+
+
+
+T3 — Image-Core Theorem
+
+
+The image
+
+
+[
+\Sigma=\operatorname{Im}(K)
+]
+
+
+is closed under K.
+
+
+Decimal:
+
+
+[
+|\Sigma|=30.
+]
+
+
+Status:
+
+
+VERIFIED
+
+
+
+T4 — Image-Core Projection
+
+
+Three independently defined objects coincide.
+
+
+[
+Q_{20}
+
+
+\pi(\operatorname{Im}(K))
+
+
+{\text{reachable gap states}}
+
+
+\text{support of the join-of-atoms quotient}.
+]
+
+
+This connects
+
+
+
+
+image dynamics,
+
+
+reachability,
+
+
+congruence lattice theory.
+
+
+
+
+Status:
+
+
+VERIFIED
+
+
+
+T5 — Symmetry
+
+
+Complete search over commuting involutions of
+
+
+[
+(Q_{20},T)
+]
+
+
+found
+
+
+only the identity.
+
+
+Therefore
+
+
+[
+Aut(Q_{20},T)={id}.
+]
+
+
+Status:
+
+
+VERIFIED
+
+
+The earlier complement-involution hypothesis is retracted for Q20.
+
+
+
+T6 — Semigroup Structure
+
+
+Restriction of K to the image core generates
+
+
+exactly six distinct maps.
+
+
+Properties:
+
+
+
+
+index = 6
+
+
+period = 1
+
+
+K⁶=idempotent
+
+
+image(K⁶)=6174
+
+
+
+
+Status:
+
+
+VERIFIED
+
+
+
+Orbit Quotients
+
+
+The project distinguishes three different quotient constructions.
+
+
+1. Orbit Quotient
+
+
+Two states are equivalent iff their complete forward orbit sequences are identical.
+
+
+For every tested system,
+
+
+[
+Q_{\text{orbit}}=G^*.
+]
+
+
+Every gap state has a unique forward orbit.
+
+
+This is called the orbit-separating property.
+
+
+Status:
+
+
+Verified.
+
+
+
+2. Tail Quotient
+
+
+States become equivalent after eventual coincidence.
+
+
+This quotient has not yet been studied completely.
+
+
+Status:
+
+
+Open.
+
+
+
+3. Coarse Asymptotic Quotient
+
+
+States are identified by
+
+
+
+
+attractor,
+
+
+transient depth,
+
+
+cycle-entry point.
+
+
+
+
+Decimal d=5:
+
+
+30 classes.
+
+
+This quotient intentionally forgets transient path information.
+
+
+Status:
+
+
+Verified.
+
+
+
+Verified Computations
+
+
+Decimal d=4
+
+
+Gap states
+
+
+54
+
+
+Image chain
+
+
+54→20→14→10→7→4→1
+
+
+Unique attractor
+
+
+6174
+
+
+Semigroup
+
+
+7 elements
+
+
+Maximum transient depth
+
+
+6
+
+
+
+Decimal d=5
+
+
+Gap states
+
+
+54
+
+
+Three attractor cycles
+
+
+Orbit quotient
+
+
+54 singleton classes
+
+
+Coarse asymptotic quotient
+
+
+30 classes
+
+
+
+Base 6
+
+
+Width four verified independently.
+
+
+20 reachable gap states.
+
+
+Single attractor cycle.
+
+
+
+Computational Methodology
+
+
+Every numerical result is obtained by complete exhaustive enumeration.
+
+
+No sampling.
+
+
+No heuristic search.
+
+
+Independent verification scripts compute:
+
+
+
+
+quotient construction,
+
+
+orbit signatures,
+
+
+attractor decomposition,
+
+
+semigroup stabilization,
+
+
+image filtrations,
+
+
+congruence lattice calculations.
+
+
+
+
+Generated datasets are accompanied by SHA-256 verification hashes.
+
+
+
+Retractions
+
+
+The following earlier claims have been removed.
+
+
+• Complement involution on Q20.
+
+
+• "Loss of future information" narrative.
+
+
+• Any statement identifying the coarse asymptotic quotient with the orbit quotient.
+
+
+These were superseded after exhaustive verification.
+
+
+
+Open Problems
+
+
+OP1
+
+
+Borrow-feasibility theorem.
+
+
+Provide a symbolic characterization of reachable gap states.
+
+
+Priority:
+
+
+Highest.
+
+
+
+OP2
+
+
+Closed-form rank function
+
+
+Find
+
+
+R(g)
+
+
+such that
+
+
+[
+R(T(g))=R(g)-1.
+]
+
+
+
+OP3
+
+
+Tail quotient
+
+
+Construct and classify the eventual-merger quotient.
+
+
+
+OP4
+
+
+General bases
+
+
+Characterize
+
+
+
+
+quotient size,
+
+
+transient depth,
+
+
+image filtration,
+
+
+semigroup structure
+
+
+
+
+for arbitrary
+
+
+(b,d).
+
+
+
+OP5
+
+
+Spectral theory
+
+
+Compute
+
+
+
+
+Laplacian spectrum,
+
+
+conductance,
+
+
+Green's relations,
+
+
+minimal ideals,
+
+
+automorphism groups.
+
+
+
+
+
+Research Roadmap
+
+
+Paper I
+
+
+Exact factorization and quotient dynamics.
+
+
+Paper II
+
+
+Image-core algebra and congruence lattices.
+
+
+Paper III
+
+
+Transformation semigroups and automata.
+
+
+Paper IV
+
+
+General-base structural theory.
+
+
+Paper V
+
+
+Spectral geometry of Kaprekar quotient systems.
+
+
+
+Repository Principles
+
+
+Every theorem is classified as
+
+
+
+
+PROVED
+
+
+VERIFIED COMPUTATION
+
+
+CONJECTURE
+
+
+OPEN
+
+
+
+
+Computational claims are reproducible.
+
+
+Mathematical claims are explicitly distinguished from empirical observations.
+
+
+The project is open source to encourage verification, correction, and extension.
+
+
+
+Current Status
+
+
+Foundation:
+
+
+Complete.
+
+
+Decimal width four:
+
+
+Closed.
+
+
+General-base theory:
+
+
+Active.
+
+
+Highest-priority remaining theorem:
+
+
+Borrow-feasibility characterization (T9).
+
+
+The project has now transitioned from computational discovery toward structural finite dynamical systems, semigroup theory, quotient automata, and algebraic classification.
+
+
+
 These definitions establish the terminology used throughout the remainder of KSG-4D.
 
 https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/LIBRARY/SUPPORT/JUNE-SUPPORT-FLOW2.MD
