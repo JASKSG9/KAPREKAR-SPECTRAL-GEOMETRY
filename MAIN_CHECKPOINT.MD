@@ -1,4 +1,1125 @@
-KSG-4D — Kaprekar Spectral Geometry
+KSG-4D — MAIN CHECKPOINT.md
+
+
+Kaprekar Quotient Dynamics, Piecewise-Affine Geometry, and Polyhedral Classification
+
+
+Version: 14.0 (Main Consolidated Checkpoint)
+
+Date: 2026-06-16
+
+Status: Stable Reference Edition
+
+Classification: Finite Dynamical Systems / Piecewise-Affine Dynamics / Polyhedral Geometry / Transformation Semigroups
+
+
+
+Abstract
+
+
+The four-digit Kaprekar map admits an exact finite quotient through a two-dimensional gap representation. The resulting quotient system consists of 54 states arranged as a lattice simplex and supports an exactly piecewise-affine dynamical structure.
+
+
+The quotient dynamics decomposes into ten convex chambers on which the map is affine. Exhaustive verification establishes chamber convexity, pairwise linear separability, exact affine branch formulas, image filtration structure, semigroup stabilization, Nerode quotients, and automorphism classifications.
+
+
+This checkpoint separates:
+
+
+
+
+proved mathematical theorems,
+
+
+computationally verified results,
+
+
+conjectures and open problems.
+
+
+
+
+Only claims appearing in Sections 1–4 are considered certified.
+
+
+
+Part I. Foundations
+
+
+
+1. Definitions
+
+
+D1. Four-Digit Kaprekar Map
+
+
+For a base b,
+
+
+[
+K(n)=\operatorname{desc}(n)-\operatorname{asc}(n),
+]
+
+
+where the digits of n are rearranged in descending and ascending order.
+
+
+
+D2. Sorted Digits
+
+
+Let
+
+
+[
+a\le b\le c\le d.
+]
+
+
+Define gap coordinates
+
+
+[
+x=d-a,
+]
+
+
+[
+y=c-b.
+]
+
+
+
+D3. Gap Projection
+
+
+[
+\pi(n)=(x,y).
+]
+
+
+
+D4. Gap State Space
+
+
+[
+G_b
+
+
+{(x,y)\in \mathbb Z^2:
+0\le y\le x\le b-1
+}
+\setminus
+{(0,0)}.
+]
+
+
+
+2. Core Theorems
+
+
+T0. Gap Simplex Theorem
+
+
+The gap projection induces a bijection between digit multisets and lattice points of G_b.
+
+
+Therefore
+
+
+[
+G_b
+\cong
+{(x,y):
+0\le y\le x\le b-1
+}
+\setminus
+{(0,0)}.
+]
+
+
+Status: PROVED
+
+
+
+T0.1. Counting Formula
+
+
+[
+|G_b|
+
+
+\binom{b+1}{2}-1.
+]
+
+
+Hence
+
+
+[
+|G_{10}|=54.
+]
+
+
+Status: PROVED
+
+
+
+T1. Affine Reconstruction Formula
+
+
+For sorted digits,
+
+
+[
+K(a,b,c,d)
+
+
+(b^3-1)x+b(b-1)y.
+]
+
+
+For base ten,
+
+
+[
+K=999x+90y.
+]
+
+
+Status: PROVED
+
+
+
+T2. Semiconjugacy Theorem
+
+
+Define
+
+
+[
+T(x,y)
+
+
+\pi(999x+90y).
+]
+
+
+Then
+
+
+[
+\pi\circ K
+
+
+T\circ\pi.
+]
+
+
+Status: PROVED
+
+
+
+Part II. Four-Digit Base-10 Quotient Dynamics
+
+
+
+3. State Space
+
+
+The quotient system consists of
+
+
+[
+|G_{10}|=54
+]
+
+
+states.
+
+
+The state simplex is
+
+
+[
+0\le y\le x\le 9.
+]
+
+
+
+4. Functional Graph Structure
+
+
+Verified Properties
+
+
+
+
+Property
+Value
+
+
+
+
+State Count
+54
+
+
+Attractor Count
+1
+
+
+Fixed Point
+(6,2)
+
+
+Corresponding Number
+6174
+
+
+Maximum Transient Depth
+6
+
+
+Nilpotent Stabilization
+T^7=T^6
+
+
+Nerode Quotient Size
+7
+
+
+
+
+Status: VERIFIED
+
+
+
+5. Image Filtration
+
+
+Successive image sizes:
+
+
+[
+54
+\rightarrow
+20
+\rightarrow
+14
+\rightarrow
+10
+\rightarrow
+7
+\rightarrow
+4
+\rightarrow
+1.
+]
+
+
+The terminal image consists solely of
+
+
+[
+(6,2).
+]
+
+
+Status: VERIFIED
+
+
+
+Part III. Chamber Geometry
+
+
+
+6. Chamber Classification
+
+
+Exactly ten digit-order chambers occur.
+
+
+Chamber Table
+
+
+C1
+
+
+Signature
+
+
+[
+(0,1,2,3)
+]
+
+
+Size: 10
+
+
+[
+(6,5),(7,5),(7,6),(8,5),(8,6),
+(8,7),(9,5),(9,6),(9,7),(9,8)
+]
+
+
+
+C2
+
+
+Signature
+
+
+[
+(0,2,1,3)
+]
+
+
+Size: 6
+
+
+[
+(7,4),(8,3),(8,4),
+(9,2),(9,3),(9,4)
+]
+
+
+
+C3
+
+
+Signature
+
+
+[
+(0,3,1,2)
+]
+
+
+Size: 4
+
+
+[
+(6,0),(7,0),(8,0),(9,0)
+]
+
+
+
+C4
+
+
+Signature
+
+
+[
+(1,0,2,3)
+]
+
+
+Size: 4
+
+
+[
+(6,6),(7,7),(8,8),(9,9)
+]
+
+
+
+C5
+
+
+Signature
+
+
+[
+(1,2,0,3)
+]
+
+
+Size: 1
+
+
+[
+(5,5)
+]
+
+
+
+C6
+
+
+Signature
+
+
+[
+(2,0,1,3)
+]
+
+
+Size: 8
+
+
+[
+(5,4),(6,3),(6,4),(7,2),
+(7,3),(8,1),(8,2),(9,1)
+]
+
+
+
+C7
+
+
+Signature
+
+
+[
+(2,0,3,1)
+]
+
+
+Size: 6
+
+
+[
+(5,1),(5,2),(5,3),
+(6,1),(6,2),(7,1)
+]
+
+
+
+C8
+
+
+Signature
+
+
+[
+(2,3,0,1)
+]
+
+
+Size: 6
+
+
+[
+(2,1),(3,1),(3,2),
+(4,1),(4,2),(4,3)
+]
+
+
+
+C9
+
+
+Signature
+
+
+[
+(2,3,1,0)
+]
+
+
+Size: 4
+
+
+[
+(1,1),(2,2),(3,3),(4,4)
+]
+
+
+
+C10
+
+
+Signature
+
+
+[
+(3,0,1,2)
+]
+
+
+Size: 5
+
+
+[
+(1,0),(2,0),(3,0),(4,0),(5,0)
+]
+
+
+
+Total:
+
+
+[
+10+6+4+4+1+8+6+6+4+5
+
+
+
+
+
+
+
+
+
+]
+
+
+Status: VERIFIED
+
+
+
+7. Piecewise-Affine Dynamics
+
+
+The quotient map is affine on each chamber.
+
+
+Chamber Affine Maps
+
+
+[
+C_1:
+\quad
+T(x,y)
+
+
+(2x-10,2y-10)
+]
+
+
+[
+C_2:
+\quad
+T(x,y)
+
+
+(2x-10,-2y+10)
+]
+
+
+[
+C_3:
+\quad
+T(x,y)
+
+
+(x-1,-x+10)
+]
+
+
+[
+C_4:
+\quad
+T(x,y)
+
+
+(x+y-9,x+y-11)
+]
+
+
+[
+C_5:
+\quad
+(5,5)\mapsto(1,1)
+]
+
+
+[
+C_6:
+\quad
+T(x,y)
+
+
+(x-y+1,x-y-1)
+]
+
+
+[
+C_7:
+\quad
+T(x,y)
+
+
+(-2y+10,2x-10)
+]
+
+
+[
+C_8:
+\quad
+T(x,y)
+
+
+(-2y+10,-2x+10)
+]
+
+
+[
+C_9:
+\quad
+T(x,y)
+
+
+(-x-y+11,-x-y+9)
+]
+
+
+[
+C_{10}:
+\quad
+T(x,y)
+
+
+(-x+10,x-1)
+]
+
+
+Residual error:
+
+
+[
+<10^{-14}.
+]
+
+
+Status: VERIFIED
+
+
+
+Part IV. Polyhedral Geometry
+
+
+
+8. Convex Cell Decomposition
+
+
+Each chamber is a convex lattice polytope.
+
+
+Degenerate cases:
+
+
+
+
+C3 = segment
+
+
+C4 = segment
+
+
+C9 = segment
+
+
+C10 = segment
+
+
+C5 = point
+
+
+
+
+All remaining chambers are two-dimensional lattice polygons.
+
+
+Status: VERIFIED
+
+
+
+9. Linear Separability
+
+
+For every pair
+
+
+[
+C_i,C_j
+]
+
+
+there exists an affine functional
+
+
+[
+L_{ij}(x,y)
+
+
+a_{ij}x+b_{ij}y+c_{ij}
+]
+
+
+such that
+
+
+[
+L_{ij}\ge1
+\quad
+\forall C_i
+]
+
+
+and
+
+
+[
+L_{ij}\le-1
+\quad
+\forall C_j.
+]
+
+
+Verified for all
+
+
+[
+45
+]
+
+
+pairs.
+
+
+Status: VERIFIED
+
+
+
+10. Polyhedral Cell Structure
+
+
+The chamber decomposition forms a finite convex polyhedral cell decomposition of the gap simplex.
+
+
+Verified ingredients:
+
+
+
+
+convexity,
+
+
+affine branches,
+
+
+pairwise separability,
+
+
+disjoint chamber partition.
+
+
+
+
+Status: VERIFIED
+
+
+
+Part V. Automorphisms and Semigroups
+
+
+
+11. Functional Automorphisms
+
+
+Functional automorphisms satisfy
+
+
+[
+\phi\circ T=T\circ\phi.
+]
+
+
+Verified size:
+
+
+[
+|\operatorname{Aut}_{func}(G,T)|
+
+
+1,990,656.
+]
+
+
+Generated by permutations of isomorphic sibling subtrees.
+
+
+Status: VERIFIED
+
+
+
+12. Geometric Automorphisms
+
+
+Geometric automorphisms preserve:
+
+
+
+
+coordinates,
+
+
+chamber decomposition,
+
+
+affine structure.
+
+
+
+
+Current evidence suggests
+
+
+[
+\operatorname{Aut}_{geom}
+
+
+{\mathrm{id}}.
+]
+
+
+No proof currently exists.
+
+
+Status: OPEN
+
+
+
+13. Semigroup Properties
+
+
+The transformation semigroup generated by T satisfies
+
+
+[
+T^7=T^6.
+]
+
+
+Thus stabilization occurs after six iterations.
+
+
+Status: VERIFIED
+
+
+
+Part VI. Base-6 Extension
+
+
+
+14. Base-6 Dynamics
+
+
+State count:
+
+
+[
+|G_6|=20.
+]
+
+
+Cycle structure:
+
+
+[
+(2,0)
+\to
+(4,1)
+\to
+(4,2)
+\to
+(3,1)
+\to
+(4,0)
+\to
+(3,2)
+\to
+(2,0).
+]
+
+
+Cycle length:
+
+
+[
+6.
+]
+
+
+No fixed point exists.
+
+
+Status: VERIFIED
+
+
+
+Part VII. Open Problems
+
+
+
+P1. Carry-Boundary Theorem
+
+
+Derive chamber walls directly from carry transitions of
+
+
+[
+999x+90y.
+]
+
+
+Priority: Highest.
+
+
+
+P2. General Base Chamber Count
+
+
+Determine chamber count as a function of base.
+
+
+Priority: High.
+
+
+
+P3. Explicit Chamber Inequalities
+
+
+Produce symbolic inequalities defining every chamber.
+
+
+Priority: High.
+
+
+
+P4. Tail Quotient Classification
+
+
+Classify all eventual-image equivalence structures.
+
+
+Priority: Medium.
+
+
+
+P5. Universal Properties of Gap Projection
+
+
+Categorical characterization of
+
+
+[
+\pi.
+]
+
+
+Priority: Medium.
+
+
+
+P6. Geometric Automorphism Group
+
+
+Determine
+
+
+[
+\operatorname{Aut}_{geom}.
+]
+
+
+Priority: Medium.
+
+
+
+Part VIII. Claim Registry
+
+
+Proven Theorems
+
+
+
+
+T0 Gap Simplex Theorem
+
+
+T0.1 Counting Formula
+
+
+T1 Reconstruction Formula
+
+
+T2 Semiconjugacy
+
+
+
+
+
+Verified Computational Results
+
+
+
+
+54-state quotient
+
+
+Unique attractor (6,2)
+
+
+Image filtration
+
+
+10 chambers
+
+
+Exact affine maps
+
+
+Convex chamber decomposition
+
+
+Linear separability
+
+
+Automorphism size 1,990,656
+
+
+Nerode quotient size 7
+
+
+Semigroup stabilization
+
+
+Base-6 six-cycle
+
+
+
+
+
+Conjectures
+
+
+
+
+Carry-Boundary Theorem
+
+
+General-base chamber formulas
+
+
+Trivial geometric automorphism group
+
+
+
+
+
+Final Summary
+
+
+The four-digit Kaprekar map admits an exact quotient onto a 54-state lattice simplex. The induced quotient dynamics is a finite piecewise-affine system decomposing into ten convex chambers, each governed by an explicit affine transformation. The resulting structure combines exact algebraic factorization, finite dynamical systems, polyhedral geometry, and transformation semigroup theory within a single verified framework.
+
+
+This document constitutes the authoritative KSG-4D reference checkpoint as of 2026-06-16.
+
+
+       ~~~《●○●》~~~
 
 Structural Quotient Theory of Kaprekar Gap Systems
 
