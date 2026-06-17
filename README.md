@@ -11,6 +11,206 @@ https://img.shields.io/badge/Domain-Discrete%20Combinatorics-purple
 AQARION-ARITHMETIC
 
 
+Definitive Repository Architecture
+
+
+Public Documentation Flow
+
+
+The AQARION-ARITHMETIC repository is organized as a complete mathematical research program. Every result progresses through a transparent sequence from foundational definitions to verified computation, formal proof, publication, and future development. The repository is designed so that every mathematical claim can be located, justified, independently reproduced, and evaluated without requiring knowledge of unpublished work.
+
+
+Rather than treating documentation as auxiliary material, the repository itself serves as the permanent scientific record of the project.
+
+
+
+Stage I — Foundations
+
+
+Every theorem begins with explicit mathematical foundations.
+
+
+This stage establishes notation, assumptions, definitions, conventions, and the finite dynamical systems framework used throughout the project. Objects are introduced only once and thereafter referenced consistently across every paper.
+
+
+Nothing in later stages introduces new foundational terminology without first extending this framework.
+
+
+The objective is to ensure that every subsequent proof rests upon an explicit and auditable mathematical base.
+
+
+
+Stage II — Structural Mathematics
+
+
+Once the foundational framework has been established, the repository develops the structural mathematics.
+
+
+This stage contains the symbolic derivations that explain why the observed computational phenomena occur.
+
+
+Definitions lead naturally to lemmas.
+
+
+Lemmas support propositions.
+
+
+Propositions combine into the principal theorems.
+
+
+Every proof explicitly records its logical dependencies, allowing the complete proof architecture to be reconstructed from the dependency graph alone.
+
+
+No theorem relies upon computational verification where a symbolic argument exists.
+
+
+
+Stage III — Computational Verification
+
+
+Finite mathematical claims are verified independently through exhaustive computation.
+
+
+Verification never replaces proof.
+
+
+Instead, computation certifies finite classifications, confirms symbolic derivations, detects implementation errors, and establishes complete enumerations that would otherwise be impractical to inspect manually.
+
+
+Every computational artifact is reproducible from publicly available source code.
+
+
+Every generated dataset is accompanied by cryptographic hashes and verification certificates.
+
+
+Every computational claim identifies the exact software responsible for its generation.
+
+
+
+Stage IV — Mathematical Integration
+
+
+The repository then integrates symbolic mathematics and computational verification into coherent mathematical results.
+
+
+Only after both symbolic derivation and independent verification are complete is a theorem considered ready for publication.
+
+
+Open results remain explicitly identified as open.
+
+
+Verified computation is never presented as established mathematics.
+
+
+Conjectures are never promoted to the status of theorems.
+
+
+This separation preserves the mathematical integrity of the project while providing complete transparency regarding the current state of every result.
+
+
+
+Stage V — Publication
+
+
+Each publication represents a mathematically independent contribution.
+
+
+Every paper contains only those results that are complete within its own scope.
+
+
+No paper depends upon unresolved conjectures appearing in later work.
+
+
+Computational evidence is clearly distinguished from symbolic proof.
+
+
+Background material, exhaustive tables, implementation details, verification certificates, and supplementary computations are maintained separately so that the primary manuscripts remain focused on the mathematics itself.
+
+
+This allows each publication to stand independently while contributing to the broader research program.
+
+
+
+Stage VI — Repository Governance
+
+
+The repository maintains explicit governance rules governing mathematical claims.
+
+
+Every theorem possesses a unique identifier.
+
+
+Every claim records its assumptions.
+
+
+Every proof records its dependencies.
+
+
+Every computational result records its generating software.
+
+
+Every public release regenerates verification certificates.
+
+
+Every modification requiring mathematical changes increments the repository version.
+
+
+Historical results remain permanently archived, allowing complete reconstruction of the project's evolution.
+
+
+Scientific transparency is treated as a first-class research objective.
+
+
+
+Stage VII — Continuing Research
+
+
+The repository concludes each development cycle by identifying the mathematical questions that remain unresolved.
+
+
+Open problems are presented as research objectives rather than incomplete results.
+
+
+Future work therefore extends naturally from verified mathematics instead of depending upon speculative assumptions.
+
+
+Each successive paper expands the theory while preserving the correctness of all preceding work.
+
+
+This produces a research program in which completed mathematics remains permanently stable, computational evidence remains reproducible, and future developments can be incorporated without altering previously established results.
+
+
+
+Guiding Principle
+
+
+The organizing principle of AQARION-ARITHMETIC is that mathematical knowledge should be traceable from first definition to final publication.
+
+
+Every theorem should answer four questions:
+
+
+
+
+What assumptions does it require?
+
+
+Why is it mathematically true?
+
+
+How has it been independently verified?
+
+
+Where does it fit within the larger theory?
+
+
+
+
+By maintaining this structure, the repository functions not only as software or documentation, but as a complete and auditable mathematical record suitable for peer review, long-term preservation, and continued theoretical development.
+
+
+---
+
 Definitive Four-Part Research Claim Matrix
 
 
@@ -11042,10 +11242,6 @@ This system demonstrates that a classical number puzzle contains a fully structu
 > not chaos, not randomness — but a rigid, partitioned affine dynamical system.
 
 
-
-
----
-
 ---
 
 If you want next step, I can:
@@ -20514,9 +20710,12 @@ The project is now locked at v2.6.0-REFINED. No modifications without version bu
 This document constitutes the authoritative KSG-4D reference checkpoint as of 2026-06-16.
 
 
-
 The project has now transitioned from computational discovery toward structural finite dynamical systems, semigroup theory, quotient automata, and algebraic classification.
 
+
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY/blob/main/ALGORITHM/AQARION-ARITHMETIC.MD
+
+https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
 
 
 Louisville Node · QUANTARION · June 2026
