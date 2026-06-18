@@ -1,4 +1,5 @@
-# AQARION‑ARITHMETIC
+# AQARION
+     ARITHMETIC
 
 ### Exact Quotient Dynamics of the Four‑Digit Kaprekar Map
 
