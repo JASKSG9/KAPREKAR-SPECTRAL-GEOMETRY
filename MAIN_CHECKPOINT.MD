@@ -1,8 +1,673 @@
 KSG-4D — MAIN CHECKPOINT.md
 
-AQARION-ARITHMETIC / KSG-KYND-MR_FDS
+
+Project: AQARION-ARITHMETIC
+
+Repository: AQARION-ARITHMETIC / KSG-KYND-MR_FDS
+
+Version: v6.0.0-CHECKPOINT
+
+Date: 2026-06-18
 
 
+
+Executive Summary
+
+
+AQARION-ARITHMETIC investigates the classical four-digit Kaprekar map from the perspective of finite dynamical systems.
+
+
+Rather than focusing on the numerical constant 6174, the project studies the structural properties of the induced dynamical system.
+
+
+The principal construction is an exact observable that compresses the original state space into a finite quotient while preserving the deterministic dynamics through semiconjugacy.
+
+
+The repository combines:
+
+
+
+
+symbolic mathematics,
+
+
+exhaustive computation,
+
+
+operator-theoretic analysis,
+
+
+reproducible software,
+
+
+transparent documentation.
+
+
+
+
+Every mathematical statement is assigned an explicit evidence level.
+
+
+
+Repository Status Dashboard
+
+
+Certified Core
+
+
+
+
+Exact gap observable
+
+
+Exact semiconjugacy
+
+
+54-state quotient
+
+
+Deterministic quotient dynamics
+
+
+Functional graph
+
+
+Koopman operator construction
+
+
+Spectral computation
+
+
+Jordan decomposition
+
+
+Nilpotent filtration
+
+
+Reproducible verification
+
+
+
+
+Status: COMPLETE
+
+
+
+Active Research
+
+
+
+
+OP0 — Intrinsic Chamber Classification
+
+
+T12 — Fiber Independence
+
+
+T13 — Observation Congruence Interval
+
+
+T14 — Quotient Maximality
+
+
+
+
+Status: OPEN
+
+
+
+Research Philosophy
+
+
+The objective is not merely to study the Kaprekar constant.
+
+
+The broader objective is to understand when nonlinear deterministic systems admit exact finite observable quotients.
+
+
+Kaprekar dynamics serve as the motivating case study.
+
+
+
+Evidence Taxonomy
+
+
+[D] Definition
+
+
+[P] Symbolic Proof
+
+
+[V] Exhaustive Verification
+
+
+[PV] Proof plus Verification
+
+
+[C] Conjecture
+
+
+[R] Research Direction
+
+
+Policy:
+
+
+Computation never replaces proof.
+
+
+Every theorem records dependencies.
+
+
+Every computational result identifies the generating script.
+
+
+Every conjecture remains explicitly labeled.
+
+
+
+Mathematical Architecture
+
+
+Original System
+
+
+↓
+
+
+Gap Observable
+
+
+↓
+
+
+Transition Congruence
+
+
+↓
+
+
+54-State Quotient
+
+
+↓
+
+
+Piecewise-Affine Dynamics
+
+
+↓
+
+
+Koopman Operator
+
+
+↓
+
+
+Jordan Structure
+
+
+↓
+
+
+Spectral Classification
+
+
+
+Certified Results
+
+
+Layer I
+
+
+Arithmetic Dynamics
+
+
+Status:
+PV
+
+
+Summary:
+
+
+Classical four-digit Kaprekar dynamics.
+
+
+
+Layer II
+
+
+Gap Projection
+
+
+Status:
+P
+
+
+Result:
+
+
+Exact observable.
+
+
+
+Layer III
+
+
+Semiconjugacy
+
+
+Status:
+P
+
+
+Result:
+
+
+π ∘ K = TG ∘ π
+
+
+
+Layer IV
+
+
+Finite Quotient
+
+
+Status:
+PV
+
+
+Result:
+
+
+54-state deterministic quotient.
+
+
+
+Layer V
+
+
+Operator Representation
+
+
+Status:
+PV
+
+
+Result:
+
+
+Finite Koopman operator.
+
+
+
+Layer VI
+
+
+Spectrum
+
+
+Status:
+V
+
+
+Distinct eigenvalues:
+
+
+{1,0}
+
+
+Multiplicity documented separately.
+
+
+
+Layer VII
+
+
+Nilpotent Structure
+
+
+Status:
+V
+
+
+N⁶ = 0
+
+
+
+Layer VIII
+
+
+Jordan Form
+
+
+Status:
+V
+
+
+Complete decomposition computed.
+
+
+
+Open Problems
+
+
+OP0
+
+
+Intrinsic Chamber Classification
+
+
+Goal:
+
+
+Characterize the maximal affine regions of gap space without enumeration.
+
+
+Importance:
+
+
+Bridges arithmetic carry structure with polyhedral geometry.
+
+
+Status:
+
+
+Open.
+
+
+
+T12
+
+
+Fiber Independence
+
+
+Status:
+
+
+In progress.
+
+
+
+T13
+
+
+Observation-Congruence Interval
+
+
+Status:
+
+
+Conjecture.
+
+
+
+T14
+
+
+Observation Quotient Maximality
+
+
+Status:
+
+
+Conjecture.
+
+
+
+Claims Matrix
+
+
+Every major theorem is listed together with:
+
+
+
+
+status,
+
+
+dependencies,
+
+
+proof location,
+
+
+verification script.
+
+
+
+
+
+Computational Certification
+
+
+Every verified computation includes:
+
+
+
+
+source code,
+
+
+deterministic seed,
+
+
+software version,
+
+
+SHA-256 certificate,
+
+
+generated artifacts.
+
+
+
+
+
+Repository Governance
+
+
+Principles:
+
+
+
+
+
+
+Proofs and computations are separated.
+
+
+
+
+
+
+Corrections are versioned.
+
+
+
+
+
+
+No silent edits.
+
+
+
+
+
+
+Every release regenerates certificates.
+
+
+
+
+
+
+Every theorem records dependencies.
+
+
+
+
+
+
+Open questions remain explicitly labeled.
+
+
+
+
+
+
+
+Documentation Index
+
+
+README.md
+
+
+CHECKPOINT.md
+
+
+CLAIMS.md
+
+
+PROOFS.md
+
+
+THEOREM_INDEX.md
+
+
+DEPENDENCY_GRAPH.md
+
+
+ASSUMPTION_AUDIT.md
+
+
+NOTATION.md
+
+
+ATLAS.md
+
+
+REPRODUCIBILITY.md
+
+
+COMPUTATIONAL_CERTIFICATES.md
+
+
+COUNTEREXAMPLES.md
+
+
+OPEN_PROBLEMS.md
+
+
+CHANGELOG.md
+
+
+
+Publication Plan
+
+
+Paper I
+
+
+Exact Quotient Dynamics
+
+
+Independent of OP0.
+
+
+Paper II
+
+
+Affine Chamber Geometry
+
+
+Depends on OP0.
+
+
+Paper III
+
+
+Observation Quotients
+
+
+Depends on T12–T14.
+
+
+Paper IV
+
+
+Universal Operator Framework
+
+
+Depends on higher-digit benchmarks.
+
+
+
+Long-Term Vision
+
+
+The lasting contribution of AQARION is not expected to be the Kaprekar constant itself.
+
+
+Instead, the project investigates a broader mathematical question:
+
+
+"When does an observable preserve the complete future evolution of a deterministic dynamical system while producing an exact finite quotient?"
+
+
+Kaprekar dynamics provide the first fully documented case study within this broader research program.
+
+
+
+Current Overall Status
+
+
+Core Quotient Construction
+
+
+COMPLETE
+
+
+Operator Classification
+
+
+COMPLETE
+
+
+Computational Verification
+
+
+COMPLETE
+
+
+Repository Documentation
+
+
+IN PROGRESS
+
+
+Intrinsic Chamber Classification (OP0)
+
+
+OPEN
+
+
+General Observation Quotient Theory
+
+
+IN DEVELOPMENT
+
+
+
+Project Motto
+
+
+"Mathematical understanding begins when apparent complexity is replaced by exact structure."
+
+---
 
 Version: v2.6.0-REFINED (Publication Candidate)
 
