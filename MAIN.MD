@@ -1,4 +1,6 @@
-# AQARION-ARITHMETIC 
+# KAPREKAR-SPECTRAL-GEOMETRY 
+
+JUNE19-2026-MAIN.MD
 
 **Version**: v6.0.0  
 **Scope**: Finite Dynamical Systems · Observable-Induced Quotients · Semigroup Dynamics  
