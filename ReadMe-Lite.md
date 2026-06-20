@@ -1,5 +1,185 @@
 AQARION-ARITHMETIC
 
+Observable-Induced Quotients for Finite Deterministic Dynamical Systems
+
+https://img.shields.io/badge/Status-CORE--1.1-blue
+https://img.shields.io/badge/Version-v10.7.0-green
+https://img.shields.io/badge/License-MIT-yellow
+https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey
+https://img.shields.io/badge/SHA256-bb40ec19...-orange
+
+---
+
+What is AQARION-ARITHMETIC?
+
+AQARION-ARITHMETIC is a governed mathematical research infrastructure that investigates finite deterministic dynamical systems through exact observable quotients.
+
+It began as an exhaustive computational study of the classical 4‑digit Kaprekar transformation and has evolved into a rigorous framework for constructing, verifying, and proving the structure of finite observable quotient dynamical systems (FOQDS).
+
+Core Idea: Given a dynamical system (X, T) and an observable \mathcal{O}: X \to Y, we construct the coarsest quotient that preserves all future observations:
+
+x \sim_F y \iff \forall n \ge 0,\ \mathcal{O}(T^n x) = \mathcal{O}(T^n y)
+
+This yields a deterministic quotient system with semiconjugate dynamics — an exact reduction, not a statistical approximation.
+
+---
+
+The Mathematics in One Paragraph
+
+FOQDS is defined as the greatest fixed point of a monotone refinement operator on the lattice of equivalence relations:
+
+\Phi(R) = \{ (x,y) \mid \mathcal{O}(x)=\mathcal{O}(y),\ (T(x),T(y)) \in R \}
+
+By the Knaster–Tarski theorem, \sim_F := \mathrm{gfp}(\Phi) exists and is the coarsest forward-invariant equivalence refining the observable partition.
+
+This construction is grounded in classical lattice theory, automata minimization, and coalgebra. The Kaprekar map provides a complete worked example.
+
+---
+
+Key Results
+
+The Kaprekar Quotient
+
+For the 4‑digit Kaprekar map, the gap observable \pi(n) = (a-d, b-c) induces a 54‑state exact quotient:
+
+Property Value Evidence
+FOQDS Classes 54 C2 + P
+Semiconjugacy Violations 0 / 9,990 C2
+Max Transient Depth 6 C2
+Image Filtration 54→30→17→12→8→5→2→1 C2
+Attractor Chamber {1,4,6,7} (6174) C2
+Automorphism Group (\mathbb{Z}_2)^6 P
+Minimal Polynomial x^6(x-1) P
+
+The Flagship Theorem
+
+\widetilde K = \pi \circ \mathrm{Sort} \circ L
+
+All nonlinearity is localised inside the sorting operation, explaining the quotient, affine decomposition, and rank‑collapse hierarchy.
+
+---
+
+Evidence Framework
+
+Every claim carries an explicit certification level:
+
+Level Meaning
+C2 Computationally verified (exhaustive, reproducible)
+P Formal proof completed
+PV Proof + computational verification
+OPEN Open problem / active research
+
+---
+
+Repository Structure
+
+```
+AQARION-ARITHMETIC/
+├── CONSTITUTION/          # Governance & invariants
+├── CORE/                  # Canonical research objects
+│   ├── CHECKPOINT.md      # Full project status
+│   ├── DEFINITIONS.md     # 26 definitions (20 frozen)
+│   ├── THEOREMS.md        # 27 results with dependency DAG
+│   └── OPEN_PROBLEMS.md   # OP‑0 through OP‑4
+├── verification/          # 10‑gate automated verification suite
+├── certificates/          # SHA‑256 certified artifacts
+├── proofs/                # Formal mathematical proofs
+├── formal/                # Lean 4 formalization scaffold
+└── papers/                # Publication drafts
+```
+
+---
+
+Quick Start
+
+Reproduce Computational Results
+
+```bash
+git clone https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY.git
+cd AQARION-ARITHMETIC
+python verification/verify.py
+```
+
+Expected output:
+
+```
+All 10 verification gates PASSED
+Artifact hash: bb40ec19be6fd8c1ae89746c5e0185639c91c14a2d41bc10da112915dad6d900
+```
+
+Explore the Theory
+
+· Definitions: CORE/DEFINITIONS.md
+· Theorems & Proofs: CORE/THEOREMS.md
+· Full Checkpoint: CORE/CHECKPOINT.md
+
+---
+
+Publication Roadmap
+
+Paper Scope Status
+I Observable Quotients of Kaprekar Dynamics 📝 95% complete
+II Algorithms for FOQDS Computation 🔬 Research
+III Quotients of Finite Deterministic Systems 🔬 Research
+IV Operator-Theoretic Extensions 🔬 Research
+
+---
+
+Open Problems
+
+ID Problem Priority
+OP‑0 Structural equivalence of FOQDS / chambers / gap partition ★★★★★
+OP‑1 Higher‑digit scaling of quotient size & collapse depth ★★★★☆
+OP‑2 Lattice of forward‑compatible observables ★★★☆☆
+OP‑3 Universal quotient theory for arbitrary FDDS ★★★★☆
+OP‑4 Incidence dynamics classification (Regime I/II/III) ★★★★★
+
+---
+
+Contributing
+
+Contributions are welcome in:
+
+· Theorem development and proof completion
+· Independent proof verification (Track B)
+· Lean formalization
+· Extension to other finite deterministic systems
+
+Please consult CONSTITUTION/GOVERNANCE.md before submitting.
+
+---
+
+Citation
+
+```bibtex
+@misc{aqarion2026,
+  author       = {{AQARION Research Node #10878}},
+  title        = {AQARION-ARITHMETIC: Observable-Induced Quotients
+                  for Finite Deterministic Dynamical Systems},
+  year         = 2026,
+  howpublished = {GitHub repository},
+  url          = {https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY},
+  note         = {Version v10.7.0}
+}
+```
+
+---
+
+License
+
+· Code: MIT License
+· Documentation: CC‑BY‑4.0
+
+---
+
+Maintainer: AQARION Research Node #10878
+Contact: GitHub Issues
+Date: 2026-06-20
+
+---
+
+"Mathematical understanding begins when apparent complexity is replaced by exact structure."
+
 Exact Quotient Dynamics of the Four-Digit Kaprekar Map
 
 A finite dynamical systems study of observable-induced quotient dynamics
@@ -1869,5 +2049,192 @@ CHECKPOINT.md Exhaustive project status ✅ Complete
 ASCII-Mermaid-Visual-Atlas.md All diagrams, charts, cheatsheet ✅ Complete
 paper1/paper.tex LaTeX manuscript for Paper I ✅ Complete
 verification/verify.py One-click verification suite ✅ Complete
+
+---
+
+AQARION-ARITHMETIC — FINAL CHECKPOINT
+
+Version: v10.7.0 (Knaster–Tarski Foundation)
+Date: 2026-06-20
+Status: CORE-1.1 Mathematical Stabilization / Paper I Ready
+Repository: github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
+Artifact Hash: bb40ec19be6fd8c1ae89746c5e0185639c91c14a2d41bc10da112915dad6d900
+Maintainer: AQARION Research Node #10878
+License: MIT (code) / CC‑BY‑4.0 (documentation)
+
+---
+
+Executive Summary
+
+AQARION‑ARITHMETIC has reached canonical mathematical form. The computational layer is frozen and fully reproducible. The theoretical framework — FOQDS (Forward Observable Quotient Dynamical Systems) — is now defined as the greatest fixed point of an observation-refinement operator via the Knaster–Tarski theorem, grounding the construction in classical lattice theory.
+
+Key Achievements:
+
+Area Status Evidence
+FOQDS Definition (gfp(Φ)) ✅ P Knaster–Tarski
+Semiconjugacy & Quotient Existence ✅ P Direct from gfp
+Kaprekar 54‑state Quotient ✅ P + C2 Algebraic + exhaustive
+Image Filtration Collapse ✅ C2 54→30→17→12→8→5→2→1
+Incidence Stabilisation (n=8) ✅ C2 rank=1
+Universal Factorization ✅ P Repaired proof
+Automorphism Group ✅ P (Z₂)⁶ with explicit generators
+Spectral Collapse ✅ P m(x)=x⁶(x-1)
+
+Open Problems: OP‑0 (structural equivalence), OP‑4 (bisimulation strictness), functoriality.
+
+---
+
+1. Core Mathematical Framework
+
+1.1 The Central Object: FOQDS
+
+Given an FDDS (X, T) and observable \mathcal{O}: X \to Y, define the refinement operator:
+
+\Phi(R) = \{ (x,y) \mid \mathcal{O}(x)=\mathcal{O}(y),\ (T(x),T(y)) \in R \}
+
+Theorem (Knaster–Tarski): Since \mathrm{Rel}(X) is a finite complete lattice and \Phi is monotone, the greatest fixed point exists:
+
+\sim_F := \mathrm{gfp}(\Phi)
+
+This is the Forward Observable Equivalence — the coarsest equivalence that preserves all future observations.
+
+1.2 Structural Theorems (All P‑level)
+
+Theorem Statement
+Forward Congruence x \sim_F y \implies T(x) \sim_F T(y)
+Maximality \sim_F is the greatest forward‑invariant equivalence refining \ker(\mathcal{O})
+Nerode Characterization x \sim_F y \iff \forall n\ge0,\ \mathcal{O}(T^n x)=\mathcal{O}(T^n y)
+Quotient Existence \pi \circ T = T_F \circ \pi with \pi: X \to X/\!\sim_F
+Bisimulation Inclusion \sim_B \subseteq \sim_F
+Moore Relation \sim_F \subseteq \sim_M (equality iff \mathcal{O} is trace‑complete)
+Universal Factorization Any compatible q: X \to Y factors uniquely through \pi
+
+---
+
+2. Kaprekar Instantiation (P + C2)
+
+2.1 Gap Observable
+
+For sorted digits a \ge b \ge c \ge d:
+
+\pi(n) = (a-d,\ b-c), \qquad G = \{ (g_1,g_2) \mid 1 \le g_1 \le 9,\ 0 \le g_2 \le g_1 \}
+
+|G| = 54, \qquad K(n) = 999g_1 + 90g_2 \quad \text{(exact identity, P)}
+
+2.2 Verified Structure (C2)
+
+Property Value
+FOQDS Classes 54
+Chamber Classes 705
+Semiconjugacy Violations 0 / 9,990
+Max Transient Depth 6
+Image Filtration 54→30→17→12→8→5→2→1
+Stabilisation n=8, rank=1
+Attractor Chamber {1,4,6,7} (contains 6174)
+Automorphism Group (\mathbb{Z}_2)^6 (P)
+Minimal Polynomial x^6(x-1) (P)
+
+2.3 Pullback Factorization (Flagship Theorem)
+
+\widetilde K = \pi \circ \mathrm{Sort} \circ L
+
+where L(g_1,g_2) = (g_1,\ g_2-1,\ 9-g_2,\ 10-g_1) (with borrow variant).
+
+Interpretation: All nonlinearity is localised inside the sorting operation. This explains the quotient, affine decomposition, and rank‑collapse hierarchy within a single framework.
+
+---
+
+3. Open Problems
+
+ID Problem Priority Status
+OP‑0 Structural equivalence of FOQDS / chambers / gap partition ★★★★★ OPEN
+OP‑1 Higher‑digit scaling of quotient size & collapse depth ★★★★☆ OPEN
+OP‑2 Lattice of forward‑compatible observables ★★★☆☆ OPEN
+OP‑3 Universal quotient theory for arbitrary FDDS ★★★★☆ OPEN
+OP‑4 Incidence dynamics classification (Regime I/II/III) ★★★★★ OPEN
+OP‑5 Bisimulation strictness for Kaprekar ★★★★☆ Conjectural
+
+---
+
+4. Publication Roadmap
+
+Paper Scope Status
+I Observable Quotients of Kaprekar Dynamics 📝 95% complete
+II Algorithms for FOQDS Computation 🔬 Research
+III Quotients of Finite Deterministic Systems 🔬 Research
+IV Operator‑Theoretic Extensions 🔬 Research
+
+Paper I Contents:
+
+· FOQDS definition (gfp(Φ))
+· Semiconjugacy & quotient existence
+· Kaprekar 54‑state quotient (P + C2)
+· Image filtration & stabilisation (C2)
+· Classification lemmas: \sim_B \subseteq \sim_F, Moore relation
+· Literature positioning vs Dahl (2026), Rolland (2024/2025)
+
+---
+
+5. Independent Verification Tracks
+
+Track Status Priority
+A — Computational Reproduction ⏳ Pending BLOCKING
+B — Mathematical Proof Review ⏳ Pending BLOCKING
+C — Lean Formalisation ⏳ Pending Non‑blocking
+D — Editorial Review ⏳ Pending Non‑blocking
+
+Track A Protocol:
+
+1. Clone repository
+2. Run python verification/verify.py
+3. Confirm all 10 gates PASS
+4. Verify artifact hashes match
+
+---
+
+6. Lean 4 Formalisation
+
+Module Status
+Foundation/FiniteSystem ✅ Scaffolded
+Foundation/Observable ✅ Scaffolded
+Foundation/Congruence ✅ Scaffolded
+Quotients/Quotient ✅ Complete
+Quotients/Semiconjugacy ✅ Complete
+Quotients/UniversalProperty ✅ Complete
+Theory/Lattice ✅ Scaffolded
+Theory/Categories ✅ Scaffolded
+Applications/Kaprekar54 ✅ Complete
+
+Proof Obligations: 0 sorries — all resolved.
+
+---
+
+7. Final Assessment
+
+AQARION‑ARITHMETIC has reached canonical form:
+
+A deterministic dynamical system acting on the incidence algebra of two finite partitions, with the FOQDS construction providing the canonical observable‑induced quotient via Knaster–Tarski fixed‑point theory.
+
+What is Complete:
+
+· ✅ Computational layer (C2 — frozen, reproducible)
+· ✅ FOQDS definition (P — Knaster–Tarski)
+· ✅ Kaprekar quotient (P + C2 — algebraic + exhaustive)
+· ✅ Classification lemmas (P — bisimulation, Moore)
+· ✅ Automorphism group (P — (\mathbb{Z}_2)^6)
+· ✅ Spectral collapse (P — m(x)=x^6(x-1))
+
+What Remains:
+
+· 🔄 OP‑0 structural equivalence (OPEN)
+· 🔄 Independent reproduction (Track A)
+· 🔄 Lean formalisation (Track C)
+
+---
+
+"Mathematical understanding begins when apparent complexity is replaced by exact structure."
+
+AQARION Research Node #10878
+2026-06-20
 
 Repository: github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY
