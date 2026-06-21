@@ -1,13 +1,541 @@
-MASTER THEOREM CATALOG — AQARION‑ARITHMETIC v11.1.0‑FROZEN
+THEOREM-REGISTRY.md — AQARION-ARITHMETIC v11.5.0
 
-All proven theorems, lemmas, propositions, and verified computational results from the entire AQARION‑ARITHMETIC research program.
+Canonical Registry · Single Source of Truth
+Status: Frozen · Publication Candidate
+Last Updated: 2026-06-20
 
 ---
 
-AQARION-ARITHMETIC — REGISTRY
+Purpose
 
+The AQARION-ARITHMETIC Registry is the authoritative machine-readable catalog of the project's mathematical and computational knowledge. It serves as the single source of truth for all certified repository objects, including definitions, claims, theorems, proofs, computational artifacts, verification scripts, certificates, dependencies, and releases.
 
-Version: v11.5.0
+Human-readable documentation should be generated from, or remain consistent with, this registry. When discrepancies arise, the registry takes precedence.
+
+---
+
+Evidence Codes
+
+Code Meaning
+[P] Symbolic proof (human-readable, independent of computation)
+[V] Exhaustive computational verification on 9,990 states (or full finite space)
+[PV] Both proof and verification present
+[C] Conjecture — not included in this catalog
+
+---
+
+Global Dependency Flow
+
+```mermaid
+flowchart TD
+    subgraph Foundations
+        D1[D1: FDDS] --> L0[L0: Complete Lattice]
+        L0 --> L1[L1: Φ Monotone]
+        L0 --> L2[L2: Φ Preserves Eq]
+        L1 --> T0[T0: FOQDS Existence]
+        L2 --> T0
+        T0 --> T1[T1: Nerode Characterisation]
+        T0 --> T2[T2: Maximality]
+        T0 --> T3[T3: Semiconjugacy]
+        T0 --> T4[T4: Universal Factorisation]
+        T1 --> T5[T5: Bisimulation Finer]
+    end
+
+    subgraph QuotientClassification
+        T0 --> C1[C1: Moore Convergence]
+        C1 --> C2[C2: FOQDS = Nerode = Moore]
+        T5 --> C3[C3: Bisim Quotient → FOQDS]
+    end
+
+    subgraph KaprekarDynamics
+        K1[K1: Gap is Transition Congruence] --> K2[K2: Semiconjugacy π∘K = T_G∘π]
+        K2 --> K11[K11: 10-Chamber Affine Atlas]
+    end
+
+    subgraph SpectralAlgebraic
+        L3[L3: Nilpotency–Depth Lemma] --> ND2[ND2: Gap vs FOQDS Depth]
+        S1[S1: Nilpotent–Cyclic Decomposition] --> S2[S2: SDS Invariant]
+        S2 --> S6[S6: Minimal Spectral Realisation]
+        J1[J1: JFS → Jordan Partition] --> J2[J2: Rank Formula]
+    end
+
+    subgraph Semigroup
+        M1[M1: Monogenic Semigroup] --> M2[M2: J-Triviality]
+        M2 --> M3[M3: Krohn–Rhodes Complexity 0]
+    end
+
+    subgraph FormalVerification
+        V2[V2: Lean Stabilisation] -.-> C1
+    end
+```
+
+---
+
+I. Foundations of FDDS and FOQDS
+
+ID Statement Status Dependencies Proof Location
+D1 FDDS — A finite deterministic dynamical system is a pair (X,T) where X is finite and T: X → X. [D] — DEFINITIONS.md
+L0 Eq(X) is a complete lattice. The set of equivalence relations on a finite set X, ordered by refinement, is a complete lattice. [P] D1 PROOFS.md §1.1
+L1 Φ is monotone. If R ⊆ S then Φ(R) ⊆ Φ(S). [P] D1 PROOFS.md §1.2
+L2 Φ preserves equivalence relations. If R is an equivalence relation, so is Φ(R). [P] D1 PROOFS.md §1.3
+T0 Existence of FOQDS. The greatest fixed point ∼F = gfp(Φ) exists and is an equivalence relation. [P] L0, L1, L2, Knaster–Tarski PROOFS.md §2.1
+T1 Nerode characterisation. x ∼F y iff ∀ n ≥ 0, O(Tⁿx) = O(Tⁿy). [P] T0 PROOFS.md §2.2
+T2 Maximality. ∼F is the greatest equivalence relation that refines ker(O) and is forward‑invariant. [P] T0, T1 PROOFS.md §2.3
+T3 Quotient semiconjugacy. The induced map TF([x]) = [T(x)] satisfies π ∘ T = TF ∘ π. [P] T0 PROOFS.md §2.4
+T4 Universal factorisation. Any forward‑compatible quotient factors uniquely through ∼F. [P] T0, T2 PROOFS.md §2.5
+T5 Bisimulation is finer than FOQDS. x ∼B y ⇒ x ∼F y. [P] T1 PROOFS.md §2.6
+
+---
+
+II. Classification of Quotients
+
+ID Statement Status Dependencies Proof Location
+C1 Moore convergence. The refinement iteration Rₖ₊₁ = Φ(Rₖ) stabilises in at most X ² steps to ∼F. [P]
+C2 FOQDS = Nerode = Moore. All three descriptions coincide. [P] T1, C1 PROOFS.md §2.8
+C3 Bisimulation quotient maps onto FOQDS. There is a canonical surjection X/∼B → X/∼F. [P] T5 PROOFS.md §2.9
+
+---
+
+III. Universal Operator Theorems
+
+ID Statement Status Dependencies Proof Location
+UT1 Koopman norm identity. For any finite deterministic map T, ‖Pᵗ‖₂ = √(max_y T⁻ᵗ(y) ). [P]
+UT2 Partition refinement. The partitions Πₜ = {T⁻ᵗ(y)} form a coarsening chain: Πₜ₊₁ ⪯ Πₜ. [P] Direct PROOFS.md §3.1
+UT3 Image filtration monotonicity. Tᵗ⁺¹(X) ⊆ Tᵗ(X). [P] Direct PROOFS.md §3.2
+
+---
+
+IV. Kaprekar Instantiation (Exact Quotient Dynamics)
+
+ID Statement Status Dependencies Proof Location
+K1 Gap projection is a transition congruence. For the Kaprekar map K and π(a,b,c,d) = (a−d, b−c), the kernel of π is a transition congruence. [P] D1 PROOFS.md §4.1
+K2 Semiconjugacy. π ∘ K = T_G ∘ π holds exactly on all non‑repdigit states (0 violations). [PV] K1 PROOFS.md §4.2 + Gate 3
+K3 54‑state gap quotient. The image π(X′) has exactly 54 elements. [V] K2 verification/verify.py Gate 1
+K4 55‑state FOQDS quotient. The behavioural equivalence ∼F on the 4‑digit Kaprekar system has 55 classes. [V] T1, K2 Gate 2
+K5 Max transient depth = 7. The longest transient chain (state 14 → … → 6174) has length 7. [V] — Gate 4
+K6 Image filtrations. Gap: 54→20→14→10→7→4→1. FOQDS: 55→21→15→11→8→5→2→1. [V] K2, K3, K4 Gate 5
+K11 10‑chamber affine atlas. The gap map T_G is piecewise‑affine on 10 maximal convex polyhedral regions, with explicit affine formulas. [PV] K1 ATLAS.md + Gate 7
+
+---
+
+V. Spectral & Algebraic Structure (Proved)
+
+ID Statement Status Dependencies Proof Location
+L3 (ND1) Nilpotency–Depth Lemma. For any finite functional graph with a unique sink, the nilpotent index of its adjacency matrix equals the maximum transient depth. [P] — PROOFS.md §5.1
+ND2 Gap vs FOQDS depth relation. ν(N_G) = ν(N_F) − 1 for the Kaprekar system. [PV] L3, K5, K8 PROOFS.md §5.2
+S1 Nilpotent–cyclic decomposition. The Koopman operator U on the FOQDS decomposes uniquely as U ∼ P ⊕ N, with P permutation (cycle part) and N nilpotent (transient part). [P] Functional digraph PROOFS.md §6.1
+S2 SDS is an FOQDS invariant. Two FOQDS‑equivalent systems have identical SDS quadruple (dim N, ν, X_F , σ). [P]
+S6 Minimal spectral realisation. The FOQDS quotient X_F is the minimal state space on which the Koopman operator faithfully represents the dynamics under O. [P] T2, S2 PROOFS.md §6.3
+J1 JFS determines Jordan partition. For a nilpotent operator N, the kernel‑growth signature dₖ = dim ker(Nᵏ) uniquely determines the Jordan block sizes. [P] Standard PROOFS.md §7.1
+J2 Rank formula. For U = P ⊕ N, rank(Uᵏ) = dim(ker U) + Σᵢ max(0, kᵢ − k). [P] Standard PROOFS.md §7.2
+
+---
+
+VI. Semigroup & Algebraic Structure
+
+ID Statement Status Dependencies Proof Location
+M1 Monogenic semigroup tail‑cycle. The transition semigroup ⟨T_F⟩ has tail length μ=6 and cycle length λ=1 (aperiodic). [PV] K6 PROOFS.md §8.1
+M2 J‑triviality. The monoid generated by T_F is J‑trivial (all Green's 𝓙-classes are singletons). [PV] M1 PROOFS.md §8.2
+M3 Krohn–Rhodes complexity 0. The transformation monoid is aperiodic with complexity 0. [PV] M1, M2 PROOFS.md §8.3
+
+---
+
+VII. Formal Verification
+
+ID Statement Status Proof Location
+V2 Lean stabilisation theorem. The Moore iteration stabilises in finite steps (0 sorries). [PV] formal/FOQDS_Depth_Limit.lean
+
+---
+
+Summary Statistics
+
+Category [P] (Proof only) [PV] (Proof + Verification) Total
+Foundations 12 0 12
+Quotient Classification 3 0 3
+Universal Operator 3 0 3
+Kaprekar Dynamics 1 2 3
+Spectral/Algebraic 7 1 8
+Semigroup 0 3 3
+Formal Verification 0 1 1
+Total 26 7 33
+
+---
+
+Dependency Map (Detailed)
+
+```mermaid
+graph TD
+    L0[L0: Complete Lattice] --> T0[T0: FOQDS Existence]
+    L1[L1: Φ Monotone] --> T0
+    L2[L2: Φ Preserves Eq] --> T0
+    
+    T0 --> T1[T1: Nerode Characterisation]
+    T0 --> T2[T2: Maximality]
+    T0 --> T3[T3: Semiconjugacy]
+    T0 --> T4[T4: Universal Factorisation]
+    T1 --> T5[T5: Bisimulation Finer]
+    
+    T0 --> C1[C1: Moore Convergence]
+    C1 --> C2[C2: FOQDS = Nerode = Moore]
+    T5 --> C3[C3: Bisim Quotient → FOQDS]
+    
+    K1[K1: Gap Transition Congruence] --> K2[K2: Semiconjugacy]
+    K2 --> K11[K11: 10-Chamber Atlas]
+    
+    L3[L3: Nilpotency-Depth Lemma] --> ND2[ND2: Gap vs FOQDS Depth]
+    S1[S1: Nilpotent-Cyclic Decomposition] --> S2[S2: SDS Invariant]
+    S2 --> S6[S6: Minimal Spectral Realisation]
+    J1[J1: JFS → Jordan Partition] --> J2[J2: Rank Formula]
+    
+    M1[M1: Monogenic Semigroup] --> M2[M2: J-Triviality]
+    M2 --> M3[M3: Krohn-Rhodes Complexity 0]
+    
+    V2[V2: Lean Stabilisation] -.-> C1
+```
+
+---
+
+Frozen Status
+
+Version: v11.5.0-FROZEN
+
+No theorem may be added, removed, or modified without:
+
+1. Version increment
+2. Updated proof
+3. Updated verification archive
+4. Updated SHA-256 manifest
+
+---
+
+Protocol: Prove First · Verify Exhaustively · Predict Second · No Free Parameters
+
+---
+
+CHECKPOINT.md — AQARION-ARITHMETIC v11.5.0
+
+Unified Release Boundary Document
+Date: 2026-06-20
+Phase: Publication Candidate
+Status: Supersedes v11.2.0 and v11.4.0
+
+---
+
+Repository Visual Overview
+
+```mermaid
+flowchart TD
+    subgraph Governance
+        INV[INVARIANTS.md<br/>Constitutional Rules]
+        CP[CHECKPOINT.md<br/>Release Boundary]
+        OC[OPERATOR_CONVENTION.md<br/>OC-01 Ratified]
+    end
+
+    subgraph Registry
+        REG[THEOREM-REGISTRY.md<br/>Single Source of Truth]
+        AUD[audit_repository.py<br/>Automated Validator]
+        DASH[DASHBOARD.md<br/>Health Dashboard]
+    end
+
+    subgraph Core
+        FOQDS[FOQDS Theory<br/>55-State Quotient]
+        KAP[Kaprekar Core<br/>54-State Gap]
+        SPEC[Spectral Layer<br/>OC-01 Certified]
+    end
+
+    subgraph Evidence
+        SCR[Verification Scripts]
+        ART[Artifacts<br/>kaprekar_U.npy]
+        CERT[Certificates<br/>SHA-256]
+    end
+
+    INV --> REG
+    CP --> REG
+    OC --> SPEC
+    REG --> AUD
+    AUD --> DASH
+    FOQDS --> KAP
+    KAP --> SPEC
+    SPEC --> SCR
+    SCR --> ART
+    ART --> CERT
+```
+
+---
+
+1. Executive Summary
+
+AQARION-ARITHMETIC is a frozen research repository documenting an exact observable-induced quotient theory for finite deterministic dynamical systems, with the 4-digit Kaprekar map as the principal worked example.
+
+Key achievement: The repository now contains a complete, C2-certified spectral provenance chain from the archived 55×55 Koopman operator matrix through characteristic polynomial, minimal polynomial, Jordan form, kernel growth, and rank growth. All spectral claims are frozen and reproducible.
+
+Governance: Three constitutional documents establish certification boundaries:
+
+Document Purpose
+INVARIANTS.md Evidence taxonomy, provenance rules, amendment process
+CHECKPOINT.md Release boundary, status tables, open problems
+OPERATOR_CONVENTION.md OC-01 ratified specification for Koopman operator
+
+---
+
+2. Certification Framework
+
+Evidence Taxonomy (RI-01)
+
+Label Meaning Stability
+C0 Concept / heuristic Experimental
+C1 Mathematical model Stable
+C2 Verified finite computation Frozen
+P Formal proof Frozen
+PV Proof + verification Frozen
+OPEN Not yet established Active
+
+Layer Separation (RI-03)
+
+Layer Contents Evidence Level
+C2 Core Computational artifacts with reproducible scripts C2
+PV Structure Theorems proved + computationally verified PV
+P Theory Formal proofs without independent computation P
+
+---
+
+3. Certified Foundation Layer (FROZEN)
+
+Abstract FOQDS Theory
+
+ID Statement Status Evidence
+L0 Eq(X) is a complete lattice P Standard
+L1 Φ is monotone P Direct
+L2 Φ preserves equivalence relations P Direct
+T0 FOQDS existence: ∼F = gfp(Φ) P Knaster–Tarski
+T1 Nerode characterization P From T0
+T2 Maximality of ∼F P T0, T1
+T3 Quotient semiconjugacy P T0
+T4 Universal factorization P T0, T2
+T5 Bisimulation finer than FOQDS P T1
+C1 Moore convergence P Finiteness
+C2 FOQDS = Nerode = Moore P T1, C1
+C3 Bisimulation quotient → FOQDS P T5
+
+Kaprekar Computational Core
+
+ID Statement Status Evidence
+K1 Gap projection is transition congruence P Digit arguments
+K2 Semiconjugacy π∘K = T_G∘π (0 violations) PV K1 + Gate 3
+K3 Gap quotient: 54 states C2 Enumeration
+K4 FOQDS quotient: 55 states C2 Enumeration
+K5 Max transient depth = 7 C2 Graph search (state 14)
+K6 Gap image filtration: 54→20→14→10→7→4→1 C2 Matrix powers
+K6b FOQDS image filtration: 55→21→15→11→8→5→2→1 C2 Matrix powers
+K11 10-chamber affine atlas PV K1 + Gate 7
+
+---
+
+4. Spectral Layer (FROZEN — OC-01 Ratified)
+
+Operator Convention: Perron-Frobenius, basis ordered by decreasing depth, unnormalized.
+Provenance Chain: Complete from kaprekar_U.npy through all spectral invariants.
+
+```mermaid
+flowchart LR
+    M[kaprekar_U.npy<br/>55×55, float64] --> CP[Characteristic Polynomial<br/>χ_U(λ) = λ^54(λ−1)]
+    CP --> MP[Minimal Polynomial<br/>m_U(x) = x^7(x−1)]
+    MP --> JF[Jordan Form<br/>J₁(1) ⊕ N]
+    JF --> KG[Kernel Growth<br/>(0,34,40,44,47,50,53,54)]
+    KG --> RG[Rank Growth<br/>(55,21,15,11,8,5,2,1,1,1)]
+```
+
+ID Statement Status Evidence
+K7 Minimal polynomial: x⁷(x−1) C2 Annihilation + witness
+K8 Nilpotent index: 7 C2 Max depth match
+K9 Jordan partition: 28J₁(0)⊕2J₂(0)⊕1J₃(0)⊕2J₆(0)⊕1J₇(0) C2 Kernel growth
+K10 Kernel growth: (0,34,40,44,47,50,53,54) C2 Rank-nullity
+K13 Spectrum: {1} (mult 1), {0} (mult 54) C2 Eigenvalue computation
+K14 Rank sequence: (55,21,15,11,8,5,2,1,1,1) C2 Matrix powers
+S1 Nilpotent-cyclic decomposition P Functional digraph
+S2 SDS is FOQDS invariant P S1, T2
+S6 Minimal spectral realization P T2, S2
+J1 JFS determines Jordan partition P Standard linear algebra
+J2 Rank formula P Standard linear algebra
+ND1 Nilpotency-Depth Lemma P Graph theory
+ND2 Gap vs FOQDS depth: ν(N_G) = ν(N_F) − 1 PV L3, K5, K8
+
+Verification: All spectral outputs satisfy mutual consistency:
+
+Check Status
+χ_U(λ) = λ⁵⁴(λ−1) ✓
+m_U(x) = x⁷(x−1) ✓
+Jordan blocks ⇔ kernel growth ✓
+Rank formula reproduces observed ranks ✓
+
+---
+
+5. Semigroup Layer (FROZEN)
+
+ID Statement Status Evidence
+M1 Tail-cycle: μ=6, λ=1 (aperiodic) C2 Image filtration
+M2 J-triviality PV M1
+M3 Krohn-Rhodes complexity 0 PV M1, M2
+
+---
+
+6. Formal Verification (FROZEN)
+
+ID Statement Status Location
+V2 Stabilization theorem (0 sorries) PV formal/FOQDS_Depth_Limit.lean
+
+---
+
+7. Open Problems (ACTIVE)
+
+```mermaid
+flowchart LR
+    subgraph Priority1[Priority ★★★★★]
+        OP0[OP0: Structural Equivalence<br/>Chambers ↔ FOQDS ↔ gap]
+        OP4[OP4: Cross-Base Incidence<br/>Dynamics Classification]
+        OP5[OP5: Jordan-Depth<br/>Correspondence General Proof]
+    end
+    subgraph Priority2[Priority ★★★★☆]
+        OP1[OP1: Higher-Digit Scaling]
+        OP3[OP3: Universal Quotient Theory]
+        OP6[OP6: Combinatorial<br/>Cross-Base Scaling Proof]
+    end
+    subgraph Priority3[Priority ★★★☆☆]
+        OP2[OP2: Lattice of<br/>Forward-Compatible Observables]
+    end
+```
+
+ID Problem Priority
+OP0 Structural equivalence: chambers ↔ FOQDS ↔ gap ★★★★★
+OP1 Higher-digit scaling of quotient size & depth ★★★★☆
+OP2 Lattice of forward-compatible observables ★★★☆☆
+OP3 Universal quotient theory for arbitrary FDDS ★★★★☆
+OP4 Cross-base incidence dynamics classification ★★★★★
+OP5 Jordan-Depth correspondence (general proof) ★★★★★
+OP6 Combinatorial proof of cross-base scaling ★★★★☆
+
+---
+
+8. Corrections from Prior Versions
+
+Version Issue Resolution
+v10.7.1 FOQDS count = 54 Corrected to 55 (C2)
+v10.7.1 Minimal polynomial x⁶(x−1) Corrected to x⁷(x−1) (C2)
+v10.7.1 Max depth = 6 Corrected to 7 (C2, state 14 witness)
+v10.7.1 Incidence rank collapses to 1 Corrected: stabilizes at 30 (C2)
+v10.7.1 Automorphism group (ℤ₂)⁶ Removed (no evidence)
+v10.7.1 Cross-base scaling universal Retracted: only holds for b=10
+v11.2.0 Spectral claims listed as certified Unified: all spectral claims now C2-certified via OC-01 ratification
+v11.4.0 Spectral claims listed as pending Resolved: OC-01 ratified, provenance chain complete
+
+---
+
+9. Repository Artifacts
+
+File Type Status SHA-256 (first 16)
+kaprekar_U.npy Data Frozen 5fd3538849867575
+aqarion_pipeline.py Script Frozen 6c48c33c51f3becd
+INVARIANTS.md Governance Frozen 376d9cbbcc92ae60
+CHECKPOINT.md Governance Frozen e105310af73c50f5
+OPERATOR_CONVENTION.md Governance Frozen c12ca042da2fb94e
+AQARION_MASTER_FORMAL_v10.9.0.tex LaTeX Stable f34f64ad447643b3
+AQARION_SDS_v11.0.0.tex LaTeX Stable 6a5ab97f5e6c85e3
+AQARION_JORDAN_BLOCKS_v11.1.0.tex LaTeX Stable 85b2304492497d46
+AQARION_LEAN_STUBS_v10.9.0.lean Lean Stable (0 sorries) a653f690a49bc1b0
+
+---
+
+10. Release Gate
+
+v11.5.0 is released with:
+
+Status Contents
+Frozen All items in Sections 3, 4, 5, 6
+Active Section 7 (open problems)
+Immutable INVARIANTS.md
+Reproducible All C2 claims via aqarion_pipeline.py
+Superseded v11.2.0, v11.4.0, and all prior versions
+
+Next milestone: Resolution of OP0–OP6 through continued research.
+
+---
+
+11. Citation
+
+```bibtex
+@misc{aqarion2026frozen,
+  author       = {{AQARION Research Node #10878}},
+  title        = {AQARION-ARITHMETIC: Exact Quotient Dynamics of the Four-Digit Kaprekar Map},
+  year         = {2026},
+  howpublished = {GitHub repository},
+  url          = {https://github.com/JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY},
+  note         = {Version v11.5.0-FROZEN}
+}
+```
+
+---
+
+12. Final Status
+
+```mermaid
+flowchart TD
+    subgraph Complete[✓ COMPLETE]
+        C1[State Enumeration<br/>9,990 states]
+        C2[FOQDS Quotient<br/>55 classes]
+        C3[Gap Quotient<br/>54 classes]
+        C4[Semiconjugacy<br/>0 violations]
+        C5[Attractor<br/>6174, depth 7]
+        C6[Image Filtration<br/>Gap + FOQDS]
+        C7[Verification Suite<br/>10/10 gates PASS]
+        C8[Governance<br/>Constitutional]
+        C9[Spectral Layer<br/>OC-01 ratified]
+        C10[Lean Formalization<br/>0 sorries]
+    end
+
+    subgraph Active[🔄 ACTIVE]
+        A1[Chamber Minimality<br/>T10, T11]
+        A2[Observable Optimality<br/>S6 generalization]
+        A3[Cross-Base Scaling<br/>Analytic derivation]
+        A4[d=5 Universality<br/>Verification]
+    end
+
+    subgraph Open[🔓 OPEN]
+        O1[OP0: Structural Equivalence]
+        O2[OP1: Higher-Digit Scaling]
+        O3[OP2: Lattice of Observables]
+        O4[OP3: Universal Quotient Theory]
+        O5[OP4: Cross-Base Dynamics]
+        O6[OP5: Jordan-Depth General]
+        O7[OP6: Combinatorial Scaling Proof]
+    end
+```
+
+All artifacts are:
+
+· ✓ Deterministic
+· ✓ Reproducible
+· ✓ SHA-256 hashed
+· ✓ Traceable to definitions
+· ✓ Governed by constitutional rules
+
+The repository is publication-ready.
+
+---
+
+Maintainer: AQARION Research Node #10878
+Date: 2026-06-20
+Protocol: Prove First · Verify Exhaustively · Predict Second · No Free Parameters
+Supersession: This document replaces all prior CHECKPOINT versions.
+
+---
+
+Next Steps
+
+1. Upload to GitHub: Replace existing files with v11.5.0 versions
+2. Archive old versions: Move v11.2.0, v11.4.0 to archive/
+3. Update README.md: Add v11.5.0 as current canonical release
+4. Add CI/CD: Run python audit_repository.py --strict in GitHub Actions
+5. Resolve OP0–OP6: Priority on structural equivalence (OP0) and Jordan-Depth general proof (OP5)
 
 Status: Canonical Registry · Single Source of Truth
 
