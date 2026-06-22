@@ -2,8 +2,9 @@
 
 # FINITE-DYNAMICAL-SYSTEMS 
 
-# AQARION-ARITHMETIC
+AQARION-ARITHMETIC documents a fixed-point characterization of observable trace equivalence for finite deterministic dynamical systems together with a complete computational and structural analysis of the four-digit Kaprekar map. The foundational theory is best understood as an identification theorem linking Moore refinement, trace semantics, Myhill–Nerode equivalence, coalgebraic final semantics, and greatest-fixed-point constructions. The principal original contributions are the exact Kaprekar quotient analysis, nilpotency-depth correspondence, chamber decomposition, and associated algebraic invariants. Remaining publication risk is concentrated in the independent auditability of proof artifacts, particularly the symbolic derivation of the 55-class FOQDS quotient.
 
+~~~
 
 **A Formal Framework for Observable-Induced Quotients in Finite Deterministic Dynamical Systems**  
 *Version v16.0-freeze · CORE-1.2 Certified · 2026-06-22*
