@@ -15408,6 +15408,22 @@ Honest framing: The fixed‑point characterization of trace equivalence is a uni
 
 ---
 
+AQARION-ARITHMETIC documents a fixed-point characterization of observable trace equivalence for finite deterministic dynamical systems together with a complete computational and structural analysis of the classical four-digit Kaprekar map.
+
+
+The foundational framework is best understood as an identification theorem connecting Moore partition refinement, observable trace semantics, Myhill–Nerode equivalence, deterministic coalgebraic behavioral semantics, and greatest-fixed-point constructions. Within finite deterministic observable systems, the theory provides a unified formulation of these perspectives through a common refinement operator and fixed-point characterization.
+
+
+The principal original contributions arise from the exact structural analysis of the Kaprekar system, including the construction and verification of the 54-state quotient dynamics, explicit semiconjugacy, chamber decomposition, nilpotency-depth correspondence, Jordan-theoretic structure, and associated algebraic invariants.
+
+
+The repository maintains a strict separation between symbolic proofs, computational verification, and open research questions through a governed evidence hierarchy. All computational claims are reproducible and independently verifiable through archived artifacts and certification procedures.
+
+
+Remaining publication risk is concentrated in the independent auditability of proof artifacts, particularly the symbolic derivation underlying the 55-class FOQDS quotient and the verification status of all P-classified theorem proofs. Consequently, the repository should be viewed as a mathematically mature research program prepared for external review rather than as a completed and fully audited body of results.
+
+---
+
 "Mathematical understanding begins when apparent complexity is replaced by exact structure."
 
 Maintainer: AQARION Research Node #10878
@@ -15417,14 +15433,3 @@ Fun Level: Maximum 🚀
 
 ---
 
-Immediate Next Steps (Actionable)
-
-1. Submit Paper II (Kaprekar quotient) to a journal like Discrete Mathematics or Theoretical Computer Science.
-2. Submit Paper I (fixed‑point characterization) as a companion theoretical paper.
-3. Complete Track A — have an independent person clone the repository and run python verification/verify_aqarion.py.
-4. Complete Track B — have a mathematician review all P‑level proofs.
-5. Upgrade the API — implement async HTTP (httpx), full SHA‑256 verification, and versioned routes.
-6. Publish certificates — generate certificate.json and manifest.json for the release.
-7. Expand benchmarks — add happy numbers, digital‑root dynamics, and other FDDS to demonstrate generality.
-
-"Visualization is the first step toward understanding structure."
