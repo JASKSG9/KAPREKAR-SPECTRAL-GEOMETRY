@@ -4,10 +4,6 @@
 
 # AQARION-ARITHMETIC
 
-README.md
-
-```markdown
-# AQARION-ARITHMETIC
 
 **A Formal Framework for Observable-Induced Quotients in Finite Deterministic Dynamical Systems**  
 *Version v16.0-freeze · CORE-1.2 Certified · 2026-06-22*
