@@ -1,8 +1,3 @@
-Below is a GitHub-ready README.md fully aligned with your API specification. It is structured to be clean, formal, and implementation-first, with no redundancy or inflated claims.
-
-
----
-
 AQARION-ARITHMETIC
 
 Version: v17.4-PUBLICATION-READY
@@ -1938,4 +1933,3 @@ t>=0 is exactly x ~_O y. QED, corrected and verified.
 
 
 11. END OF SPECIFICATION
-
