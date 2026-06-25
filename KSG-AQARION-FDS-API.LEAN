@@ -2392,9 +2392,8 @@ Status: 📍 PUBLICATION FREEZE v27.0
 
 These three files form the immutable entry point of the AQARION v27.0 ecosystem. They can be placed directly into the repository root and `lean4/` directory to provide immediate clarity, both for human readers and for the Lean formalisation.
 
----
 
-AQARION CHECKPOINT.md v27.0
+---
 
 Publication Freeze · Foundation Sprint Complete · PC2 Verified
 Date: 2026‑06‑25
