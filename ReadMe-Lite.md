@@ -2228,3 +2228,13 @@ The repository maintains a strict separation between symbolic proofs, computatio
 
 
 Remaining publication risk is concentrated in the independent auditability of proof artifacts, particularly the symbolic derivation underlying the 55-class FOQDS quotient and the verification status of all P-classified theorem proofs. Consequently, the repository should be viewed as a mathematically mature research program prepared for external review rather than as a completed and fully audited body of results.
+
+June Freeze v30.1 records the state of AQARION and QUANTARION as of June 30, 2026. This checkpoint intentionally distinguishes observed artifacts, derived interpretations, engineering proposals, mathematical results, and unresolved questions. It is a versioned engineering and research baseline rather than a claim of completed theory. Future checkpoints should extend this record without retroactively altering its historical content, except through explicitly documented errata.
+
+---
+
+A stratified observational framework with explicit epistemic partitioning (A/B/C), whose only missing component is a formally typed Evidence Object Algebra enabling compositional closure under verification.
+
+---
+
+https://github.com/JASKSG9/AQARION-ARITHMETIC-FDS-FINITE-DYNAMICAL-SYSTEMS-/blob/main/DOCS/JUNE-CHECKPOINT.MD
