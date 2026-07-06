@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQARION · A8 Publication Workflow</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Barlow+Condensed:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:#030407; --bg2:#060810; --bg3:#0a0d16; --bg4:#0d1020;
+  --border:#161925; --border2:#1e2435;
+  --accent:#00e5ff; --a2:#ff3cac; --a3:#ffe14d; --a4:#7c4dff;
+  --done:#00ff9f; --prog:#ff8c00; --block:#ff2244; --pend:#4a5070;
+  --text:#dde1f0; --muted:#3d4460; --dim:#1a1d2a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(22,25,37,.7) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(22,25,37,.7) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;background:rgba(3,4,7,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;overflow-x:auto;gap:0;}
+.nl{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;
+  letter-spacing:3px;padding:10px 18px;white-space:nowrap;border-right:1px solid var(--border);
+  background:linear-gradient(90deg,var(--accent),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nb{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);
+  padding:10px 12px;white-space:nowrap;cursor:pointer;border:none;background:none;
+  text-transform:uppercase;transition:color .15s;}
+.nb:hover{color:var(--accent);}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1500px;margin:0 auto;padding:0 24px 100px;position:relative;z-index:1;}
+
+/* ── HEADER ── */
+header{padding:36px 0 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:52px;letter-spacing:5px;line-height:1;
+  background:linear-gradient(100deg,var(--accent),var(--a2),var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:5px;letter-spacing:1.5px;}
+.hstats{display:flex;gap:20px;flex-wrap:wrap;align-items:center;}
+.hstat{text-align:center;}
+.hstat-n{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:36px;line-height:1;}
+.hstat-l{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;margin-top:2px;}
+
+/* ── SECTION ── */
+section{margin-top:44px;}
+.slbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:3px;
+  text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.slbl span{color:var(--muted);font-size:8px;}
+
+/* ── GRID ── */
+.g{display:grid;gap:14px;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+.g5{grid-template-columns:repeat(5,1fr);}
+@media(max-width:1200px){.g5{grid-template-columns:repeat(3,1fr);}.g4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.g5,.g4,.g3{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.g5,.g4,.g3,.g2{grid-template-columns:1fr;}}
+
+/* ── CARD ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:18px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border);}
+.card.done::before{background:var(--done);}
+.card.prog::before{background:var(--prog);}
+.card.block::before{background:var(--block);}
+.card.pend::before{background:var(--pend);}
+.card.accent::before{background:var(--accent);}
+.ct{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+
+/* ── STATUS BADGES ── */
+.sb{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;
+  font-size:8px;letter-spacing:1px;padding:2px 7px;border-radius:2px;font-weight:700;}
+.sb.done{background:rgba(0,255,159,.1);color:var(--done);border:1px solid rgba(0,255,159,.25);}
+.sb.prog{background:rgba(255,140,0,.1);color:var(--prog);border:1px solid rgba(255,140,0,.25);}
+.sb.block{background:rgba(255,34,68,.1);color:var(--block);border:1px solid rgba(255,34,68,.25);}
+.sb.pend{background:rgba(74,80,112,.2);color:var(--pend);border:1px solid rgba(74,80,112,.4);}
+.sb.target{background:rgba(255,225,77,.1);color:var(--a3);border:1px solid rgba(255,225,77,.25);}
+.sb::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;}
+
+/* ── PROGRESS BAR ── */
+.pbar{height:4px;background:var(--bg3);border-radius:2px;margin:8px 0;}
+.pfill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
+
+/* ── MONO ── */
+.mono{font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.9;}
+.ac{color:var(--accent)}.ve{color:var(--done)}.go{color:var(--a3)}.pi{color:var(--a2)}.mu{color:var(--muted)}.kl{color:var(--block)}.pr{color:var(--prog)}
+
+/* ── PIPELINE FLOW ── */
+.flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding:4px 0;}
+.fnode{flex-shrink:0;min-width:100px;max-width:140px;padding:10px 12px;
+  background:var(--bg3);border:1px solid var(--border2);border-radius:3px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;}
+.fnode.dn{border-color:rgba(0,255,159,.4);background:rgba(0,255,159,.05);}
+.fnode.pg{border-color:rgba(255,140,0,.4);background:rgba(255,140,0,.05);}
+.fnode.bl{border-color:rgba(255,34,68,.4);background:rgba(255,34,68,.05);}
+.fnode.pe{border-color:rgba(74,80,112,.4);}
+.fnode.hl{border-color:rgba(0,229,255,.4);background:rgba(0,229,255,.05);}
+.fnode-title{font-weight:700;font-size:10px;letter-spacing:.5px;}
+.fnode-sub{font-size:8px;color:var(--muted);letter-spacing:.5px;}
+.farr{display:flex;align-items:center;padding:0 6px;color:var(--border2);font-size:18px;flex-shrink:0;}
+.farr.dn{color:var(--done);}
+.farr.bl{color:var(--block);}
+
+/* ── KANBAN ── */
+.kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;overflow-x:auto;}
+.kcol{min-width:150px;}
+.kcol-head{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;padding:8px 10px;border-radius:2px 2px 0 0;margin-bottom:8px;}
+.kcol-head.done{background:rgba(0,255,159,.12);color:var(--done);}
+.kcol-head.prog{background:rgba(255,140,0,.12);color:var(--prog);}
+.kcol-head.block{background:rgba(255,34,68,.12);color:var(--block);}
+.kcol-head.pend{background:rgba(74,80,112,.15);color:var(--pend);}
+.kcol-head.target{background:rgba(255,225,77,.12);color:var(--a3);}
+.kcard{background:var(--bg3);border:1px solid var(--border);border-radius:2px;padding:8px 10px;margin:4px 0;font-size:11px;}
+.kcard-id{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-bottom:3px;}
+.kcard-name{font-size:10px;font-weight:500;line-height:1.3;}
+.kcard-note{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-top:4px;}
+
+/* ── SECTION STATUS TABLE ── */
+.stbl{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:10px;}
+.stbl th{color:var(--muted);font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:7px 12px;border-bottom:1px solid var(--border);text-align:left;}
+.stbl td{padding:7px 12px;border-bottom:1px solid rgba(22,25,37,.8);vertical-align:middle;}
+.stbl tr:hover td{background:rgba(255,255,255,.01);}
+.pct-bar{display:flex;align-items:center;gap:8px;}
+.pct-track{flex:1;height:8px;background:var(--bg3);border-radius:1px;overflow:hidden;}
+.pct-fill{height:100%;border-radius:1px;}
+.pct-num{width:32px;text-align:right;font-size:9px;color:var(--muted);}
+
+/* ── DEP GRAPH ── */
+.depgraph{display:grid;grid-template-columns:1fr 60px 1fr 60px 1fr 60px 1fr;align-items:start;gap:0;margin:8px 0;}
+.deplayer{display:flex;flex-direction:column;gap:8px;}
+.depnode{background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:8px 10px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;text-align:center;}
+.depnode.dn{border-color:rgba(0,255,159,.3);color:var(--done);}
+.depnode.pg{border-color:rgba(255,140,0,.3);color:var(--prog);}
+.depnode.bl{border-color:rgba(255,34,68,.3);color:var(--block);}
+.depnode.pe{border-color:rgba(74,80,112,.3);color:var(--pend);}
+.deparr{display:flex;align-items:center;justify-content:center;color:var(--border2);font-size:20px;}
+.deparr.ok{color:var(--done);}
+.deparr.bl{color:var(--block);}
+
+/* ── RELEASE SWIM LANE ── */
+.swimlane{display:grid;grid-template-columns:120px 1fr;gap:0;border:1px solid var(--border);border-radius:3px;overflow:hidden;margin:8px 0;}
+.swim-label{background:var(--bg3);border-right:1px solid var(--border);padding:12px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);
+  display:flex;align-items:center;text-transform:uppercase;}
+.swim-content{padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.swim-step{font-family:'JetBrains Mono',monospace;font-size:9px;padding:5px 10px;
+  border:1px solid var(--border2);border-radius:2px;white-space:nowrap;}
+.swim-step.dn{border-color:rgba(0,255,159,.35);color:var(--done);background:rgba(0,255,159,.06);}
+.swim-step.pg{border-color:rgba(255,140,0,.35);color:var(--prog);background:rgba(255,140,0,.06);}
+.swim-step.pe{border-color:rgba(74,80,112,.35);color:var(--pend);}
+.swim-step.bl{border-color:rgba(255,34,68,.35);color:var(--block);background:rgba(255,34,68,.06);}
+.swim-arrow{color:var(--border2);font-size:14px;flex-shrink:0;}
+
+/* ── PRESSURE METER ── */
+.pressure{height:20px;background:var(--bg3);border-radius:2px;overflow:hidden;position:relative;margin:6px 0;}
+.pressure-fill{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:8px;
+  font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;white-space:nowrap;letter-spacing:.5px;}
+.pressure-label{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);}
+
+/* ── EO TABLE ── */
+.eo-row{display:grid;grid-template-columns:180px 80px 100px 100px 1fr;gap:0;
+  border-bottom:1px solid var(--border);padding:6px 0;align-items:center;}
+.eo-row.head{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--border2);}
+.eo-name{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);}
+.eo-stage{font-family:'JetBrains Mono',monospace;font-size:9px;}
+.eo-sha{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);}
+
+/* ── COMMUNITY LANE ── */
+.com-item{display:flex;gap:12px;padding:10px;border:1px solid var(--border);border-radius:3px;margin:6px 0;background:var(--bg2);}
+.com-level{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--dim);width:80px;flex-shrink:0;display:flex;align-items:center;}
+.com-content{flex:1;}
+.com-title{font-weight:500;margin-bottom:4px;font-size:12px;}
+.com-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.chip{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 7px;border:1px solid var(--border2);border-radius:2px;color:var(--muted);}
+.chip.a{border-color:rgba(0,229,255,.3);color:var(--accent);}
+.chip.v{border-color:rgba(0,255,159,.3);color:var(--done);}
+.chip.g{border-color:rgba(255,225,77,.3);color:var(--a3);}
+.chip.p{border-color:rgba(255,60,172,.3);color:var(--a2);}
+
+/* ── TIMELINE ── */
+.tl-row{display:flex;gap:0;align-items:stretch;margin:6px 0;}
+.tl-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);width:180px;flex-shrink:0;display:flex;align-items:center;padding-right:12px;}
+.tl-track{flex:1;background:var(--bg3);border-radius:2px;height:28px;position:relative;overflow:hidden;}
+.tl-fill{position:absolute;top:0;bottom:0;border-radius:2px;display:flex;align-items:center;padding-left:8px;
+  font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;white-space:nowrap;}
+.tl-marker{position:absolute;top:0;bottom:0;width:2px;background:var(--a2);opacity:.6;}
+
+/* ── PRINCIPLE ── */
+.principle{background:linear-gradient(135deg,rgba(0,229,255,.04),rgba(255,60,172,.04));
+  border:1px solid var(--border);border-top:2px solid var(--accent);padding:24px 28px;
+  margin:44px 0 0;border-radius:0 0 4px 4px;font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--text);letter-spacing:.5px;text-align:center;line-height:2.4;}
+.principle em{color:var(--accent);font-style:normal;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nl">A8 · WORKFLOW</div>
+  <button class="nb" onclick="s('s-overview')">Overview</button>
+  <button class="nb" onclick="s('s-lifecycle')">Claim Lifecycle</button>
+  <button class="nb" onclick="s('s-kanban')">Kanban</button>
+  <button class="nb" onclick="s('s-paper')">Paper Sections</button>
+  <button class="nb" onclick="s('s-dep')">Dep Graph</button>
+  <button class="nb" onclick="s('s-eo')">Evidence Objects</button>
+  <button class="nb" onclick="s('s-pressure')">Pressure Scores</button>
+  <button class="nb" onclick="s('s-release')">Release Pipeline</button>
+  <button class="nb" onclick="s('s-community')">Community Edition</button>
+  <button class="nb" onclick="s('s-papera')">⚡ PAPER A NOW</button>
+  <button class="nb" onclick="s('s-calculus')">Phase IV Calculus</button>
+  <button class="nb" onclick="s('s-timeline')">Timeline</button>
+</nav>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="logo">A8 · PUBLICATION WORKFLOW</div>
+    <div class="logo-meta">AQARION · Louisville Node #1 · Kaprekar Spectral Geometry · math.CO + math.SP</div>
+    <div class="logo-meta" style="margin-top:3px;">
+      <a href="https://github.com/JASKSG9/AQARION-ARITHMETIC-FDS-FINITE-DYNAMICAL-SYSTEMS-" target="_blank"
+         style="color:var(--a2);text-decoration:none;">github.com/JASKSG9/AQARION-ARITHMETIC-FDS</a>
+      &nbsp;·&nbsp; OSF: osf.io/pag8j &nbsp;·&nbsp; HF: Aqarion13
+    </div>
+  </div>
+  <div class="hstats">
+    <div class="hstat"><div class="hstat-n" style="color:var(--done);">6</div><div class="hstat-l">Core Theorems Proved</div></div>
+    <div class="hstat"><div class="hstat-n" style="color:var(--prog);">2</div><div class="hstat-l">Theorem Targets Open</div></div>
+    <div class="hstat"><div class="hstat-n" style="color:var(--block);">3</div><div class="hstat-l">Hard Blockers</div></div>
+    <div class="hstat"><div class="hstat-n" style="color:var(--a3);">14</div><div class="hstat-l">Claims Killed</div></div>
+    <div class="hstat"><div class="hstat-n" style="color:var(--accent);">~68%</div><div class="hstat-l">A8 Complete</div></div>
+  </div>
+</header>
+
+<!-- §1 OVERVIEW PIPELINE -->
+<section id="s-overview">
+  <div class="slbl">Master Pipeline · Idea → Published Paper <span>§1</span></div>
+
+  <div class="card accent" style="margin-bottom:14px;">
+    <div class="ct">Full End-to-End Flow</div>
+    <div class="flow">
+      <div class="fnode dn"><div class="fnode-title" style="color:var(--done)">IDEAS</div><div class="fnode-sub">Research Journal</div><div class="fnode-sub">Daily Logs</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn"><div class="fnode-title" style="color:var(--done)">CLAIM REGISTRY</div><div class="fnode-sub">AQ-IDs assigned</div><div class="fnode-sub">Deps mapped</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn"><div class="fnode-title" style="color:var(--done)">IMPLEMENTATION</div><div class="fnode-sub">Python primary</div><div class="fnode-sub">Julia partial</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn"><div class="fnode-title" style="color:var(--done)">EXHAUSTIVE CENSUS</div><div class="fnode-sub">Exact arithmetic</div><div class="fnode-sub">All states</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode pg"><div class="fnode-title" style="color:var(--prog)">ADVERSARIAL TEST</div><div class="fnode-sub">Mutation testing</div><div class="fnode-sub">Module C/G</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">INDEP. IMPL.</div><div class="fnode-sub">Rust / C++ / Lean</div><div class="fnode-sub">Targets</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pg"><div class="fnode-title" style="color:var(--prog)">PROOF</div><div class="fnode-sub">6/6 core done</div><div class="fnode-sub">2 gaps remain</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">LEAN FORMAL</div><div class="fnode-sub">V4/V5 target</div><div class="fnode-sub">Post-submission</div></div>
+      <div class="farr">→</div>
+      <div class="fnode hl"><div class="fnode-title" style="color:var(--accent)">arXiv</div><div class="fnode-sub">math.CO</div><div class="fnode-sub">math.SP</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">SIAM</div><div class="fnode-sub">Journal</div><div class="fnode-sub">Submission</div></div>
+    </div>
+  </div>
+
+  <div class="g g3">
+    <div class="card done">
+      <div class="ct">What is done</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="ve">✓</span> All 6 core theorems proved (T1–T6)<br>
+        <span class="ve">✓</span> d=3 Universal Collapse (T10) proved<br>
+        <span class="ve">✓</span> Exhaustive census d=2–5, bases −6 to −16<br>
+        <span class="ve">✓</span> SPD-CCS engine (NumPy vectorized)<br>
+        <span class="ve">✓</span> CLAIMS.yaml + KILLED_CLAIMS.md<br>
+        <span class="ve">✓</span> ATLAS.md + NOTATION.md<br>
+        <span class="ve">✓</span> d3_verifier.py (exact arithmetic)<br>
+        <span class="ve">✓</span> 14 claims killed and documented<br>
+        <span class="ve">✓</span> Domain A/B labeling corrected<br>
+        <span class="ve">✓</span> Three-system disambiguation
+      </div>
+    </div>
+    <div class="card prog">
+      <div class="ct">What is in progress</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="pr">▶</span> Odd-B fixed point arithmetic [T10, K-14]<br>
+        <span class="pr">▶</span> Paper A8 prose draft (~60% sections)<br>
+        <span class="pr">▶</span> Reference DOI collection<br>
+        <span class="pr">▶</span> ι₃ universality formal proof (T11)<br>
+        <span class="pr">▶</span> OSF project structure setup<br>
+        <span class="pr">▶</span> RO-Crate metadata draft<br>
+        <span class="pr">▶</span> Adversarial mutation testing (Module G)<br>
+        <span class="pr">▶</span> Julia SPD-CCS port (partial)
+      </div>
+    </div>
+    <div class="card block">
+      <div class="ct">Hard blockers (arXiv gate)</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="kl">✗</span> Odd-B reconstruction complete → T10 fully proved<br>
+        <span class="kl">✗</span> b=−12,d=5 collapse mechanism (T05 anomaly)<br>
+        <span class="kl">✗</span> κ_c(d,B) not derivable → field theory stays conjecture<br>
+        <span style="color:var(--muted);font-size:9px;margin-top:6px;display:block;">
+          These three do not block arXiv submission of main results.<br>
+          They block: (a) field theory appendix promotion,<br>
+          (b) complete d=3 theorem statement, (c) phase diagram completeness.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §2 CLAIM LIFECYCLE -->
+<section id="s-lifecycle">
+  <div class="slbl">Claim Lifecycle · Pressure-Before-Promotion <span>§2</span></div>
+
+  <div class="card accent" style="margin-bottom:14px;">
+    <div class="ct">Lifecycle Stages — Both Axes Required</div>
+    <div class="flow" style="gap:2px;">
+      <div class="fnode dn" style="min-width:90px;"><div class="fnode-title" style="color:var(--done);font-size:9px;">DEFINE</div><div class="fnode-sub">AQ-ID assigned</div><div class="fnode-sub">Deps mapped</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn" style="min-width:90px;"><div class="fnode-title" style="color:var(--done);font-size:9px;">IMPLEMENT</div><div class="fnode-sub">Code written</div><div class="fnode-sub">SHA256 pinned</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn" style="min-width:90px;"><div class="fnode-title" style="color:var(--done);font-size:9px;">EXHAUSTIVE</div><div class="fnode-sub">All states checked</div><div class="fnode-sub">Exact arith.</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn" style="min-width:90px;"><div class="fnode-title" style="color:var(--done);font-size:9px;">RANDOM FUZZ</div><div class="fnode-sub">10⁷ random tests</div><div class="fnode-sub">Oracle compared</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pg" style="min-width:90px;"><div class="fnode-title" style="color:var(--prog);font-size:9px;">MUTATION TEST</div><div class="fnode-sub">20+ operators</div><div class="fnode-sub">Module G</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe" style="min-width:90px;"><div class="fnode-title" style="font-size:9px;">INDEP. IMPL.</div><div class="fnode-sub">≥2 codebases</div><div class="fnode-sub">Rust / Lean</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe" style="min-width:90px;"><div class="fnode-title" style="font-size:9px;">FORMAL PROOF</div><div class="fnode-sub">Complete math</div><div class="fnode-sub">All gaps closed</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe" style="min-width:90px;"><div class="fnode-title" style="font-size:9px;">LEAN / SMT</div><div class="fnode-sub">Machine verified</div><div class="fnode-sub">V4/V5 achieved</div></div>
+      <div class="farr dn">→</div>
+      <div class="fnode dn" style="min-width:90px;"><div class="fnode-title" style="color:var(--done);font-size:9px;">PUBLISH</div><div class="fnode-sub">arXiv → SIAM</div><div class="fnode-sub">DOI assigned</div></div>
+    </div>
+  </div>
+
+  <div class="g g2">
+    <div class="card">
+      <div class="ct">Two Axes — Independent Assessment</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+        <div>
+          <div class="mono" style="font-size:9px;color:var(--accent);margin-bottom:6px;letter-spacing:1px;">AXIS 1 — MATH STATUS</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;"></span>Definition
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--prog);flex-shrink:0;"></span>Lemma
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></span>Theorem
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--done);flex-shrink:0;"></span>Published Theorem
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="mono" style="font-size:9px;color:var(--a2);margin-bottom:6px;letter-spacing:1px;">AXIS 2 — VERIF STATUS</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;"></span>Executable
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--prog);flex-shrink:0;"></span>Reproducible
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--a3);flex-shrink:0;"></span>Adversarially Tested
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></span>Independently Implemented
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--done);flex-shrink:0;"></span>Formally Verified (Lean)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mono" style="font-size:9px;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
+        Example formal description:<br>
+        <span style="color:var(--a3);">"Theorem (proved), executable, reproducible,<br>adversarially tested, formalization pending."</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">AMF Verification Modules Active on A8</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">A</span> System Generator<br><span style="color:var(--muted);font-size:8px;">13 families, Kaprekar primary</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">B</span> Property Spec<br><span style="color:var(--muted);font-size:8px;">Executable predicates</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--prog);">C</span> Adversary Gen<br><span style="color:var(--muted);font-size:8px;">20+ mutation ops</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">D</span> CE Reduction<br><span style="color:var(--muted);font-size:8px;">Delta-debug to minimal</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">E</span> Collision Engine<br><span style="color:var(--muted);font-size:8px;">Hash → Atlas</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--prog);">F</span> Oracle Layer<br><span style="color:var(--muted);font-size:8px;">networkx/sage/Lean</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--prog);">G</span> Mutation Testing<br><span style="color:var(--muted);font-size:8px;">Detect weak verification</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">H</span> Literature Adv.<br><span style="color:var(--muted);font-size:8px;">Novel confirmed (negabase)</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">I</span> Pressure Score<br><span style="color:var(--muted);font-size:8px;">See §6</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">K</span> Research Memory<br><span style="color:var(--muted);font-size:8px;">14 kills preserved</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--border2);border-radius:2px;">
+          <span style="color:var(--done);">L</span> Research Graph<br><span style="color:var(--muted);font-size:8px;">CLAIMS.yaml dep DAG</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;padding:6px 8px;border:1px solid var(--muted);border-radius:2px;opacity:.5;">
+          <span style="color:var(--muted);">J</span> Observatory<br><span style="color:var(--muted);font-size:8px;">Not yet active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §3 KANBAN -->
+<section id="s-kanban">
+  <div class="slbl">Claim Kanban · Current State of All A8 Claims <span>§3</span></div>
+
+  <div style="overflow-x:auto;">
+  <div class="kanban">
+    <!-- DONE -->
+    <div class="kcol">
+      <div class="kcol-head done">✓ VERIFIED</div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-001</div>
+        <div class="kcard-name">|Image(K₁₀,₄)| = 54 = T₁₀−1</div>
+        <div class="kcard-note">Executable · Reproducible</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-002</div>
+        <div class="kcard-name">SUSY μₖ+μ₆₋ₖ=2 exact</div>
+        <div class="kcard-note">Executable · Reproducible</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-003</div>
+        <div class="kcard-name">Fiedler μ₁(A) ≈ 0.16144</div>
+        <div class="kcard-note">Cut τ=4→5 corrected</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-004</div>
+        <div class="kcard-name">Fiedler μ₁(B) ≈ 0.16243</div>
+        <div class="kcard-note">Executable · Reproducible</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-005</div>
+        <div class="kcard-name">F_H ≈ 4.222 gauge invariant</div>
+        <div class="kcard-note">Executable · Reproducible</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-006</div>
+        <div class="kcard-name">Index thm dim(ker L)=1</div>
+        <div class="kcard-note">Zero mode verified</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-007</div>
+        <div class="kcard-name">DAG → 6174 convergence</div>
+        <div class="kcard-note">Exhaustive census</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-008</div>
+        <div class="kcard-name">defect_nonmarkov = 0</div>
+        <div class="kcard-note">Universal all bases</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-009</div>
+        <div class="kcard-name">Cycle eigenvals = roots of unity</div>
+        <div class="kcard-note">Subtraction step eliminated</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-012</div>
+        <div class="kcard-name">Cheeger h_deg/μ₁≈1.0465</div>
+        <div class="kcard-note">count-based KILLED</div>
+      </div>
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="kcol">
+      <div class="kcol-head prog">▶ IN PROGRESS</div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-010 · PARTIAL</div>
+        <div class="kcard-name">d=3 Universal Collapse</div>
+        <div class="kcard-note">Even-B done. Odd-B arith incomplete [K-14]</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AQ-THM-011 · HEURISTIC</div>
+        <div class="kcard-name">ι₃ universality |T(Ω)|=b</div>
+        <div class="kcard-note">Computational evidence. No proof yet.</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">PAPER DRAFT</div>
+        <div class="kcard-name">A8 Prose ~60% sections written</div>
+        <div class="kcard-note">See §4 for section breakdown</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">OSF SETUP</div>
+        <div class="kcard-name">Project components being structured</div>
+        <div class="kcard-note">osf.io/pag8j — datasets, protocols</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">AML MODULE G</div>
+        <div class="kcard-name">Mutation testing pipeline</div>
+        <div class="kcard-note">Framework designed, not fully active</div>
+      </div>
+    </div>
+
+    <!-- BLOCKED -->
+    <div class="kcol">
+      <div class="kcol-head block">✗ BLOCKED</div>
+      <div class="kcard">
+        <div class="kcard-id">TARGET-01 · BLOCKER</div>
+        <div class="kcard-name">Odd-B reconstruction arithmetic</div>
+        <div class="kcard-note">Blocks T10 full promotion</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">TARGET-02 · BLOCKER</div>
+        <div class="kcard-name">κ_c(d,B) derivation</div>
+        <div class="kcard-note">V(τ) unspecified → field theory stays [H]</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">TARGET-05 · BLOCKER</div>
+        <div class="kcard-name">b=−12,d=5 collapse mechanism</div>
+        <div class="kcard-note">H=0.095 anomalous — exact census needed</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">FIELD THEORY APPENDIX</div>
+        <div class="kcard-name">Cannot appear as main body claim</div>
+        <div class="kcard-note">Depends on TARGET-02 resolution</div>
+      </div>
+    </div>
+
+    <!-- PENDING -->
+    <div class="kcol">
+      <div class="kcol-head pend">○ PENDING</div>
+      <div class="kcard">
+        <div class="kcard-id">TARGET-03 · PENDING</div>
+        <div class="kcard-name">Transfer operator ℒ computation</div>
+        <div class="kcard-note">Matrix form from state space</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">TARGET-06 · PENDING</div>
+        <div class="kcard-name">Lean formalization</div>
+        <div class="kcard-note">T1, T2, T10 → V4/V5</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">RUST IMPL.</div>
+        <div class="kcard-name">Independent implementation</div>
+        <div class="kcard-note">High credibility ROI</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">RO-CRATE</div>
+        <div class="kcard-name">ro-crate-metadata.json</div>
+        <div class="kcard-note">Machine-readable archive</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">ZENODO DOI</div>
+        <div class="kcard-name">Dataset DOI assignment</div>
+        <div class="kcard-note">After OSF structure complete</div>
+      </div>
+      <div class="kcard">
+        <div class="kcard-id">SIAM SUBMISSION</div>
+        <div class="kcard-name">Journal-ready manuscript</div>
+        <div class="kcard-note">After arXiv v1 live</div>
+      </div>
+    </div>
+
+    <!-- KILLED -->
+    <div class="kcol">
+      <div class="kcol-head" style="background:rgba(255,34,68,.1);color:var(--block);">× KILLED (14)</div>
+      <div class="kcard" style="opacity:.7;">
+        <div class="kcard-id">K-01</div><div class="kcard-name" style="text-decoration:line-through;color:var(--block);">d=5 critical dimension</div>
+      </div>
+      <div class="kcard" style="opacity:.7;">
+        <div class="kcard-id">K-02</div><div class="kcard-name" style="text-decoration:line-through;color:var(--block);">3:2:1 ratio in Domain A</div>
+      </div>
+      <div class="kcard" style="opacity:.7;">
+        <div class="kcard-id">K-03</div><div class="kcard-name" style="text-decoration:line-through;color:var(--block);">A/B labeling pre-M20</div>
+      </div>
+      <div class="kcard" style="opacity:.7;">
+        <div class="kcard-id">K-04–K-14</div><div class="kcard-name" style="text-decoration:line-through;color:var(--block);">11 additional kills</div><div class="kcard-note">See KILLED_CLAIMS.md</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- §4 PAPER A8 SECTIONS -->
+<section id="s-paper">
+  <div class="slbl">Paper A8 Section-by-Section Status · SIAM Format <span>§4</span></div>
+
+  <div class="g g2">
+    <div class="card">
+      <div class="ct">Section Completion</div>
+      <table class="stbl" style="margin-top:6px;">
+        <thead><tr><th>Section</th><th>Status</th><th>Completion</th><th>Blocker</th></tr></thead>
+        <tbody id="secBody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="ct">SIAM Paper Structure</div>
+      <div class="flow" style="flex-direction:column;gap:6px;overflow:visible;">
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">Abstract (preliminary, needs κ_c decision)</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§1 Introduction · motivation, overview, contribution list</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§2 Background · FDS, Kaprekar, spectral theory</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§3 Definitions · 3 systems disentangled, domains A/B</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§4 Main Results · T1–T6 statements</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb prog">70%</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§5 Proofs · 4/6 complete, T10 odd-B gap</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§6 Benchmarks · SPD-CCS, phase diagram, census</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb prog">50%</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§7 Discussion · implications, KSD interpretation</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb pend">DRAFT</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§8 Limitations · known gaps, K register citation</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb pend">DRAFT</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§9 Future Work · 6 targets, Lean, negabase</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb prog">60%</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">§10 References · DOI collection in progress</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb block">BLOCKED</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">App A Field Theory · κ_c required for promotion</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">App B SPD-CCS Code · full script</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="sb done">DONE</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9px;">App C Kill Register · 14 entries</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §5 DEPENDENCY GRAPH -->
+<section id="s-dep">
+  <div class="slbl">Blocking Dependency Graph · What Must Land Before What <span>§5</span></div>
+
+  <div class="card" style="overflow-x:auto;">
+    <div class="ct">arXiv v1 Dependency Tree</div>
+    <div style="min-width:900px;padding:16px 0;">
+
+      <!-- Row 1: Leaves (prerequisites) -->
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="depnode dn" style="min-width:130px;">T1 |Image|=54<br><span style="font-size:8px;color:var(--muted)">AQ-THM-001 · DONE</span></div>
+        <div class="depnode dn" style="min-width:130px;">T2 SUSY pairing<br><span style="font-size:8px;color:var(--muted)">AQ-THM-002 · DONE</span></div>
+        <div class="depnode dn" style="min-width:130px;">T3 Fiedler μ₁(A)<br><span style="font-size:8px;color:var(--muted)">AQ-THM-003 · DONE</span></div>
+        <div class="depnode dn" style="min-width:130px;">T4 Index thm<br><span style="font-size:8px;color:var(--muted)">AQ-THM-006 · DONE</span></div>
+        <div class="depnode dn" style="min-width:130px;">T5 DAG 6174<br><span style="font-size:8px;color:var(--muted)">AQ-THM-007 · DONE</span></div>
+        <div class="depnode dn" style="min-width:130px;">T6 defect=0<br><span style="font-size:8px;color:var(--muted)">AQ-THM-008 · DONE</span></div>
+      </div>
+
+      <div style="text-align:center;font-size:20px;color:var(--done);margin:4px 0;">↓ all DONE ↓</div>
+
+      <!-- Row 2: T10 with gap -->
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="depnode pg" style="min-width:200px;">T10 d=3 Collapse<br>
+          <span style="font-size:8px;color:var(--prog)">Proved (even B) · Odd-B gap [K-14]</span><br>
+          <span style="font-size:8px;color:var(--block)">TARGET-01 required to close</span>
+        </div>
+        <div class="depnode dn" style="min-width:200px;">Phase Diagram Census<br>
+          <span style="font-size:8px;color:var(--done)">Exhaustive d=2–5, b=−6 to −16</span><br>
+          <span style="font-size:8px;color:var(--block)">b=−12,d=5 anomaly open [TARGET-05]</span>
+        </div>
+        <div class="depnode dn" style="min-width:200px;">CLAIMS.yaml + ATLAS.md<br>
+          <span style="font-size:8px;color:var(--done)">Canonical register complete</span>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:20px;color:var(--prog);margin:4px 0;">↓</div>
+
+      <!-- Row 3: Paper sections -->
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="depnode pg" style="min-width:200px;">§5 Proofs Complete<br>
+          <span style="font-size:8px;color:var(--block)">Needs TARGET-01 (odd-B)</span>
+        </div>
+        <div class="depnode pe" style="min-width:200px;">App A Field Theory<br>
+          <span style="font-size:8px;color:var(--pend)">Needs TARGET-02 (κ_c)</span>
+        </div>
+        <div class="depnode pg" style="min-width:200px;">§10 References + DOIs<br>
+          <span style="font-size:8px;color:var(--prog)">In progress ~60%</span>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:20px;color:var(--prog);margin:4px 0;">↓</div>
+
+      <!-- Row 4: arXiv -->
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;">
+        <div class="depnode hl" style="min-width:300px;border-color:var(--accent);padding:14px;">
+          <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:1px;">arXiv SUBMISSION v1</div>
+          <div style="font-size:8px;color:var(--muted);margin-top:4px;">math.CO + math.SP · Louisville Node #1</div>
+          <div style="font-size:8px;color:var(--block);margin-top:4px;">GATES: TARGET-01 closed, References 100%, Abstract finalized</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:20px;color:var(--muted);margin:4px 0;">↓</div>
+
+      <!-- Row 5: Post-arXiv -->
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <div class="depnode pe" style="min-width:130px;">OSF Full Update<br><span style="font-size:8px;color:var(--muted)">Datasets + EOs</span></div>
+        <div class="depnode pe" style="min-width:130px;">RO-Crate Export<br><span style="font-size:8px;color:var(--muted)">Machine archive</span></div>
+        <div class="depnode pe" style="min-width:130px;">Zenodo DOI<br><span style="font-size:8px;color:var(--muted)">Dataset mint</span></div>
+        <div class="depnode pe" style="min-width:130px;">Lean Formalization<br><span style="font-size:8px;color:var(--muted)">T1,T2,T10</span></div>
+        <div class="depnode pe" style="min-width:130px;">SIAM Submission<br><span style="font-size:8px;color:var(--muted)">After arXiv v1</span></div>
+        <div class="depnode pe" style="min-width:130px;">Community Edition<br><span style="font-size:8px;color:var(--muted)">Auto-generated</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §6 EVIDENCE OBJECTS -->
+<section id="s-eo">
+  <div class="slbl">Evidence Objects · Validation Stage V0→V5 <span>§6</span></div>
+
+  <div class="card">
+    <div class="ct">Evidence Object Register</div>
+    <div class="eo-row head">
+      <div>ARTIFACT</div><div>V-STAGE</div><div>SHA256</div><div>STATUS</div><div>NOTES</div>
+    </div>
+    <div id="eoBody"></div>
+  </div>
+
+  <div class="g g2" style="margin-top:14px;">
+    <div class="card">
+      <div class="ct">V0–V5 Stage Definitions</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+        <div style="display:flex;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;">
+          <span style="background:rgba(0,255,159,.1);color:var(--done);padding:2px 6px;border-radius:2px;width:20px;text-align:center;flex-shrink:0;">V0</span>
+          <span style="color:var(--muted);">Structure — file exists, parses correctly, all required fields present</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;">
+          <span style="background:rgba(0,255,159,.1);color:var(--done);padding:2px 6px;border-radius:2px;width:20px;text-align:center;flex-shrink:0;">V1</span>
+          <span style="color:var(--muted);">Hash — SHA256 recorded, output immutable, re-hash matches</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;">
+          <span style="background:rgba(0,255,159,.1);color:var(--done);padding:2px 6px;border-radius:2px;width:20px;text-align:center;flex-shrink:0;">V2</span>
+          <span style="color:var(--muted);">Replay — script reruns from seed, output matches SHA256</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;">
+          <span style="background:rgba(0,255,159,.1);color:var(--done);padding:2px 6px;border-radius:2px;width:20px;text-align:center;flex-shrink:0;">V3</span>
+          <span style="color:var(--muted);">Provenance — seed, software version, hardware, timestamp documented</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;">
+          <span style="background:rgba(255,225,77,.1);color:var(--a3);padding:2px 6px;border-radius:2px;width:20px;text-align:center;flex-shrink:0;">V4</span>
+          <span style="color:var(--muted);">Math Predicate — formal predicate verified (Lean/SMT) on output</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:9px;">
+          <span style="background:rgba(255,225,77,.1);color:var(--a3);padding:2px 6px;border-radius:2px;width:20px;text-align:center;flex-shrink:0;">V5</span>
+          <span style="color:var(--muted);">Claim Promotion — claim advances in OVCR, CLAIMS.yaml updated</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">Evidence Object Metadata Requirements</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="ac">Required fields per EO:</span><br>
+        <span class="mu">· SHA256 of output file</span><br>
+        <span class="mu">· Timestamp (ISO 8601)</span><br>
+        <span class="mu">· Software version (Python/Julia/etc)</span><br>
+        <span class="mu">· Hardware (CPU/GPU, RAM)</span><br>
+        <span class="mu">· Random seed (if stochastic)</span><br>
+        <span class="mu">· License (CC-BY 4.0 default)</span><br>
+        <span class="mu">· Author: AQARION/Louisville-Node-1</span><br>
+        <span class="mu">· Dependencies (pip freeze / julia manifest)</span><br>
+        <span class="ac">Optional (RO-Crate):</span><br>
+        <span class="mu">· DOI (after Zenodo minting)</span><br>
+        <span class="mu">· Related claim IDs from CLAIMS.yaml</span><br>
+        <span class="mu">· Reproduction script path</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §7 PRESSURE SCORES -->
+<section id="s-pressure">
+  <div class="slbl">Proof Pressure Scores · AMF Module I <span>§7</span></div>
+
+  <div class="g g2">
+    <div class="card">
+      <div class="ct">Per-Claim Pressure Score</div>
+      <div id="pressureBody" style="margin-top:8px;"></div>
+    </div>
+    <div class="card">
+      <div class="ct">Pressure Accumulation Model</div>
+      <div class="mono" style="font-size:9px;line-height:2;margin-top:6px;">
+        <span class="ac">Pressure increments:</span><br>
+        <span class="mu">+15 pts · Random tests (10⁶+)</span><br>
+        <span class="mu">+25 pts · Exhaustive census (all states)</span><br>
+        <span class="mu">+15 pts · Each independent implementation</span><br>
+        <span class="mu">+20 pts · SMT / Lean machine-check passed</span><br>
+        <span class="mu">+10 pts · Adversarial mutation testing passed</span><br>
+        <span class="mu">+10 pts · Oracle comparison (nauty/WL/sage)</span><br>
+        <span class="mu">+5 pts  · Literature novelty confirmed</span><br>
+        <span class="mu">−50 pts · Any unresolved counterexample</span><br><br>
+        <span class="ve">Threshold for arXiv: 60 pts</span><br>
+        <span class="go">Threshold for SIAM: 80 pts</span><br>
+        <span class="ac">Threshold for Lean cert: 100 pts</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §8 RELEASE PIPELINE -->
+<section id="s-release">
+  <div class="slbl">Release Pipeline · GitHub → World <span>§8</span></div>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="ct">Trigger: Every significant evidence update</div>
+    <div class="flow" style="margin-top:8px;">
+      <div class="fnode pg"><div class="fnode-title" style="color:var(--prog);">RESEARCH</div><div class="fnode-sub">New EO or proof</div></div>
+      <div class="farr">→</div>
+      <div class="fnode dn"><div class="fnode-title" style="color:var(--done);">EO PACKAGE</div><div class="fnode-sub">SHA256+timestamp</div><div class="fnode-sub">+metadata</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pg"><div class="fnode-title" style="color:var(--prog);">V0→V3</div><div class="fnode-sub">Structure, hash</div><div class="fnode-sub">replay, provenance</div></div>
+      <div class="farr">→</div>
+      <div class="fnode dn"><div class="fnode-title" style="color:var(--done);">GITHUB RELEASE</div><div class="fnode-sub">Tagged semver</div><div class="fnode-sub">CI passes</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pg"><div class="fnode-title" style="color:var(--prog);">OSF UPDATE</div><div class="fnode-sub">Datasets</div><div class="fnode-sub">Verification rpts</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">RO-CRATE</div><div class="fnode-sub">ro-crate-metadata</div><div class="fnode-sub">.json export</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">ZENODO DOI</div><div class="fnode-sub">Optional per release</div><div class="fnode-sub">Citable dataset</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:8px;">
+    <div class="swimlane">
+      <div class="swim-label">GitHub</div>
+      <div class="swim-content">
+        <div class="swim-step dn">src/</div><div class="swim-arrow">·</div>
+        <div class="swim-step dn">verification/</div><div class="swim-arrow">·</div>
+        <div class="swim-step dn">benchmarks/</div><div class="swim-arrow">·</div>
+        <div class="swim-step dn">papers/</div><div class="swim-arrow">·</div>
+        <div class="swim-step pg">lean/ (target)</div><div class="swim-arrow">·</div>
+        <div class="swim-step pg">CI Actions</div>
+      </div>
+    </div>
+    <div class="swimlane">
+      <div class="swim-label">OSF</div>
+      <div class="swim-content">
+        <div class="swim-step dn">Datasets</div><div class="swim-arrow">·</div>
+        <div class="swim-step pg">Preregistrations</div><div class="swim-arrow">·</div>
+        <div class="swim-step pg">Protocols</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">Preprints</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">Software snapshots</div>
+      </div>
+    </div>
+    <div class="swimlane">
+      <div class="swim-label">RO-Crate</div>
+      <div class="swim-content">
+        <div class="swim-step pe">ro-crate-metadata.json</div><div class="swim-arrow">→</div>
+        <div class="swim-step pe">authors + ORCID</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">software versions</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">datasets + EOs</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">provenance graph</div>
+      </div>
+    </div>
+    <div class="swimlane">
+      <div class="swim-label">arXiv</div>
+      <div class="swim-content">
+        <div class="swim-step bl">v1 PENDING [~68% ready]</div><div class="swim-arrow">→</div>
+        <div class="swim-step pe">math.CO primary</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">math.SP cross-list</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">DOI refs to OSF</div>
+      </div>
+    </div>
+    <div class="swimlane">
+      <div class="swim-label">SIAM</div>
+      <div class="swim-content">
+        <div class="swim-step pe">After arXiv v1</div><div class="swim-arrow">→</div>
+        <div class="swim-step pe">Numbered theorems</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">SIAM bibliography</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">Appendices A–C</div>
+      </div>
+    </div>
+    <div class="swimlane">
+      <div class="swim-label">Zenodo</div>
+      <div class="swim-content">
+        <div class="swim-step pe">DOI minting</div><div class="swim-arrow">→</div>
+        <div class="swim-step pe">SPD-CCS phase diagram data</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">d3_verifier outputs</div><div class="swim-arrow">·</div>
+        <div class="swim-step pe">Versioned snapshots</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §9 COMMUNITY EDITION -->
+<section id="s-community">
+  <div class="slbl">Community Edition · Auto-Generated from Canonical Source <span>§9</span></div>
+
+  <div class="com-item">
+    <div class="com-level" style="color:var(--accent);">BEGIN</div>
+    <div class="com-content">
+      <div class="com-title">Beginner — Visual Explanations &amp; Animations</div>
+      <div style="font-size:11px;color:var(--muted);">No prerequisites. Goal: intuition for what Kaprekar dynamics does and why it's interesting.</div>
+      <div class="com-chips">
+        <span class="chip p">What is 6174?</span>
+        <span class="chip p">Digit-sorting visualization</span>
+        <span class="chip p">Animated convergence</span>
+        <span class="chip p">Why does it always work? (informal)</span>
+        <span class="chip p">Phase diagram interactive</span>
+        <span class="chip p">Negabase intro</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-item">
+    <div class="com-level" style="color:var(--prog);">INTER</div>
+    <div class="com-content">
+      <div class="com-title">Intermediate — Tutorials &amp; Worked Examples</div>
+      <div style="font-size:11px;color:var(--muted);">Undergraduate math background. Goal: reproduce results, understand spectral methods.</div>
+      <div class="com-chips">
+        <span class="chip g">SPD-CCS walkthrough</span>
+        <span class="chip g">How to compute Fiedler vector</span>
+        <span class="chip g">What does H_norm measure?</span>
+        <span class="chip g">Domain A vs B explained</span>
+        <span class="chip g">d3_verifier.py tutorial</span>
+        <span class="chip g">Phase diagram explorer</span>
+        <span class="chip g">Benchmark reproduction guide</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-item">
+    <div class="com-level" style="color:var(--accent);">ADV</div>
+    <div class="com-content">
+      <div class="com-title">Advanced — Theorem Notes &amp; Operator Theory</div>
+      <div style="font-size:11px;color:var(--muted);">Graduate math. Goal: understand proofs, limitations, and open problems.</div>
+      <div class="com-chips">
+        <span class="chip a">Middle-digit cancellation proof</span>
+        <span class="chip a">Semiconjugacy derivation</span>
+        <span class="chip a">SUSY bipartite structure</span>
+        <span class="chip a">Transfer operator ℒ design</span>
+        <span class="chip a">Field theory bridge (annotated)</span>
+        <span class="chip a">Evidence maturity matrix guide</span>
+        <span class="chip a">Open problems bounty</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="com-item">
+    <div class="com-level" style="color:var(--done);">RES</div>
+    <div class="com-content">
+      <div class="com-title">Research — Formal Proofs, Datasets &amp; Lean</div>
+      <div style="font-size:11px;color:var(--muted);">Research-level. Goal: formal verification, novel extensions, independent reproduction.</div>
+      <div class="com-chips">
+        <span class="chip v">CLAIMS.yaml (canonical)</span>
+        <span class="chip v">KILLED_CLAIMS.md</span>
+        <span class="chip v">ATLAS.md notation</span>
+        <span class="chip v">d3_verifier.py (exact)</span>
+        <span class="chip v">SPD-CCS phase diagram JSON</span>
+        <span class="chip v">Lean proof targets</span>
+        <span class="chip v">RO-Crate package</span>
+        <span class="chip v">Collision Atlas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="ct">Single-Source Publishing — One Definition, All Outputs</div>
+    <div class="mono" style="font-size:9px;color:var(--muted);line-height:1.9;margin-top:6px;">
+      Every theorem, definition, benchmark, dataset, figure, and verification artifact exists ONCE in canonical machine-readable form (CLAIMS.yaml + ATLAS.md + GitHub).<br>
+      All downstream outputs — community tutorials, OSF packages, RO-Crates, arXiv preprints, SIAM manuscripts — are generated automatically.<br>
+      <span style="color:var(--block);">NO manual copy-paste between versions. If it's not in the canonical source, it doesn't go in the paper.</span>
+    </div>
+  </div>
+</section>
+
+<!-- §10 TIMELINE -->
+<section id="s-timeline">
+  <div class="slbl">Estimated Timeline to arXiv v1 Submission <span>§10</span></div>
+
+  <div class="card">
+    <div class="ct">Completion Milestones — Current Relative to arXiv Gate</div>
+    <div style="margin-top:12px;" id="tlBody"></div>
+    <div style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);">
+      ← NOW &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; arXiv v1 TARGET →
+    </div>
+  </div>
+
+  <div class="g g3" style="margin-top:14px;">
+    <div class="card block">
+      <div class="ct">Sprint 1 — Critical Path (closes blockers)</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="kl">→</span> TARGET-01: odd-B F(δ) arithmetic<br>
+        <span class="kl">→</span> Odd-B reconstruction script<br>
+        <span class="kl">→</span> d3_verifier.py v2 (odd-B complete)<br>
+        <span class="kl">→</span> CLAIMS.yaml T10 status → VERIFIED<br>
+        <span class="go">Outcome: T10 fully proved, §5 proofs complete</span>
+      </div>
+    </div>
+    <div class="card prog">
+      <div class="ct">Sprint 2 — Paper Assembly</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="pr">→</span> Complete §7 Discussion prose<br>
+        <span class="pr">→</span> Write §8 Limitations<br>
+        <span class="pr">→</span> Write §9 Future Work<br>
+        <span class="pr">→</span> Complete reference DOI collection<br>
+        <span class="pr">→</span> Finalize abstract language (κ_c as conjecture)<br>
+        <span class="go">Outcome: Full draft ready for internal review</span>
+      </div>
+    </div>
+    <div class="card pend">
+      <div class="ct">Sprint 3 — Submission Prep</div>
+      <div class="mono" style="font-size:9px;line-height:2;">
+        <span class="mu">→</span> OSF project fully structured<br>
+        <span class="mu">→</span> Zenodo dataset DOIs minted<br>
+        <span class="mu">→</span> RO-Crate metadata.json generated<br>
+        <span class="mu">→</span> arXiv submission package compiled<br>
+        <span class="mu">→</span> GitHub release tagged<br>
+        <span class="go">Outcome: arXiv v1 submitted</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="ct">Post-arXiv Roadmap</div>
+    <div class="flow" style="flex-wrap:wrap;">
+      <div class="fnode pe"><div class="fnode-title">arXiv v1</div><div class="fnode-sub">math.CO+math.SP</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">Community Response</div><div class="fnode-sub">OSF + GitHub</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">TARGET-02</div><div class="fnode-sub">κ_c(d,B) derive</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">TARGET-03</div><div class="fnode-sub">ℒ operator</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">Lean V4/V5</div><div class="fnode-sub">T1, T2, T10</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">arXiv v2</div><div class="fnode-sub">Lean cert + ℒ</div></div>
+      <div class="farr">→</div>
+      <div class="fnode pe"><div class="fnode-title">SIAM Submit</div><div class="fnode-sub">Journal version</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAPER A URGENT -->
+<section id="s-papera" style="margin-top:44px;">
+  <div class="slbl">PAPER A — SUBMIT NOW · 5 Fixes Required <span>URGENT</span></div>
+
+  <div class="card" style="border-top:3px solid var(--block);margin-bottom:14px;">
+    <div class="ct">Title</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);margin:8px 0;">
+      "The Kaprekar Map Admits a Gap Quotient that is a Finite Graded In-Arborescence"
+    </div>
+    <div class="ct" style="margin-top:10px;">Abstract (locked)</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--a3);line-height:1.7;margin:8px 0;padding:10px;background:var(--bg3);border-radius:2px;border-left:3px solid var(--a3);">
+      The 4-digit base-10 Kaprekar map satisfies diff=999g₁+90g₂, which proves the gap projection
+      induces a well-defined 54-state quotient forming a graded in-arborescence of height 6, with a
+      20-state reachable image characterized equivalently as the image-core projection, the join of
+      all 56 congruence atoms, and the minimal future-dynamics quotient.
+    </div>
+    <div class="ct" style="margin-top:10px;">Submission Targets</div>
+    <div class="flow-chips" style="margin-top:6px;">
+      <span class="chip a">Primary: Theory of Computing Systems (Springer)</span>
+      <span class="chip g">Alt: Discrete &amp; Continuous Dynamical Systems (AIMS)</span>
+      <span class="chip">Backup: J. Combinatorics &amp; Number Theory</span>
+    </div>
+  </div>
+
+  <div class="g g2">
+    <div class="card">
+      <div class="ct">5 Required Fixes (~30 min each)</div>
+      <div style="margin-top:8px;">
+        <div style="display:flex;gap:10px;padding:8px;border:1px solid rgba(255,140,0,.3);border-radius:2px;margin:6px 0;background:rgba(255,140,0,.05);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--prog);font-weight:700;flex-shrink:0;">FIX 1</span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);">
+            Semigroup order: change 8 → 6 everywhere in manuscript
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px;border:1px solid rgba(255,34,68,.3);border-radius:2px;margin:6px 0;background:rgba(255,34,68,.05);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--block);font-weight:700;flex-shrink:0;">FIX 2</span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);">
+            ⚠️ μ₁ DISCREPANCY — Doc says change 0.1614→0.0016. Verified value in CLAIMS.yaml = 0.16144.<br>
+            <span style="color:var(--block);">FACTOR ~100 DIFFERENCE. MUST recompute before submission. DO NOT publish either value until resolved.</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px;border:1px solid rgba(255,140,0,.3);border-radius:2px;margin:6px 0;background:rgba(255,140,0,.05);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--prog);font-weight:700;flex-shrink:0;">FIX 3</span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);">
+            Add Nuez (2021) citation in Introduction and Section 2
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px;border:1px solid rgba(255,140,0,.3);border-radius:2px;margin:6px 0;background:rgba(255,140,0,.05);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--prog);font-weight:700;flex-shrink:0;">FIX 4</span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);">
+            "globally minimal quotient" → "minimal quotient refining the gap projection"
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px;border:1px solid rgba(255,140,0,.3);border-radius:2px;margin:6px 0;background:rgba(255,140,0,.05);">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--prog);font-weight:700;flex-shrink:0;">FIX 5</span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);">
+            Add scope rider to Nerode claim everywhere: "for the gap observable C(x)=gap(x)"
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">Paper A Theorem Stack (all proved)</div>
+      <table class="stbl" style="margin-top:6px;">
+        <thead><tr><th>ID</th><th>Statement</th><th>Status</th></tr></thead>
+        <tbody id="paperABody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="ct">New Finding — μ(K)=20 (include in Paper A or addendum)</div>
+    <div class="mono" style="font-size:9px;line-height:1.9;margin-top:6px;">
+      Future-sequence collision analysis: 18 collision groups. States sharing same future trajectory T(g),T²(g),... collapse to Q₂₀.<br>
+      <span class="ve">μ(K)=20 = minimal future-dynamics quotient class count. PROVED.</span><br>
+      Notable groups: {(1,1),(9,1),(9,9)} · {(2,0),(9,0)} · {(2,1),(8,1),(9,2),(9,8)} · 15 more.<br>
+      New finding: (99g₁+90g₂) mod 100 perfectly separates Q₂₀ from 34 unreachable states — zero overlap.
+    </div>
+  </div>
+</section>
+
+<!-- PHASE IV CALCULUS -->
+<section id="s-calculus" style="margin-top:44px;">
+  <div class="slbl">Phase IV · Research Rewrite Calculus · AML Formal Model <span>§RC</span></div>
+
+  <div class="card accent" style="margin-bottom:14px;">
+    <div class="ct">R = (V, E, Σ, Π) · Repository as Finite Dynamical System</div>
+    <div class="g g4" style="margin-top:8px;">
+      <div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);">V</span><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px;">Typed research objects: definitions, theorems, implementations, evidence, proofs, releases</div></div>
+      <div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--a2);">E</span><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px;">Typed dependency relations: depends_on, implements, tests, refutes, extends, formalizes</div></div>
+      <div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--done);">Σ</span><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px;">Immutable evidence store: SHA256-pinned, never edited in place</div></div>
+      <div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--a3);">Π</span><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px;">Governance policy: invariants, contracts, promotion rules</div></div>
+    </div>
+    <div class="mono" style="font-size:9px;color:var(--muted);margin-top:10px;">
+      Repository evolution F: R → R' where every transition preserves invariants I1–I6.<br>
+      Research Graph is the state space. Repository evolution is the transition operator.
+    </div>
+  </div>
+
+  <div class="g g2">
+    <div class="card">
+      <div class="ct">Invariants I1–I6 (Conservation Laws)</div>
+      <div id="invariantsBody" style="margin-top:8px;"></div>
+    </div>
+    <div class="card">
+      <div class="ct">Rewrite Primitives (Monoid)</div>
+      <div style="margin-top:8px;" id="primBody"></div>
+      <div class="mono" style="font-size:9px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+        Composition f∘g: associative. Identity: NoOp.<br>
+        Some pairs commute (CreateDef ∘ CreateDef).<br>
+        Some provably do not (PromoteClaim ∘ SupersedeTheorem).
+      </div>
+    </div>
+  </div>
+
+  <div class="g g3" style="margin-top:14px;">
+    <div class="card">
+      <div class="ct">Research Entropy H(R)</div>
+      <div class="ft-eq" style="border-left-color:var(--a4);margin-top:8px;">H(R) = w₁D + w₂O + w₃S + w₄U + w₅C</div>
+      <div class="mono" style="font-size:9px;margin-top:8px;line-height:1.9;">
+        <span class="ac">D</span>: duplicate concepts<br>
+        <span class="ac">O</span>: orphan nodes<br>
+        <span class="ac">S</span>: stale evidence<br>
+        <span class="ac">U</span>: unreachable claims<br>
+        <span class="ac">C</span>: conflicting policies<br><br>
+        <span class="ve">Repository-improving rewrites: H(R') ≤ H(R)</span><br>
+        <span class="mu">Lyapunov objective for evolution</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">Repository Normal Form N(R)</div>
+      <div class="ft-eq" style="border-left-color:var(--done);margin-top:8px;">N(R) = R ← stable state</div>
+      <div class="ft-eq" style="border-left-color:var(--done);">N(N(R)) = N(R) ← idempotent</div>
+      <div class="mono" style="font-size:9px;margin-top:8px;line-height:1.9;">
+        N(R) operator:<br>
+        <span class="mu">· Regenerates derived artifacts</span><br>
+        <span class="mu">· Recomputes evidence synthesis</span><br>
+        <span class="mu">· Recomputes maturity matrices</span><br>
+        <span class="mu">· Updates projections</span><br>
+        <span class="mu">· Removes stale derived outputs</span><br><br>
+        <span class="ve">Stronger than "all tests pass"</span><br>
+        <span class="mu">Semantic state is canonical</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">Semantic Shockwaves</div>
+      <div class="mono" style="font-size:9px;margin-top:8px;line-height:1.9;">
+        Change to D03 automatically reports:<br>
+        <span class="ac">D03</span><br>
+        &nbsp;→ <span class="a2">Projection Operator</span><br>
+        &nbsp;&nbsp;→ <span class="a2">Defect Operator</span><br>
+        &nbsp;&nbsp;&nbsp;→ <span class="a3">T01</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;→ <span class="a3">Claims A01</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="ve">Paper A</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="ve">Lean proofs</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="ve">Evidence Objects</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="ve">RO-Crate</span><br><br>
+        <span class="mu">Graph traversal over Research Graph.</span><br>
+        <span class="mu">Implemented in research_calculus.py.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="ct">RC Test Suite (RC01–RC10) · verification/research_calculus/</div>
+    <table class="stbl" style="margin-top:6px;">
+      <thead><tr><th>Test</th><th>Purpose</th><th>Success Criterion</th><th>Status</th></tr></thead>
+      <tbody id="rcBody"></tbody>
+    </table>
+  </div>
+</section>
+  <em>"Every claim is subjected to systematic attempts at falsification before promotion within the evidence hierarchy."</em><br>
+  <span style="color:var(--muted);font-size:10px;display:block;margin-top:6px;">
+    AQARION · Louisville Node #1 · Prove first. Reproduce second. Publish third.
+  </span>
+  <a href="https://github.com/JASKSG9/AQARION-ARITHMETIC-FDS-FINITE-DYNAMICAL-SYSTEMS-" target="_blank"
+     style="color:var(--a2);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:9px;display:block;margin-top:4px;">
+    github.com/JASKSG9/AQARION-ARITHMETIC-FDS-FINITE-DYNAMICAL-SYSTEMS-
+  </a>
+</div>
+
+</div>
+
+<script>
+// PAPER A THEOREMS
+const paperATheorems=[
+  {id:'T1',stmt:'diff=999g₁+90g₂',s:'done'},
+  {id:'T2',stmt:'K_𝒢 well-defined (corollary T1)',s:'done'},
+  {id:'T3',stmt:'Gap=Nerode (gap observable)',s:'done'},
+  {id:'T4',stmt:'Q₅₄ graded arborescence h=6',s:'done'},
+  {id:'T5',stmt:'Borrow sig (1,1,[g₂=0])',s:'done'},
+  {id:'T6',stmt:'Fixed pt iff 5∣b, d=4 (b≤50)',s:'done'},
+  {id:'T7',stmt:'Nuez formula C(b+1,2)−1',s:'done'},
+  {id:'T8',stmt:'Im(K)=Σ₃₀, 30 states',s:'done'},
+  {id:'T_IM',stmt:'π(Im(K))=Q₂₀=join-of-atoms',s:'done'},
+  {id:'T_SG',stmt:'Semigroup order 6, index 6',s:'done'},
+  {id:'OP-19',stmt:'(S,g₂) complete coordinate',s:'done'},
+  {id:'AUT',stmt:'Aut(Q₂₀)={id}',s:'done'},
+  {id:'μ(K)=20',stmt:'Future-dynamics quotient min',s:'done'},
+];
+const paBody=document.getElementById('paperABody');
+paperATheorems.forEach(t=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent)">${t.id}</td>
+    <td style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text)">${t.stmt}</td>
+    <td><span class="sb ${t.s}">PROVED</span></td>`;
+  paBody.appendChild(tr);
+});
+
+// INVARIANTS
+const invariants=[
+  {id:'I1',name:'Identity',desc:'Every mathematical object has one persistent identifier. No duplicates.'},
+  {id:'I2',name:'Provenance',desc:'Every derived object has finite dependency path to a definition.'},
+  {id:'I3',name:'Evidence Immutability',desc:'Evidence never edited. Supersession creates EO_v2, never mutates EO_v1.'},
+  {id:'I4',name:'Dependency Acyclicity',desc:'Definitions→Lemmas→Theorems→Claims→Artifacts must remain acyclic.'},
+  {id:'I5',name:'Reachability',desc:'Every theorem reachable from definitions. No orphan claims.'},
+  {id:'I6',name:'Semantic Consistency',desc:'Generated artifacts correspond to exactly one Research Graph state.'},
+];
+const invBody=document.getElementById('invariantsBody');
+invariants.forEach(inv=>{
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(22,25,37,.6);';
+  div.innerHTML=`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);width:24px;flex-shrink:0">${inv.id}</span>
+    <div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text);margin-bottom:2px;">${inv.name}</div>
+    <div style="font-size:10px;color:var(--muted);">${inv.desc}</div></div>`;
+  invBody.appendChild(div);
+});
+
+// PRIMITIVES
+const prims=[
+  {name:'CreateDefinition',note:'Precond: ID unique. Postcond: V grows by 1.'},
+  {name:'AttachEvidence',note:'Precond: EO valid SHA256. Postcond: Σ grows, immutable.'},
+  {name:'PromoteClaim',note:'Precond: contract satisfied. Postcond: math/verif status advances (no demotion).'},
+  {name:'SupersedeTheorem',note:'Precond: old exists. Postcond: old.superseded_by set, new created.'},
+  {name:'GenerateArtifact',note:'Precond: source theorem proved. Postcond: artifact in V with I6 source.'},
+  {name:'ArchiveCounterexample',note:'Precond: CE minimized. Postcond: CE in Σ + refutes edge.'},
+  {name:'NoOp (identity)',note:'id element. f∘NoOp = NoOp∘f = f.'},
+];
+const primBody=document.getElementById('primBody');
+prims.forEach(p=>{
+  const div=document.createElement('div');
+  div.style.cssText='padding:6px 8px;border:1px solid var(--border2);border-radius:2px;margin:4px 0;';
+  div.innerHTML=`<div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent)">${p.name}</div>
+    <div style="font-size:9px;color:var(--muted);margin-top:2px;">${p.note}</div>`;
+  primBody.appendChild(div);
+});
+
+// RC TESTS
+const rcTests=[
+  {id:'RC01',purpose:'Rewrite invariants',criterion:'Every valid rewrite preserves all declared invariants',s:'done'},
+  {id:'RC02',purpose:'Provenance',criterion:'Every derived node has complete provenance chain',s:'done'},
+  {id:'RC03',purpose:'Evidence immutability',criterion:'Existing EOs never modified in place; tampering detected',s:'done'},
+  {id:'RC04',purpose:'Dependency DAG',criterion:'Dependency graph remains acyclic; cycles detected',s:'done'},
+  {id:'RC05',purpose:'Normalization',criterion:'N(N(R)) = N(R) — idempotency verified',s:'done'},
+  {id:'RC06',purpose:'Entropy monotonicity',criterion:'Approved maintenance rewrites do not increase H(R)',s:'done'},
+  {id:'RC07',purpose:'Semantic diff',criterion:'Change reports affected claims, proofs, evidence, publications',s:'done'},
+  {id:'RC08',purpose:'Research contracts',criterion:'Claims cannot advance without satisfying declared evidence obligations',s:'done'},
+  {id:'RC09',purpose:'Shockwave analysis',criterion:'Dependency impact matches graph traversal exactly',s:'done'},
+  {id:'RC10',purpose:'Repository equivalence',criterion:'Two equivalent states produce identical observable outputs',s:'done'},
+];
+const rcBody=document.getElementById('rcBody');
+rcTests.forEach(r=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent)">${r.id}</td>
+    <td style="font-family:'JetBrains Mono',monospace;font-size:9px">${r.purpose}</td>
+    <td style="font-size:10px;color:var(--muted)">${r.criterion}</td>
+    <td><span class="sb ${r.s}">IMPL</span></td>`;
+  rcBody.appendChild(tr);
+});
+
+// FT-EQ class needs to be added inline
+document.querySelectorAll('.ft-eq').forEach(el=>{
+  if(!el.style.background) el.style.background='var(--bg3)';
+});
+
+
+// SECTION STATUS TABLE
+const secs=[
+  {name:'Abstract',pct:85,status:'prog',blocker:'κ_c decision'},
+  {name:'§1 Introduction',pct:90,status:'done',blocker:'—'},
+  {name:'§2 Background',pct:100,status:'done',blocker:'—'},
+  {name:'§3 Definitions',pct:100,status:'done',blocker:'Three-system disambiguation done'},
+  {name:'§4 Main Results',pct:100,status:'done',blocker:'—'},
+  {name:'§5 Proofs',pct:70,status:'prog',blocker:'T10 odd-B [TARGET-01]'},
+  {name:'§6 Benchmarks',pct:100,status:'done',blocker:'—'},
+  {name:'§7 Discussion',pct:50,status:'prog',blocker:'Needs T10 complete'},
+  {name:'§8 Limitations',pct:30,status:'prog',blocker:'Draft only'},
+  {name:'§9 Future Work',pct:40,status:'prog',blocker:'Draft only'},
+  {name:'§10 References',pct:60,status:'prog',blocker:'DOI collection'},
+  {name:'App A Field Theory',pct:20,status:'block',blocker:'κ_c required [TARGET-02]'},
+  {name:'App B SPD-CCS',pct:100,status:'done',blocker:'—'},
+  {name:'App C Kill Register',pct:100,status:'done',blocker:'—'},
+];
+const cols={done:'var(--done)',prog:'var(--prog)',block:'var(--block)',pend:'var(--pend)'};
+const sb={done:'done',prog:'prog',block:'block',pend:'pend'};
+const slbl={done:'DONE','prog':'IN PROG','block':'BLOCKED','pend':'PENDING'};
+const secBody=document.getElementById('secBody');
+secs.forEach(r=>{
+  const tr=document.createElement('tr');
+  const col=cols[r.status];
+  tr.innerHTML=`<td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text)">${r.name}</td>
+    <td><span class="sb ${sb[r.status]}">${slbl[r.status]}</span></td>
+    <td>
+      <div class="pct-bar">
+        <div class="pct-track"><div class="pct-fill" style="width:${r.pct}%;background:${col}"></div></div>
+        <span class="pct-num">${r.pct}%</span>
+      </div>
+    </td>
+    <td style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted)">${r.blocker}</td>`;
+  secBody.appendChild(tr);
+});
+
+// EVIDENCE OBJECTS
+const eos=[
+  {name:'d3_verifier.py',stage:'V2',sha:'SHA256 pinned',status:'done',note:'Exact arithmetic, all B=2..16'},
+  {name:'phase_diagram.json',stage:'V2',sha:'SHA256 pinned',status:'done',note:'Exhaustive census d=2–5'},
+  {name:'CLAIMS.yaml',stage:'V1',sha:'SHA256 pinned',status:'done',note:'Canonical OVCR'},
+  {name:'KILLED_CLAIMS.md',stage:'V1',sha:'SHA256 pinned',status:'done',note:'14 kills documented'},
+  {name:'ATLAS.md',stage:'V1',sha:'SHA256 pinned',status:'done',note:'Full notation glossary'},
+  {name:'spd_ccs_engine.py',stage:'V2',sha:'SHA256 pinned',status:'done',note:'NumPy vectorized'},
+  {name:'fiedler_computation',stage:'V2',sha:'SHA256 pinned',status:'done',note:'Domain A and B'},
+  {name:'susy_verification',stage:'V2',sha:'SHA256 pinned',status:'done',note:'All 7 pairs exact'},
+  {name:'d3_odd_B_proof',stage:'V0',sha:'pending',status:'block',note:'K-14 open — TARGET-01'},
+  {name:'kappa_c_derivation',stage:'—',sha:'not started',status:'block',note:'TARGET-02 blocked'},
+  {name:'ro-crate-metadata.json',stage:'—',sha:'not started',status:'pend',note:'Post-OSF structure'},
+  {name:'lean/T1_image_54.lean',stage:'—',sha:'not started',status:'pend',note:'TARGET-06'},
+  {name:'rust_independent_impl',stage:'—',sha:'not started',status:'pend',note:'High credibility ROI'},
+];
+const stageCol={'V0':'var(--muted)','V1':'var(--prog)','V2':'var(--done)','—':'var(--block)'};
+const eoBody=document.getElementById('eoBody');
+eos.forEach(e=>{
+  const div=document.createElement('div');
+  div.className='eo-row';
+  const sc=stageCol[e.stage]||'var(--muted)';
+  const nc=e.status==='done'?'var(--done)':e.status==='block'?'var(--block)':'var(--muted)';
+  div.innerHTML=`
+    <div class="eo-name">${e.name}</div>
+    <div class="eo-stage" style="color:${sc}">${e.stage}</div>
+    <div class="eo-sha">${e.sha}</div>
+    <div><span class="sb ${e.status}">${e.status.toUpperCase()}</span></div>
+    <div style="font-size:10px;color:var(--muted);padding-left:8px;">${e.note}</div>
+  `;
+  eoBody.appendChild(div);
+});
+
+// PRESSURE SCORES
+const pressureData=[
+  {name:'AQ-THM-001 |Image|=54',pts:75,max:100,items:['Exhaustive +25','Random 10⁷ +15','Oracle compare +10','Lit. novel +5','Repro +10','Fuzz start +10']},
+  {name:'AQ-THM-002 SUSY pairing',pts:70,max:100,items:['Exhaustive +25','Random 10⁷ +15','Oracle compare +10','Repro +10','Fuzz start +10']},
+  {name:'AQ-THM-010 d=3 Collapse',pts:65,max:100,items:['Exhaustive +25','Random 10⁷ +15','Adv.tested +10','Lit.novel +5','−10 odd-B gap']},
+  {name:'AQ-THM-011 ι₃ universality',pts:30,max:100,items:['Executable +5','Census B=2..16 +25']},
+  {name:'AQ-CONJ-003 κ_c(d,B)',pts:5,max:100,items:['Definition only +5']},
+  {name:'Transfer op. ℒ',pts:5,max:100,items:['Template only +5']},
+];
+const thresholds=[{v:60,label:'arXiv',col:'var(--done)'},{v:80,label:'SIAM',col:'var(--a3)'},{v:100,label:'Lean',col:'var(--accent)'}];
+const pb=document.getElementById('pressureBody');
+pressureData.forEach(p=>{
+  const pct=Math.min(100,Math.round(p.pts/p.max*100));
+  const col=p.pts>=80?'var(--done)':p.pts>=60?'var(--prog)':p.pts>=30?'var(--a3)':'var(--block)';
+  const div=document.createElement('div');
+  div.style.marginBottom='12px';
+  div.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text)">${p.name}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:${col};font-weight:700">${p.pts} pts</span>
+    </div>
+    <div class="pressure">
+      <div class="pressure-fill" style="width:${pct}%;background:${col}">${p.pts>=20?p.pts+' pts':''}</div>
+      ${thresholds.map(t=>`<div style="position:absolute;top:0;bottom:0;left:${t.v}%;width:1px;background:${t.col};opacity:.5;"></div>`).join('')}
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--muted);margin-top:3px;">${p.items.join(' · ')}</div>
+  `;
+  pb.appendChild(div);
+});
+// threshold labels
+const pl=document.createElement('div');
+pl.style.cssText='display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:8px;color:var(--muted);margin-top:8px;';
+pl.innerHTML='<span></span><span style="color:var(--done)">↑ 60 arXiv</span><span style="color:var(--a3)">↑ 80 SIAM</span><span style="color:var(--accent)">↑ 100 Lean cert</span>';
+pb.appendChild(pl);
+
+// TIMELINE
+const tlData=[
+  {label:'T1–T9 Core Theorems',left:0,width:100,col:'var(--done)',text:'DONE'},
+  {label:'Phase Diagram Census',left:0,width:100,col:'var(--done)',text:'DONE'},
+  {label:'CLAIMS + ATLAS + Kill Reg',left:0,width:100,col:'var(--done)',text:'DONE'},
+  {label:'TARGET-01 odd-B proof',left:0,width:40,col:'var(--block)',text:'NEXT — Sprint 1'},
+  {label:'§7–§9 Prose + References',left:10,width:55,col:'var(--prog)',text:'Sprint 2'},
+  {label:'OSF structure + Zenodo DOIs',left:20,width:50,col:'var(--prog)',text:'Sprint 2'},
+  {label:'arXiv package compile',left:65,width:20,col:'var(--a3)',text:'Sprint 3'},
+  {label:'arXiv v1 SUBMIT',left:85,width:15,col:'var(--accent)',text:'TARGET'},
+  {label:'Lean T1/T2/T10',left:95,width:5,col:'var(--pend)',text:'Post-submission'},
+  {label:'SIAM Submission',left:97,width:3,col:'var(--pend)',text:'Post-arXiv'},
+];
+const tlBody=document.getElementById('tlBody');
+tlData.forEach(t=>{
+  const row=document.createElement('div');
+  row.className='tl-row';
+  row.style.marginBottom='6px';
+  row.innerHTML=`
+    <div class="tl-label">${t.label}</div>
+    <div class="tl-track">
+      <div class="tl-fill" style="left:${t.left}%;width:${t.width}%;background:${t.col};color:var(--bg);padding:0 8px;">
+        <span style="font-size:8px;font-weight:700;white-space:nowrap;">${t.text}</span>
+      </div>
+    </div>
+  `;
+  tlBody.appendChild(row);
+});
+</script>
+
+</body>
+</html>
