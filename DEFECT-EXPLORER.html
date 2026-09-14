@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Defect Operator Explorer — D=(I-P)KP</title>
+<style>
+  :root {
+    --bg: #0f1117; --panel: #171a23; --border: #2a2f3d;
+    --text: #e6e8ef; --muted: #8b90a3; --accent: #6ea8fe;
+    --good: #4ade80; --bad: #f87171; --mono: 'SF Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px; background: var(--bg); color: var(--text);
+    font-family: -apple-system, system-ui, sans-serif; line-height: 1.5;
+  }
+  h1 { font-size: 1.3rem; margin: 0 0 4px 0; }
+  .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 18px; }
+  .panel {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; margin-bottom: 14px;
+  }
+  .controls { display: grid; gap: 14px; }
+  .ctrl label {
+    display: flex; justify-content: space-between; font-size: 0.85rem;
+    color: var(--muted); margin-bottom: 4px;
+  }
+  .ctrl label span.val { color: var(--accent); font-family: var(--mono); font-weight: 600; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  svg { width: 100%; height: auto; display: block; }
+  .block-a { fill: #6ea8fe; } .block-b { fill: #f6a35b; }
+  .block-c { fill: #4ade80; } .block-d { fill: #f87171; }
+  .block-e { fill: #c084fc; } .block-f { fill: #fbbf24; }
+  .shift-arrow { stroke: #e6e8ef; stroke-width: 1.5; fill: none; opacity: 0.6; }
+  .result-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;
+  }
+  .result-box {
+    background: #10121a; border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px;
+  }
+  .result-box h3 { margin: 0 0 6px 0; font-size: 0.75rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.05em; }
+  .mono { font-family: var(--mono); font-size: 0.82rem; word-break: break-all; }
+  .verify-line {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+    border-radius: 8px; margin-top: 10px; font-size: 0.88rem; font-family: var(--mono);
+  }
+  .verify-pass { background: rgba(74,222,128,0.12); color: var(--good); border: 1px solid rgba(74,222,128,0.3); }
+  .verify-fail { background: rgba(248,113,113,0.12); color: var(--bad); border: 1px solid rgba(248,113,113,0.3); }
+  .note {
+    font-size: 0.8rem; color: var(--muted); border-left: 2px solid var(--accent);
+    padding-left: 10px; margin-top: 10px;
+  }
+  .eig-list { font-family: var(--mono); font-size: 0.78rem; line-height: 1.7; }
+  .eig-row { display: flex; justify-content: space-between; }
+  .eig-diff-ok { color: var(--good); }
+  .eig-diff-bad { color: var(--bad); }
+</style>
+</head>
+<body>
+
+<h1>Defect Operator Explorer</h1>
+<div class="subtitle">D = (I−P)KP on m equal blocks of size k, cyclic shift s. Every value below is computed live in your browser from the raw matrices — not looked up from a formula table.</div>
+
+<div class="panel">
+  <div class="controls">
+    <div class="ctrl">
+      <label>Block size k <span class="val" id="kval">4</span></label>
+      <input type="range" id="k" min="2" max="10" value="4">
+    </div>
+    <div class="ctrl">
+      <label>Number of blocks m <span class="val" id="mval">5</span></label>
+      <input type="range" id="m" min="2" max="14" value="5">
+    </div>
+    <div class="ctrl">
+      <label>Shift s <span class="val" id="sval">1</span></label>
+      <input type="range" id="s" min="0" max="55" value="1">
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <svg id="diagram" viewBox="0 0 600 140"></svg>
+</div>
+
+<div class="panel">
+  <div class="result-grid">
+    <div class="result-box">
+      <h3>Derived quantities</h3>
+      <div class="mono" id="derived"></div>
+    </div>
+    <div class="result-box">
+      <h3>Closed-form vs computed</h3>
+      <div class="eig-list" id="eiglist"></div>
+    </div>
+  </div>
+  <div id="verify" class="verify-line"></div>
+  <div class="note" id="m2note" style="display:none">
+    m=2 special case: the cycle C₂ is a doubled edge (S₁ = S₋₁), so the correct Laplacian
+    off-diagonal is −2, not −1. This is a real bug that was found and fixed while deriving
+    this identity — if the numbers above ever stop matching at m=2 specifically, that's
+    almost certainly what regressed.
+  </div>
+</div>
+
+<script>
+// ---- Matrix helpers (plain JS, no deps) ----
+function zeros(r,c){ return Array.from({length:r},()=>new Array(c).fill(0)); }
+function matmul(A,B){
+  const ar=A.length, ac=A[0].length, bc=B[0].length;
+  const C=zeros(ar,bc);
+  for(let i=0;i<ar;i++) for(let k=0;k<ac;k++){
+    const aik=A[i][k]; if(aik===0) continue;
+    for(let j=0;j<bc;j++) C[i][j]+=aik*B[k][j];
+  }
+  return C;
+}
+function transpose(A){ const r=A.length,c=A[0].length; const T=zeros(c,r);
+  for(let i=0;i<r;i++) for(let j=0;j<c;j++) T[j][i]=A[i][j]; return T; }
+
+// Jacobi eigenvalue algorithm for small symmetric matrices
+function jacobiEigenvalues(Ain, tol=1e-12, maxit=5000){
+  const n=Ain.length; let A=Ain.map(r=>r.slice());
+  for(let it=0; it<maxit; it++){
+    let p=0,q=1,mx=0;
+    for(let i=0;i<n;i++) for(let j=i+1;j<n;j++){
+      const v=Math.abs(A[i][j]); if(v>mx){mx=v;p=i;q=j;}
+    }
+    if(mx<=tol) break;
+    const app=A[p][p], aqq=A[q][q], apq=A[p][q];
+    const ang=0.5*Math.atan2(2*apq, aqq-app);
+    const c=Math.cos(ang), s=Math.sin(ang);
+    for(let i=0;i<n;i++){
+      if(i===p||i===q) continue;
+      const aip=A[i][p], aiq=A[i][q];
+      A[i][p]=c*aip-s*aiq; A[p][i]=A[i][p];
+      A[i][q]=s*aip+c*aiq; A[q][i]=A[i][q];
+    }
+    A[p][p]=c*c*app-2*s*c*apq+s*s*aqq;
+    A[q][q]=s*s*app+2*s*c*apq+c*c*aqq;
+    A[p][q]=A[q][p]=0;
+  }
+  const eig=[]; for(let i=0;i<n;i++) eig.push(A[i][i]);
+  return eig.sort((a,b)=>a-b);
+}
+
+function buildEverything(m,k,s){
+  const n=m*k;
+  // I - P, K, P as full n x n
+  const P=zeros(n,n);
+  for(let b=0;b<m;b++) for(let i=b*k;i<(b+1)*k;i++) for(let j=b*k;j<(b+1)*k;j++) P[i][j]=1/k;
+  const K=zeros(n,n);
+  for(let x=0;x<n;x++) K[x][(x+s)%n]=1;
+  const I=zeros(n,n); for(let i=0;i<n;i++) I[i][i]=1;
+  const ImP=zeros(n,n); for(let i=0;i<n;i++) for(let j=0;j<n;j++) ImP[i][j]=I[i][j]-P[i][j];
+  const D = matmul(matmul(ImP,K),P);   // n x n defect operator, built from scratch
+
+  const U=zeros(n,m);
+  const c=1/Math.sqrt(k);
+  for(let b=0;b<m;b++) for(let x=b*k;x<(b+1)*k;x++) U[x][b]=c;
+
+  const DU = matmul(D,U);              // n x m
+  const gram = matmul(transpose(DU), DU); // m x m -- this is U^T D^T D U, NUMERICALLY, from raw D
+  const eigNumeric = jacobiEigenvalues(gram);
+
+  const r = s % k;
+  const alpha2 = r*(k-r)/(k*k);
+  const eigClosed = [];
+  for(let l=0;l<m;l++) eigClosed.push(alpha2 * 4*Math.pow(Math.sin(Math.PI*l/m),2));
+  eigClosed.sort((a,b)=>a-b);
+
+  let opNormClosed;
+  const alpha = Math.sqrt(alpha2);
+  if(m%2===0) opNormClosed = 2*alpha;
+  else opNormClosed = 2*alpha*Math.cos(Math.PI/(2*m));
+
+  const opNormNumeric = Math.sqrt(Math.max(...eigNumeric));
+
+  return {n, r, alpha2, eigNumeric, eigClosed, opNormClosed, opNormNumeric};
+}
+
+function draw(m,k,s){
+  const svg=document.getElementById('diagram');
+  const n=m*k;
+  const w=600,h=140, pad=20;
+  const usable=w-2*pad;
+  const step=usable/n;
+  const colors=['block-a','block-b','block-c','block-d','block-e','block-f'];
+  let html='';
+  for(let i=0;i<n;i++){
+    const b=Math.floor(i/k);
+    const x=pad+i*step;
+    html+=`<circle cx="${x+step/2}" cy="60" r="${Math.max(3,Math.min(9,step*0.35))}" class="${colors[b%colors.length]}"></circle>`;
+  }
+  // shift arrow from element 0 to element s mod n
+  const x0=pad+step/2, x1=pad+((s%n)+0.5)*step;
+  const mid=(x0+x1)/2;
+  const dir = x1>=x0 ? 1 : -1;
+  html += `<path d="M ${x0} 45 Q ${mid} ${5} ${x1} 45" class="shift-arrow" marker-end="url(#arrow)"></path>`;
+  html += `<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#e6e8ef" opacity="0.7"></path></marker></defs>`;
+  html += `<text x="${pad}" y="115" fill="#8b90a3" font-size="11">n=${n} points, ${m} blocks of ${k}, shift s=${s} (element 0 → element ${s%n})</text>`;
+  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  svg.innerHTML = html;
+}
+
+function update(){
+  const k=parseInt(document.getElementById('k').value);
+  const m=parseInt(document.getElementById('m').value);
+  const sMax = m*k-1;
+  const sSlider=document.getElementById('s');
+  sSlider.max = sMax;
+  let s=parseInt(sSlider.value);
+  if(s>sMax) s=sMax;
+  sSlider.value=s;
+
+  document.getElementById('kval').textContent=k;
+  document.getElementById('mval').textContent=m;
+  document.getElementById('sval').textContent=s;
+
+  draw(m,k,s);
+  const res = buildEverything(m,k,s);
+
+  document.getElementById('derived').innerHTML =
+    `n = m·k = ${res.n}<br>r = s mod k = ${res.r}<br>` +
+    `alpha² = r(k−r)/k² = ${res.alpha2.toFixed(6)}<br>` +
+    `op-norm (closed form) = ${res.opNormClosed.toFixed(6)}<br>` +
+    `op-norm (from raw D, numeric) = ${res.opNormNumeric.toFixed(6)}`;
+
+  let eigHtml = '<div class="eig-row"><span>l</span><span>closed</span><span>numeric</span><span>|diff|</span></div>';
+  let maxDiff = 0;
+  for(let i=0;i<res.eigClosed.length;i++){
+    const diff = Math.abs(res.eigClosed[i]-res.eigNumeric[i]);
+    maxDiff = Math.max(maxDiff, diff);
+    const cls = diff < 1e-6 ? 'eig-diff-ok' : 'eig-diff-bad';
+    eigHtml += `<div class="eig-row"><span>${i}</span><span>${res.eigClosed[i].toFixed(5)}</span>` +
+      `<span>${res.eigNumeric[i].toFixed(5)}</span><span class="${cls}">${diff.toExponential(1)}</span></div>`;
+  }
+  document.getElementById('eiglist').innerHTML = eigHtml;
+
+  const verifyEl = document.getElementById('verify');
+  if(maxDiff < 1e-6){
+    verifyEl.className='verify-line verify-pass';
+    verifyEl.textContent = `✓ Closed form matches raw-matrix computation exactly (max diff ${maxDiff.toExponential(2)})`;
+  } else {
+    verifyEl.className='verify-line verify-fail';
+    verifyEl.textContent = `✗ MISMATCH (max diff ${maxDiff.toExponential(2)}) — closed form does not match the actual operator built from scratch`;
+  }
+
+  document.getElementById('m2note').style.display = (m===2) ? 'block' : 'none';
+}
+
+['k','m','s'].forEach(id => document.getElementById(id).addEventListener('input', update));
+update();
+</script>
+
+</body>
+</html>
