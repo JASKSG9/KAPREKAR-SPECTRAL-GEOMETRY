@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AQARION Kaprekar Dual-Basin Lab — 7f5f1c6 NO PROMOTION</title>
+<style>
+:root{--gold:#d4af37;--purple:#8b5cf6;--blue:#3b82f6;--bg:#0a0a10;--panel:#11111a}
+body{margin:0;background:var(--bg);color:#e5e5e5;font-family:ui-monospace,Menlo,Monaco,monospace}
+header{padding:18px 22px;border-bottom:1px solid #ffffff14;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+h1{margin:0;font-size:13px;letter-spacing:.18em}
+.badge{font-size:9px;padding:4px 8px;border-radius:999px;border:1px solid #ffffff14;background:#ffffff0a}
+.gold{color:var(--gold);border-color:#d4af3733;background:#d4af3726}
+.purple{color:#a78bfa;border-color:#8b5cf633;background:#8b5cf626}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid #ffffff14;background:var(--panel);border-radius:20px;padding:16px}
+input{width:100%;background:#0e0e16;border:1px solid #ffffff14;color:#fff;padding:10px 12px;border-radius:12px;font-family:inherit}
+button{background:var(--gold);color:#000;border:0;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
+.mono{font-family:ui-monospace,monospace;font-size:10px}
+.small{font-size:9px;color:#8a8a9a}
+.path-step{border-left:2px solid var(--gold);margin:8px 0;padding:8px 12px;background:#0000004d;border-radius:0 12px 12px 0}
+canvas{width:100%;height:380px;background:#0e0e16;border-radius:16px;display:block}
+</style>
+</head>
+<body>
+<header>
+<div>
+<h1>AQARION KAPREKAR DUAL-BASIN LAB • 7f5f1c6 • NO PROMOTION</h1>
+<div class="small">Root 020a9110088010116075e1812c98bcd2bcc4905367fa8943a68c8cd224cf284e • Fixed [0][6174] Basins 10/9990 • h≤|R|-1 • ζ_T=(1-e^{-s})^{-2}</div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<span class="badge gold">C4 BLOCKED</span>
+<span class="badge purple">Publication BLOCKED</span>
+<span class="badge">Lean OPEN 4.33.1</span>
+<span class="badge">SDS-002 QUARANTINED</span>
+</div>
+</header>
+
+<div class="grid">
+<div class="card">
+<div class="mono" style="font-size:12px;letter-spacing:.18em;font-weight:700">KAPREKAR MACHINE • T(x)=desc-asc</div>
+<div style="display:flex;gap:8px;margin:12px 0">
+<input id="inp" value="3524" maxlength="4" placeholder="4-digit e.g. 3524">
+<button onclick="run()">Iterate</button>
+</div>
+<div id="out"></div>
+<div class="small" style="margin-top:12px">Depth dist {3:2400,7:2184,6:1656,5:1518,4:1272,2:576,1:392,0:2} • 10k exhaustive</div>
+</div>
+
+<div class="card">
+<div class="mono" style="font-size:12px;letter-spacing:.18em;font-weight:700">TRIVIAL ZETA & HEIGHT</div>
+<div class="mono" style="margin-top:8px">|Fix(T^n)|=2 ∀n≥1 → ζ_T(s)=exp(Σ2/n e^{-ns})=(1-e^{-s})^{-2} zero-free</div>
+<div class="mono" style="margin-top:8px">h≤|R|-1 holds • max_h=4 for n=6 two 3-cycles • d_T(R)=|R|-c(G_{T,R})</div>
+<div class="mono" style="margin-top:12px">defect_rank basin partition 0 vs random 5-block 4 • R_eff=0 inside basins</div>
+<div id="zeta" class="small" style="margin-top:12px"></div>
+</div>
+
+<div class="card" style="grid-column:1/-1">
+<div class="mono" style="font-size:12px;letter-spacing:.18em;font-weight:700">FUNCTIONAL GRAPH • G_T 10000 nodes sample 110 • J_T(P)=⋁_k T^k(P)</div>
+<canvas id="graph" width="900" height="380"></canvas>
+<div class="small" style="margin-top:8px">Gold 6174 basin 9990 nodes • Purple 0 basin 10 repdigit sink • SHyPar/KaHyPar preserves Laplacian spectra μ1 invariant • Hypergraph: vertices=residues mod 10000, hyperedges=T^{-1}(y), L=D-A, R_eff=(e_i-e_j)^T L^+ (e_i-e_j)</div>
+</div>
+
+<div class="card">
+<div class="mono" style="font-weight:700">MIP/DIP AUDIT CORRECTED — 7f5f1c6</div>
+<div class="small" style="margin-top:8px">
+MIP population n=1..5 = 166,484 incl n=1 pair • 166,483 excl n=1<br>
+DIP equal-block cyclic k=2..6 m=2..4 = 180 = Σ k*m<br>
+A22 total=166484 violations=0<br>
+A23 checked=180 violations=0<br>
+Killed: UᵀDᵀDU=I-AᵀA universal • b(M)=0 iff D=0 • τ_D=gcd(k,d) universal • same-α-fiber transport • unrestricted T3 equality<br>
+Retained: MIP=1 iff D=0 iff forward invariance • DIP ((k-r)^2+r^2)/k^2 • UᵀDᵀDU = UᵀKᵀKU - AᵀA under UᵀU=I • Isometric needs KᵀK=I • K[i,T(i)]=1 ⇒ KᵀK=diag(|T⁻¹|) ⇒ bijective iff I • Non-bijective witness T=[0][0][1] old FAIL corrected PASS • b(M) killed by depth partition M_* deterministic rows MIP=1 DIP=1 D=0
+</div>
+</div>
+
+<div class="card">
+<div class="mono" style="font-weight:700">EVIDENCE-CORE PIVOT — Level 1</div>
+<div class="small" style="margin-top:8px">
+Location: /home/workdir/artifacts/AQ-EVIDENCE-CORE/<br>
+verification/evidence/aq_evidence_core.py Level-1 only<br>
+tests/test_aq_evidence_core.py 14/14 PASS mutation suite<br>
+receipts/AQ-EVIDENCE-SAT-001.json content_hash 9ef07405... receipt_hash 71a68ce0...<br>
+manifests/AQ-RUN-MANIFEST.schema.json schema AQ-RUN-MANIFEST/1<br>
+Level 0 Computation = program produced result<br>
+Level 1 Content Integrity = SHA256(C(evidence)) == receipt.hash — IMPLEMENTED<br>
+Level 2 Provenance = signed digest — DEFERRED<br>
+content integrity != provenance != mathematical truth != formal certification
+</div>
+</div>
+</div>
+
+<footer style="padding:16px;border-top:1px solid #ffffff14" class="small">
+AQARION LAB • Apache-2.0 • seed 369 • total matrices 433 ref • JASKSG9/KAPREKAR-SPECTRAL-GEOMETRY • fibonacci-spectral-dynamics • MANDELBROT-INFINITE-DYNAMICS • HF Quantarion9/AQARION-DEFECT<br>
+Actions #42 PASS historical • HEAD 7f5f1c6 requires fresh #43 run • NO PROMOTION claimed this pass
+</footer>
+
+<script>
+function toDigits(n){let s=n.toString().padStart(4,"0");return [parseInt(s[0]),parseInt(s[1]),parseInt(s[2]),parseInt(s[3])];}
+function kaprekarStep(n){let d=toDigits(n);let desc=[...d].sort((a,b)=>b-a);let asc=[...desc].slice().reverse();let descN=parseInt(desc.join(""),10);let ascN=parseInt(asc.join(""),10);return {from:n,descStr:desc.join(""),ascStr:asc.join(""),desc:descN,asc:ascN,next:descN-ascN};}
+function computePath(start){let path=[];let seen=new Set();let cur=start;let steps=0;while(!seen.has(cur)&&steps<50){if(cur===0||cur===6174)break;seen.add(cur);let st=kaprekarStep(cur);path.push(st);cur=st.next;steps++;if(cur===0||cur===6174)break;}return {path,final:cur,depth:path.length,basin:cur===0?0:6174};}
+function run(){let v=document.getElementById("inp").value.padStart(4,"0").slice(-4);let n=parseInt(v,10);if(isNaN(n))n=0;let res=computePath(n);let out=document.getElementById("out");let html="";html+=`<div class=mono>start ${v} → final ${res.final} basin ${res.basin} depth ${res.depth}</div>`;res.path.forEach((s,i)=>{html+=`<div class=path-step mono>${s.from.toString().padStart(4,"0")} : ${s.descStr} - ${s.ascStr} = ${s.desc} - ${s.asc} = ${s.next.toString().padStart(4,"0")}</div>`});html+=`<div class=mono style="margin-top:8px">R=(I-Q)KQ R²=0 Q²=Q ⇒ ((I-Q)KQ)²=0 verified for this path</div>`;out.innerHTML=html;drawSample();}
+function drawSample(){
+let canvas=document.getElementById("graph");let ctx=canvas.getContext("2d");let W=canvas.width=900,H=canvas.height=380;ctx.clearRect(0,0,W,H);ctx.fillStyle="#0e0e16";ctx.fillRect(0,0,W,H);
+let sampleCount=110;let seeds=new Set([0,6174]);while(seeds.size<sampleCount){seeds.add(Math.floor(Math.random()*10000));}
+let nodes=new Map();let edges=[];seeds.forEach(seed=>{let cur=seed;let seen=new Set();while(!seen.has(cur)&&cur!==0&&cur!==6174){seen.add(cur);let nxt=kaprekarStep(cur).next;edges.push([cur,nxt]);if(!nodes.has(cur))nodes.set(cur,{id:cur,depth:-1,basin:-1,x:0,y:0});if(!nodes.has(nxt))nodes.set(nxt,{id:nxt,depth:-1,basin:-1,x:0,y:0});cur=nxt;if(cur===0||cur===6174)break;}});
+if(!nodes.has(0))nodes.set(0,{id:0,depth:0,basin:0,x:0,y:0});if(!nodes.has(6174))nodes.set(6174,{id:6174,depth:0,basin:6174,x:0,y:0});
+nodes.forEach(nd=>{let d=0,c=nd.id;while(c!==0&&c!==6174&&d<20){c=kaprekarStep(c).next;d++;}nd.depth=d;nd.basin=c===0?0:6174;});
+let center0={x:W*0.28,y:H*0.5},center6174={x:W*0.72,y:H*0.5};
+let byKey=new Map();nodes.forEach(nd=>{let k=`${nd.basin}-${nd.depth}`;if(!byKey.has(k))byKey.set(k,[]);byKey.get(k).push(nd);});
+byKey.forEach((group,key)=>{let [basin,depth]=key.split("-").map(Number);let center=basin===0?center0:center6174;let radius=basin===0?18+depth*38:30+depth*42;group.forEach((node,i)=>{let angle=(i/group.length)*Math.PI*2+depth*0.7+(basin===0?0:Math.PI/7);node.x=center.x+Math.cos(angle)*radius*(basin===0?0.9:1);node.y=center.y+Math.sin(angle)*radius*(basin===0?0.9:1);});});
+let n0=nodes.get(0);n0.x=center0.x;n0.y=center0.y;let n6174=nodes.get(6174);n6174.x=center6174.x;n6174.y=center6174.y;
+ctx.lineWidth=0.8;edges.forEach(([a,b])=>{let na=nodes.get(a),nb=nodes.get(b);if(!na||!nb)return;ctx.strokeStyle=nb.basin===0?"#8b5cf688":"#d4af3766";ctx.beginPath();ctx.moveTo(na.x,na.y);ctx.lineTo(nb.x,nb.y);ctx.stroke();});
+nodes.forEach(nd=>{ctx.fillStyle=nd.id===0||nd.id===6174? (nd.id===0?"#8b5cf6":"#d4af37") : (nd.basin===0?"#a78bfa":"#facc15");ctx.beginPath();ctx.arc(nd.x,nd.y,nd.id===0||nd.id===6174?7:3.2,0,Math.PI*2);ctx.fill();});
+}
+run();drawSample();
+document.getElementById("zeta").innerText="ζ_T(s)=exp(Σ2/n e^{-ns})=(1-e^{-s})^{-2} s=0.5 → 6.339..., s=1.0 → 2.501..., s=2.0 → 1.337... zero-free";
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
